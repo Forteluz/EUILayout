@@ -9,7 +9,7 @@
 #import "EUITemplet.h"
 #import <YogaKit/UIView+Yoga.h>
 
-#define TColumn(...) [DCUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
+#define TColumn(...) [EUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
 
 @interface EUIColumnTemplet : EUITemplet
 

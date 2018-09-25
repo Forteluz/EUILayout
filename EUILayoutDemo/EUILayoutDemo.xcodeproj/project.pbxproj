@@ -24,6 +24,8 @@
 		D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852AD215A0ABE007D9CFF /* EUIColumnTemplet.m */; };
 		D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852B0215A0ACF007D9CFF /* EUIRowTemplet.m */; };
 		D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */; };
+		D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BA215A17B3007D9CFF /* TestViewController1.m */; };
+		D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BD215A1843007D9CFF /* BaseTestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,10 @@
 		D5D852B3215A0AED007D9CFF /* EUILayoutMetamacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutMetamacros.h; sourceTree = "<group>"; };
 		D5D852B5215A0B53007D9CFF /* UIView+EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+EUILayout.h"; sourceTree = "<group>"; };
 		D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+EUILayout.m"; sourceTree = "<group>"; };
+		D5D852B9215A17B3007D9CFF /* TestViewController1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController1.h; sourceTree = "<group>"; };
+		D5D852BA215A17B3007D9CFF /* TestViewController1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController1.m; sourceTree = "<group>"; };
+		D5D852BC215A1843007D9CFF /* BaseTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTestViewController.h; sourceTree = "<group>"; };
+		D5D852BD215A1843007D9CFF /* BaseTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +171,7 @@
 				D57CFCC4215A08DA002D137F /* AppDelegate.m */,
 				D57CFCC6215A08DA002D137F /* ViewController.h */,
 				D57CFCC7215A08DA002D137F /* ViewController.m */,
+				D5D852B8215A12B5007D9CFF /* TestCase */,
 				D57CFCC9215A08DA002D137F /* Main.storyboard */,
 				D57CFCCC215A08DB002D137F /* Assets.xcassets */,
 				D57CFCCE215A08DB002D137F /* LaunchScreen.storyboard */,
@@ -234,6 +241,17 @@
 				D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		D5D852B8215A12B5007D9CFF /* TestCase */ = {
+			isa = PBXGroup;
+			children = (
+				D5D852BC215A1843007D9CFF /* BaseTestViewController.h */,
+				D5D852BD215A1843007D9CFF /* BaseTestViewController.m */,
+				D5D852B9215A17B3007D9CFF /* TestViewController1.h */,
+				D5D852BA215A17B3007D9CFF /* TestViewController1.m */,
+			);
+			path = TestCase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -527,7 +545,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */,
 				D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */,
+				D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */,
 				D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,

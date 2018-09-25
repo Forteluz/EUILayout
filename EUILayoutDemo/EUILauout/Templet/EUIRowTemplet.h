@@ -8,6 +8,8 @@
 
 #import "EUIColumnTemplet.h"
 
+#define TRow(...) [EUIRowTemplet templetWithItems:@[__VA_ARGS__]]
+
 @interface EUIRowTemplet : EUIColumnTemplet
 
 @end
