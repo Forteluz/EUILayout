@@ -32,7 +32,7 @@
 
 #pragma mark -
 
-#define NODE_RL_EDGE(_NODE_) (_NODE_SIDE_EDGE_METHOD(_NODE_, margin) + _NODE_SIDE_EDGE_METHOD(_NODE_, padding))
+#define NODE_RL_EDGE(_NODE_) (NODE_RL_EDGE_METHOD(_NODE_, margin) + NODE_RL_EDGE_METHOD(_NODE_, padding))
 #define NODE_RL_EDGE_METHOD(_NODE_, _METHOD_) (_NODE_._METHOD_.left + _NODE_._METHOD_.right)
 
 #define NODE_TB_EDGE(_NODE_) (_NODE_SIDE_EDGE_METHOD(_NODE_, margin) + _NODE_SIDE_EDGE_METHOD(_NODE_, padding))

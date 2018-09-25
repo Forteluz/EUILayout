@@ -6,14 +6,10 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUITemplet.h"
-#import <YogaKit/UIView+Yoga.h>
+#import "EUIRowTemplet.h"
 
 #define TColumn(...) [EUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
 
-@interface EUIColumnTemplet : EUITemplet
-
-- (void)layoutNodeBased:(EUILayout *)node yoga:(YGLayout *)layout;
-- (void)layoutTempletBased:(EUILayout *)node yoga:(YGLayout *)layout;
+@interface EUIColumnTemplet : EUIRowTemplet
 
 @end

@@ -12,36 +12,68 @@
 
 - (void)layoutTemplet {
     [super layoutTemplet];
-    [self layoutRowTemplet];
+    [self layoutColumnTemplet];
 }
 
-- (void)layoutRowTemplet {
+- (void)layoutColumnTemplet {
     void (^configBlock)(YGLayout *) = ^(YGLayout *layout) {
         layout.isEnabled = YES;
         layout.isIncludedInLayout = YES;
-        layout.flexWrap = YGWrapWrap;
+        layout.flexWrap = YGWrapNoWrap;
         layout.alignItems = YGAlignStretch;
         layout.justifyContent = YGJustifyFlexStart;
-        layout.flexDirection = YGFlexDirectionRow;
-        YOGASetMargin(layout, self.margin);
+        layout.flexDirection = YGFlexDirectionColumn;
+        layout.position = YGPositionTypeRelative;
+        
         YOGASetPadding(layout, self.padding);
+        YOGASetMargin(layout, self.margin);
     };
     [self.view configureLayoutWithBlock:configBlock];
     [self.view.yoga applyLayoutPreservingOrigin:YES];
 }
 
+- (void)layoutNode:(EUILayout *)node {
+    void (^configBlock)(YGLayout *) = ^(YGLayout *layout) {
+        layout.isEnabled = YES;
+        if (EUILayoutSizeTypeAuto == node.sizeType) {
+            [self layoutNodeBased:node yoga:layout];
+        } else {
+            [self layoutTempletBased:node yoga:layout];
+        }
+        YOGASetMargin(layout, node.margin);
+        YOGASetPadding(layout, node.padding);
+    };
+    [node.view configureLayoutWithBlock:configBlock];
+}
+
 - (void)layoutNodeBased:(EUILayout *)node yoga:(YGLayout *)layout {
     CGFloat w = NODE_VALID_WIDTH(node);
     CGFloat h = NODE_VALID_HEIGHT(node);
-    if (h == 0) {
-        h = YOGA_VALID_HEIGHT(self.view) - NODE_TB_EDGE_METHOD(self, padding) - NODE_TB_EDGE_METHOD(node, margin);
+
+    ///< 自动计算宽度
+    if (w == 0) {
+        CGFloat sw = YOGA_VALID_WIDTH(self.view);
+        CGFloat se = NODE_RL_EDGE_METHOD(self, padding);
+        CGFloat ne = NODE_RL_EDGE_METHOD(node, margin);
+        w = sw - se - ne;
     }
-    if (w > 0) layout.width = YGPointValue(w);
+    
+    if (w > 0) layout.width  = YGPointValue(w);
     if (h > 0) layout.height = YGPointValue(h);
-    layout.flexGrow = w == 0 ? 1 : 0;
-    layout.flexShrink = w == 0 ? 1 : 0;
+    
+    layout.flexGrow = h == 0 ? 1 : 0;
+    layout.flexShrink = h == 0 ? 1 : 0;
     layout.alignSelf = YGAlignFlexStart;
 }
 
+- (void)layoutTempletBased:(EUILayout *)node yoga:(YGLayout *)layout {
+//    CGFloat w = YOGA_VALID_WIDTH(self.view) -
+//    NODE_RL_EDGE_METHOD(self, padding) -
+//    NODE_RL_EDGE_METHOD(node, margin);
+//    layout.width = YGPointValue(w);
+    layout.flexGrow = 1;
+    layout.flexShrink = 1;
+    layout.alignSelf = YGAlignStretch;
+}
 
 @end

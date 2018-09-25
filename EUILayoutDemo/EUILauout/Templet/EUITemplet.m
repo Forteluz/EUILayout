@@ -101,7 +101,9 @@
                 [templets addObject:(EUITemplet *)node];
             }
         }
-        
+        if ( nodeView.superview ) {
+            [nodeView removeFromSuperview];
+        }
         if (lastNode) {
             [self.view insertSubview:nodeView aboveSubview:lastNode.view];
         } else if (!nodeView.superview) {
@@ -114,6 +116,7 @@
         index ++;
     }
     
+    ///< Skip a runloop for yoga
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^
                    {
@@ -136,7 +139,15 @@
     if (!CGSizeEqualToSize(CGSizeZero, node.size)) {
         r.size = node.size;
     } else {
-        r.size = [node.view bounds].size;
+        if (node.padding.top > 0 &&
+            node.padding.left > 0 &&
+            node.padding.right > 0 &&
+            node.padding.bottom > 0)
+        {
+            
+        } else {
+            r.size = [node.view bounds].size;
+        }
     }
     [node.view setFrame:r];
 }
@@ -152,7 +163,7 @@
 + (EUITempletView *)imitateByView:(UIView *)view {
     CGRect r = view ? view.bounds : CGRectZero;
     EUITempletView *one = [[EUITempletView alloc] initWithFrame:r];
-    one.backgroundColor = DCRandomColor;
+    one.backgroundColor = UIColor.grayColor;
     return one;
 }
 @end

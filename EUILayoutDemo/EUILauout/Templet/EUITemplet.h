@@ -14,6 +14,10 @@
 
 #pragma mark -
 
+#define TEasy(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
+
+#pragma mark -
+
 @interface EUITemplet : EUILayout
 
 ///< 模板包含的所有子布局节点

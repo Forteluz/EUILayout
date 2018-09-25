@@ -7,13 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "EUIColumnTemplet.h"
-
-#define _SETButton(_N_, _TITLE_)                                          \
-     self.view##_N_ = [self creatButton];                                 \
-     self.view##_N_.tag = _N_;                                            \
-    [self.view##_N_ setTitle:_TITLE_ forState:UIControlStateNormal];
-
+#import "TestFactory.h"
 
 @interface ViewController() <EUILayouterDataSource>
 @end
@@ -22,8 +16,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _SETButton(1, @"测试1");
-    _SETButton(2, @"测试2");
+    _SETButton(1, @"布局模板介绍");
+    _SETButton(2, @"模仿业务场景布局");
     _SETButton(3, @"测试3");
     _SETButton(4, @"测试4");
     _SETButton(5, @"测试5");
@@ -36,22 +30,16 @@
 #pragma mark - EUILayouterDataSource
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TColumn(self.view1,
-                   self.view2,
-                   self.view3,
-                   self.view4,
-                   self.view5,
-                   self.view6).t_margin(20,0,0,0);
+    return TRow(self.view1,
+                self.view2,
+                self.view3,
+                self.view4,
+                self.view5,
+                self.view6
+                ).t_padding(20, 10, 0, 10);
 }
 
-#pragma mark -
-
-- (UIButton *)creatButton {
-    UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [one setBackgroundColor:DCRandomColor];
-    [one addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
-    return one;
-}
+#pragma mark - Action
 
 - (void)action:(UIButton *)button {
     NSInteger tag = button.tag;
@@ -60,7 +48,7 @@
         return;
     }
     UIViewController *one = [NSClassFromString(clsName) new];
-    [self presentViewController:one animated:YES completion:NULL];\
+    [self presentViewController:one animated:YES completion:NULL];
 }
 
 @end

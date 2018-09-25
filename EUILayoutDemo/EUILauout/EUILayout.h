@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, EUILayoutSizeType) {
 
 #pragma mark -
 
-///< Just subclass of UIView and DCUILayoutNode
+///< 只支持 UIView 、EUILayout 、EUITemplet 、NSArray
 typedef id EUIObject;
 
 #pragma mark -
@@ -48,6 +48,7 @@ typedef id EUIObject;
 ///< DCUILayoutSizeTypeDefault
 @property (nonatomic, assign) EUILayoutSizeType sizeType;
 
+///< 走你
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
 
 #pragma mark -
@@ -60,8 +61,8 @@ typedef id EUIObject;
 
 @interface EUILayout (Helper)
 
-+ (EUILayout *)findNode:(EUIObject)object;
-+ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <id> *)items;
++ (EUILayout * __nullable)findNode:(EUIObject)object;
++ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <EUIObject> *)items;
 
 @end
 

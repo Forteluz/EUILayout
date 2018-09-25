@@ -26,6 +26,11 @@
 		D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */; };
 		D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BA215A17B3007D9CFF /* TestViewController1.m */; };
 		D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BD215A1843007D9CFF /* BaseTestViewController.m */; };
+		D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C21215A1D47002ACBAF /* TestFactory.m */; };
+		D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C27215A240E002ACBAF /* TestListViewController.m */; };
+		D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */; };
+		D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */; };
+		D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +93,17 @@
 		D5D852BA215A17B3007D9CFF /* TestViewController1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController1.m; sourceTree = "<group>"; };
 		D5D852BC215A1843007D9CFF /* BaseTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTestViewController.h; sourceTree = "<group>"; };
 		D5D852BD215A1843007D9CFF /* BaseTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTestViewController.m; sourceTree = "<group>"; };
+		D5DE6C20215A1D47002ACBAF /* TestFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestFactory.h; sourceTree = "<group>"; };
+		D5DE6C21215A1D47002ACBAF /* TestFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestFactory.m; sourceTree = "<group>"; };
+		D5DE6C26215A240E002ACBAF /* TestListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestListViewController.h; sourceTree = "<group>"; };
+		D5DE6C27215A240E002ACBAF /* TestListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestListViewController.m; sourceTree = "<group>"; };
+		D5DE6C2A215A243F002ACBAF /* TestOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestOrderViewController.h; sourceTree = "<group>"; };
+		D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestOrderViewController.m; sourceTree = "<group>"; };
+		D5DE6C30215A2A6B002ACBAF /* EUILayoutKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutKit.h; sourceTree = "<group>"; };
+		D5DE6C32215A2E0E002ACBAF /* TestTEasyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTEasyViewController.h; sourceTree = "<group>"; };
+		D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTEasyViewController.m; sourceTree = "<group>"; };
+		D5DE6C36215A385D002ACBAF /* TestTRowViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTRowViewController.h; sourceTree = "<group>"; };
+		D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTRowViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +187,8 @@
 				D57CFCC4215A08DA002D137F /* AppDelegate.m */,
 				D57CFCC6215A08DA002D137F /* ViewController.h */,
 				D57CFCC7215A08DA002D137F /* ViewController.m */,
+				D5DE6C20215A1D47002ACBAF /* TestFactory.h */,
+				D5DE6C21215A1D47002ACBAF /* TestFactory.m */,
 				D5D852B8215A12B5007D9CFF /* TestCase */,
 				D57CFCC9215A08DA002D137F /* Main.storyboard */,
 				D57CFCCC215A08DB002D137F /* Assets.xcassets */,
@@ -202,6 +220,7 @@
 		D5D852A1215A0A1B007D9CFF /* EUILauout */ = {
 			isa = PBXGroup;
 			children = (
+				D5DE6C30215A2A6B002ACBAF /* EUILayoutKit.h */,
 				D5D852B4215A0B2B007D9CFF /* Category */,
 				D5D852B2215A0AD8007D9CFF /* Utility */,
 				D5D852A2215A0A4F007D9CFF /* EUILayouter.h */,
@@ -218,10 +237,10 @@
 			children = (
 				D5D852A9215A0AAA007D9CFF /* EUITemplet.h */,
 				D5D852AA215A0AAA007D9CFF /* EUITemplet.m */,
-				D5D852AC215A0ABE007D9CFF /* EUIColumnTemplet.h */,
-				D5D852AD215A0ABE007D9CFF /* EUIColumnTemplet.m */,
 				D5D852AF215A0ACF007D9CFF /* EUIRowTemplet.h */,
 				D5D852B0215A0ACF007D9CFF /* EUIRowTemplet.m */,
+				D5D852AC215A0ABE007D9CFF /* EUIColumnTemplet.h */,
+				D5D852AD215A0ABE007D9CFF /* EUIColumnTemplet.m */,
 			);
 			path = Templet;
 			sourceTree = "<group>";
@@ -248,10 +267,66 @@
 			children = (
 				D5D852BC215A1843007D9CFF /* BaseTestViewController.h */,
 				D5D852BD215A1843007D9CFF /* BaseTestViewController.m */,
-				D5D852B9215A17B3007D9CFF /* TestViewController1.h */,
-				D5D852BA215A17B3007D9CFF /* TestViewController1.m */,
+				D5DE6C23215A2217002ACBAF /* 简单布局测试 */,
+				D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */,
 			);
 			path = TestCase;
+			sourceTree = "<group>";
+		};
+		D5DE6C23215A2217002ACBAF /* 简单布局测试 */ = {
+			isa = PBXGroup;
+			children = (
+				D5D852B9215A17B3007D9CFF /* TestViewController1.h */,
+				D5D852BA215A17B3007D9CFF /* TestViewController1.m */,
+				D5DE6C31215A2DD6002ACBAF /* TEasy 模板 */,
+				D5DE6C35215A383C002ACBAF /* TRow 模板 */,
+			);
+			path = "简单布局测试";
+			sourceTree = "<group>";
+		};
+		D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */ = {
+			isa = PBXGroup;
+			children = (
+				D5DE6C29215A242D002ACBAF /* 发单页 */,
+				D5DE6C25215A23F0002ACBAF /* 列表页 */,
+			);
+			path = "模仿业务场景";
+			sourceTree = "<group>";
+		};
+		D5DE6C25215A23F0002ACBAF /* 列表页 */ = {
+			isa = PBXGroup;
+			children = (
+				D5DE6C26215A240E002ACBAF /* TestListViewController.h */,
+				D5DE6C27215A240E002ACBAF /* TestListViewController.m */,
+			);
+			path = "列表页";
+			sourceTree = "<group>";
+		};
+		D5DE6C29215A242D002ACBAF /* 发单页 */ = {
+			isa = PBXGroup;
+			children = (
+				D5DE6C2A215A243F002ACBAF /* TestOrderViewController.h */,
+				D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */,
+			);
+			path = "发单页";
+			sourceTree = "<group>";
+		};
+		D5DE6C31215A2DD6002ACBAF /* TEasy 模板 */ = {
+			isa = PBXGroup;
+			children = (
+				D5DE6C32215A2E0E002ACBAF /* TestTEasyViewController.h */,
+				D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */,
+			);
+			path = "TEasy 模板";
+			sourceTree = "<group>";
+		};
+		D5DE6C35215A383C002ACBAF /* TRow 模板 */ = {
+			isa = PBXGroup;
+			children = (
+				D5DE6C36215A385D002ACBAF /* TestTRowViewController.h */,
+				D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */,
+			);
+			path = "TRow 模板";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -549,12 +624,17 @@
 				D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */,
 				D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */,
 				D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */,
+				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D57CFCD3215A08DB002D137F /* main.m in Sources */,
+				D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */,
+				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
+				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
+				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
 				D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

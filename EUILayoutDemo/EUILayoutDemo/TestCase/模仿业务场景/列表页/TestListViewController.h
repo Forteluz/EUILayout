@@ -1,13 +1,13 @@
 //
-//  ViewController1.h
+//  TestListViewController.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "BaseTestViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface TestViewController1 : BaseTestViewController
+@interface TestListViewController : UIViewController
 
 @end

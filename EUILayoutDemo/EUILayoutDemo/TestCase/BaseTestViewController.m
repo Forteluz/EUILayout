@@ -10,7 +10,6 @@
 #import "EUILayoutMetamacros.h"
 
 @interface BaseTestViewController ()
-@property (nonatomic, strong) UIButton *backBtn;
 @end
 
 @implementation BaseTestViewController
@@ -18,13 +17,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    _SETButton(1, @"视图1");
+    _SETButton(2, @"视图2");
+    _SETButton(3, @"视图3");
+    _SETButton(4, @"视图4");
+    _SETButton(5, @"视图5");
+    _SETButton(6, @"视图6");
+    
     [self.view setBackgroundColor:UIColor.whiteColor];
     [self.view addSubview:({
-        UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *one = [TestFactory creatButton:@"返回" tag:1];
         [one addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-        [one setTitle:@"返回" forState: UIControlStateNormal];
-        [one setFrame:CGRectMake(10, 20, 100, 100)];
-        [one setBackgroundColor:DCRandomColor];
+        [one setFrame:(CGRect){10, 20, 100, 100}];
+        [one.eui_layout setSizeType:EUILayoutSizeTypeAuto];
         self.backBtn = one;
         self.backBtn;
     })];
@@ -33,6 +38,5 @@
 - (void)backAction {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-
 
 @end

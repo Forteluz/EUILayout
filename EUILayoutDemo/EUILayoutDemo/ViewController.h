@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+EUILayout.h"
+#import "EUILayoutKit.h"
 
 @interface ViewController : UIViewController
 @property (nonatomic, strong) UIButton *view1;

@@ -45,7 +45,7 @@
 
 @implementation EUILayout (Helper)
 
-+ (EUILayout *)findNode:(EUIObject)object {
++ (EUILayout * __nullable)findNode:(EUIObject)object {
     if (!object) return nil;
     EUILayout *one = nil;
     if ([object isKindOfClass:UIView.class]) {
