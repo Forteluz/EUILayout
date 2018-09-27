@@ -36,7 +36,7 @@
                 self.view4,
                 self.view5,
                 self.view6
-                ).t_padding(20, 10, 0, 10);
+                ).e_padding(30, 10, 0, 10);
 }
 
 #pragma mark - Action

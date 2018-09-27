@@ -18,6 +18,7 @@
 		D57CFCD3215A08DB002D137F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCD2215A08DB002D137F /* main.m */; };
 		D57CFCDD215A08DB002D137F /* EUILayoutDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCDC215A08DB002D137F /* EUILayoutDemoTests.m */; };
 		D57CFCE8215A08DB002D137F /* EUILayoutDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */; };
+		D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */; };
 		D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A3215A0A4F007D9CFF /* EUILayouter.m */; };
 		D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A7215A0A92007D9CFF /* EUILayout.m */; };
 		D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852AA215A0AAA007D9CFF /* EUITemplet.m */; };
@@ -76,6 +77,8 @@
 		D57CFCE3215A08DB002D137F /* EUILayoutDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EUILayoutDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutDemoUITests.m; sourceTree = "<group>"; };
 		D57CFCE9215A08DB002D137F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5A8D61E215CBF0200EE881E /* EUIBaseTemplet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIBaseTemplet.h; sourceTree = "<group>"; };
+		D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIBaseTemplet.m; sourceTree = "<group>"; };
 		D5D852A2215A0A4F007D9CFF /* EUILayouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayouter.h; sourceTree = "<group>"; };
 		D5D852A3215A0A4F007D9CFF /* EUILayouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayouter.m; sourceTree = "<group>"; };
 		D5D852A6215A0A92007D9CFF /* EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayout.h; sourceTree = "<group>"; };
@@ -237,6 +240,8 @@
 			children = (
 				D5D852A9215A0AAA007D9CFF /* EUITemplet.h */,
 				D5D852AA215A0AAA007D9CFF /* EUITemplet.m */,
+				D5A8D61E215CBF0200EE881E /* EUIBaseTemplet.h */,
+				D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */,
 				D5D852AF215A0ACF007D9CFF /* EUIRowTemplet.h */,
 				D5D852B0215A0ACF007D9CFF /* EUIRowTemplet.m */,
 				D5D852AC215A0ABE007D9CFF /* EUIColumnTemplet.h */,
@@ -633,6 +638,7 @@
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
+				D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
 				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
 				D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */,

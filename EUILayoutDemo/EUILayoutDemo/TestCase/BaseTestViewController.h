@@ -10,7 +10,7 @@
 #import "EUILayoutKit.h"
 #import "TestFactory.h"
 
-@interface BaseTestViewController : UIViewController
+@interface BaseTestViewController : UIViewController <EUILayouterDataSource>
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UIButton *view1;
 @property (nonatomic, strong) UIButton *view2;
@@ -18,5 +18,10 @@
 @property (nonatomic, strong) UIButton *view4;
 @property (nonatomic, strong) UIButton *view5;
 @property (nonatomic, strong) UIButton *view6;
+@property (nonatomic, strong) UIButton *view7;
+@property (nonatomic, strong) UIButton *view8;
+@property (nonatomic, strong) UIButton *view9;
+
 - (void)action:(UIButton *)button;
+
 @end

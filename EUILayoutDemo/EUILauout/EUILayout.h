@@ -19,7 +19,23 @@ typedef NS_ENUM(NSInteger, EUILayoutSizeType) {
     
     ///< 如果显示使用了基于模板的布局，则会忽略掉 Node 节点和 view 的尺寸进行布局。
     EUILayoutSizeTypeTempletBased,
+    
+    EUILayoutSizeToFit,
+    EUILayoutSizeToFill
 };
+
+typedef NS_ENUM(NSInteger, EUILayoutAlign) {
+    EUILayoutAlignStart,
+    EUILayoutAlignCenter,
+    EUILayoutAlignEnd
+};
+
+#pragma mark -
+
+UIKIT_STATIC_INLINE UIEdgeInsets EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
+    UIEdgeInsets insets = {top, left, bottom, right};
+    return insets;
+}
 
 #pragma mark -
 
@@ -30,6 +46,9 @@ typedef id EUIObject;
 
 @interface EUILayout : NSObject
 
+///<
+@property (nonatomic, weak) EUILayout *superLayout;
+
 ///< Node 的 view 视图，通常该属性不需要显式处理
 @property (nonatomic, weak) UIView *view;
 
@@ -39,6 +58,9 @@ typedef id EUIObject;
 ///< 绝对坐标
 @property (nonatomic, assign) CGPoint origin;
 
+///< origin + size
+@property (nonatomic, assign) CGRect frame;
+
 ///< 外边距(只作用于布局 Node)
 @property (nonatomic, assign) UIEdgeInsets margin;
 
@@ -47,6 +69,9 @@ typedef id EUIObject;
 
 ///< DCUILayoutSizeTypeDefault
 @property (nonatomic, assign) EUILayoutSizeType sizeType;
+
+@property (nonatomic, assign) EUILayoutAlign vAlign; ///< 垂直
+@property (nonatomic, assign) EUILayoutAlign hAlign; ///< 水平
 
 ///< 走你
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
@@ -71,6 +96,6 @@ typedef id EUIObject;
 - (__kindof EUILayout * (^)(CGFloat))t_height;
 - (__kindof EUILayout * (^)(CGFloat))t_width;
 - (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_margin;
-- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_padding;
+- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))e_padding;
 @end
 

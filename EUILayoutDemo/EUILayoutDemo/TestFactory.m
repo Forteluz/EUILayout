@@ -17,12 +17,14 @@
     UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [one setBackgroundColor:DCRandomColor];
     [one setTitle:title forState:UIControlStateNormal];
+    [one setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [one setTag:tag];
-    [one.eui_layout setMargin:UIEdgeInsetsMake(0, 0, 10, 0)];
     [one.layer setShadowColor:[UIColor colorWithWhite:0.1 alpha:0.08].CGColor];
     [one.layer setShadowOffset:CGSizeMake(4, 4)];
     [one.layer setShadowRadius:8];
-    [one setClipsToBounds:NO];
+    [one setClipsToBounds:YES];
+    [one.titleLabel setFont:[UIFont systemFontOfSize:16.]];
+    [one.eui_layout setMargin:EUIEdgeMake(0, 0, 10, 0)];
     return one;
 }
 

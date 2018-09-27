@@ -47,7 +47,7 @@
     return TRow(self.backBtn,
                 self.view1,
                 self.view2,
-                ).t_margin(20,0,0,0);
+                ).t_margin(30,0,0,0);
 }
 
 @end

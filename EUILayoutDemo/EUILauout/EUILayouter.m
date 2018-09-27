@@ -10,6 +10,7 @@
 
 @interface EUILayouter()
 @property (nonatomic, strong, readwrite) UIView *view;
+@property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
 @end
 
 @implementation EUILayouter
@@ -38,7 +39,13 @@
 
 - (void)updateTemplet:(EUITemplet *)templet {
     [templet updateInView:self.rootContainer];
+    [templet setIsHolder:YES];
     [templet layoutTemplet];
+    [self setRootTemplet:templet];
+}
+
+- (EUITemplet *)bulidTemplet:(EUITemplet *)templet {
+    return nil;
 }
 
 #pragma mark - Root Container

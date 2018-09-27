@@ -28,15 +28,25 @@
     [self.view addSubview:({
         UIButton *one = [TestFactory creatButton:@"返回" tag:1];
         [one addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-        [one setFrame:(CGRect){10, 20, 100, 100}];
+        [one setBounds:(CGRect){0, 0, 100, 40}];
         [one.eui_layout setSizeType:EUILayoutSizeTypeAuto];
         self.backBtn = one;
         self.backBtn;
     })];
+    
+    [self.view eui_creatLayouterByDelegate:self];
+    [self.view.eui_layouter update];
 }
 
 - (void)backAction {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+- (void)action:(UIButton *)button {}
+
+- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+    return TRow(self.backBtn).t_margin(30,0,0,0);
+}
+
 
 @end

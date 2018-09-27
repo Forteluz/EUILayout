@@ -13,7 +13,11 @@
 if (!self.view##_N_) { \
      self.view##_N_ = [TestFactory creatButton:_TITLE_ tag:_N_]; \
 } \
+[self.view##_N_ setTitle:_TITLE_ forState:UIControlStateNormal];\
 [self.view##_N_ addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
+
+#define _DEFButton(_NAME_) \
+    @property (nonatomic, strong) UIButton *_NAME_;
 
 @interface TestFactory : NSObject
 

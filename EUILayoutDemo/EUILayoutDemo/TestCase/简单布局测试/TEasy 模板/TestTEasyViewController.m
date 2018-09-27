@@ -29,9 +29,11 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    self.view1.eui_layout.padding = UIEdgeInsetsMake(10, 10, 10, 10);
-    return TEasy(self.backBtn,
-                 self.view1);
+    self.backBtn.eui_layout.origin = CGPointMake(10, 40);
+    self.view1.eui_layout.origin = CGPointMake(10, 40);
+    self.view1.eui_layout.padding = EUIEdgeMake(10, 10, 10, 10);
+    
+    return TBase(self.backBtn, self.view1);
 }
 
 @end

@@ -63,6 +63,21 @@
      }];
 }
 
+- (void)insertNode:(EUIObject)item {
+    if (!item) {
+        return;
+    }
+    EUILayout *node = [EUILayout findNode:item];
+    if (!node) {
+        return;
+    }
+    NSMutableArray *one = _nodes.mutableCopy;
+//    [one insertObject:node atIndex:0];
+    [one addObject:node];
+    _nodes = one.copy;
+    [self layoutTemplet];
+}
+
 - (void)reset {
     [self cleanTempletIfNeeded];
 }
@@ -79,16 +94,17 @@
     for (EUILayout *node in nodes) {
         UIView *nodeView = node.view;
         BOOL isTempletNode = [node isKindOfClass:EUITemplet.class];
-        if ( isTempletNode ) {
+        if ( isTempletNode && [(EUITemplet *)node isHolder] ) {
             if (!nodeView) {
-                nodeView = [EUITempletView imitateByView:nil];
+                 nodeView = [EUITempletView imitateByView:nil];
                 [(EUITemplet *)node updateInView:nodeView];
             }
         }
         if (!nodeView) {
             continue;
         }
-        
+
+        [node setSuperLayout:self];
         [self layoutNode:node];
         
         if (isTempletNode) {
@@ -130,26 +146,7 @@
 }
 
 - (void)layoutNode:(EUILayout *)node {
-    CGRect r = {0};
-    if (!CGPointEqualToPoint(CGPointZero, node.origin)) {
-        r.origin = node.origin;
-    } else {
-        r.origin = (CGPoint) { node.padding.left, node.padding.top };
-    }
-    if (!CGSizeEqualToSize(CGSizeZero, node.size)) {
-        r.size = node.size;
-    } else {
-        if (node.padding.top > 0 &&
-            node.padding.left > 0 &&
-            node.padding.right > 0 &&
-            node.padding.bottom > 0)
-        {
-            
-        } else {
-            r.size = [node.view bounds].size;
-        }
-    }
-    [node.view setFrame:r];
+    ///< 子类自己实现去
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {

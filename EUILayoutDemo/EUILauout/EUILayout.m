@@ -25,6 +25,9 @@
     self = [super init];
     if (self) {
         _sizeType = EUILayoutSizeTypeAuto;
+        _size = CGSizeMake(NSNotFound, NSNotFound);
+        _origin = CGPointMake(NSNotFound, NSNotFound);
+        _margin = EUIEdgeMake(NSNotFound, NSNotFound, NSNotFound, NSNotFound);
     }
     return self;
 }
@@ -37,6 +40,23 @@
         return [self.view sizeThatFits:size];
     }
     return CGSizeZero;
+}
+
+#pragma mark -
+
+- (void)setFrame:(CGRect)frame {
+    self.origin = frame.origin;
+    self.size = frame.size;
+}
+
+- (CGRect)frame {
+    if (CGSizeEqualToSize(self.size, CGSizeZero) && CGPointEqualToPoint(self.origin, CGPointZero))
+    {
+        return CGRectZero;
+    }
+    return (CGRect) {
+        .origin = self.origin, .size = self.size
+    };
 }
 
 #pragma mark - NSCopying
@@ -100,7 +120,7 @@
     };
 }
 
-- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_padding {
+- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))e_padding {
     return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
         UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
         self.padding = insets;

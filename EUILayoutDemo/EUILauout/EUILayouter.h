@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong, readonly) UIView *view;
 @property (nonatomic, weak) id <EUILayouterDataSource> dataSource;
+@property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 
 #pragma mark -
 
@@ -41,5 +42,10 @@
  *  @brief 更新为一个指定的模板
  */
 - (void)updateTemplet:(EUITemplet *)templet;
+
+/*!
+ *  @brief 创建一个模板
+ */
+- (EUITemplet *)bulidTemplet:(EUITemplet *)templet;
 
 @end
