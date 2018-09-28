@@ -27,7 +27,8 @@
     self = [super init];
     if (self) {
         _nodes = [EUILayout nodesFromItems:items];
-        self.sizeType = EUILayoutSizeTypeTempletBased;
+        self.isHolder = YES;
+        self.sizeType = EUILayoutSizeToFill;
     }
     return self;
 }
@@ -108,7 +109,7 @@
         [self layoutNode:node];
         
         if (isTempletNode) {
-            if (EUILayoutSizeTypeAuto == node.sizeType) {
+            if (EUILayoutSizeToFit == node.sizeType) {
                 [(EUITemplet *)node layoutTemplet];
             } else {
                 if (!templets) {
@@ -139,9 +140,6 @@
                        for (EUITemplet *one in templets) {
                            [one layoutTemplet];
                        }
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                           [templets count];
-                       });
                    });
 }
 
@@ -157,10 +155,16 @@
 @end
 
 @implementation EUITempletView
+
 + (EUITempletView *)imitateByView:(UIView *)view {
     CGRect r = view ? view.bounds : CGRectZero;
     EUITempletView *one = [[EUITempletView alloc] initWithFrame:r];
-    one.backgroundColor = UIColor.grayColor;
+    one.backgroundColor = DCRandomColor;
     return one;
 }
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+}
+
 @end

@@ -29,7 +29,7 @@
         UIButton *one = [TestFactory creatButton:@"返回" tag:1];
         [one addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
         [one setBounds:(CGRect){0, 0, 100, 40}];
-        [one.eui_layout setSizeType:EUILayoutSizeTypeAuto];
+        [one.eui_layout setSizeType:EUILayoutSizeToFit];
         self.backBtn = one;
         self.backBtn;
     })];

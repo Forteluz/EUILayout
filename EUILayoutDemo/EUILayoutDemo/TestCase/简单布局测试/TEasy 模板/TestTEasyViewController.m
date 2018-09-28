@@ -7,6 +7,7 @@
 //
 
 #import "TestTEasyViewController.h"
+#import "TestTEasyViewController+View1.h"
 
 @interface TestTEasyViewController () <EUILayouterDataSource>
 
@@ -29,11 +30,24 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    self.backBtn.eui_layout.origin = CGPointMake(10, 40);
-    self.view1.eui_layout.origin = CGPointMake(10, 40);
-    self.view1.eui_layout.padding = EUIEdgeMake(10, 10, 10, 10);
+    self.backBtn.eui_layout.margin = EUIEdgeMake(10, 30, 0, 0);
+    self.backBtn.eui_layout.sizeType = EUILayoutSizeToFit;
     
-    return TBase(self.backBtn, self.view1);
+//    self.view1.eui_layout.margin = EUIEdgeMake(10, 10, 10, 10);
+    
+    return TBase(self.backBtn);
 }
+
+- (void)action:(UIButton *)button {
+    switch (button.tag) {
+        case 1: [self setupView1]; break;
+    }
+    [self.view.eui_layouter update];
+}
+
+- (EUITemplet *)absoultBaseTemplet {
+    return TBase(self.view1);
+}
+
 
 @end

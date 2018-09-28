@@ -20,9 +20,6 @@
 
 @interface EUITemplet : EUILayout
 
-///< 作为容器时是否创建模板容器视图，默认YES
-@property (nonatomic, assign) BOOL isHolder;
-
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUILayout *> *nodes;
 

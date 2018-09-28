@@ -24,10 +24,13 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _sizeType = EUILayoutSizeTypeAuto;
-        _size = CGSizeMake(NSNotFound, NSNotFound);
-        _origin = CGPointMake(NSNotFound, NSNotFound);
-        _margin = EUIEdgeMake(NSNotFound, NSNotFound, NSNotFound, NSNotFound);
+        _hAlign   = EUILayoutAlignStart;
+        _vAlign   = EUILayoutAlignStart;
+        _sizeType = EUILayoutSizeToFill;
+        _size     = CGSizeMake(NSNotFound, NSNotFound);
+        _origin   = CGPointMake(NSNotFound, NSNotFound);
+        _margin   = UIEdgeInsetsZero;
+        _padding  = UIEdgeInsetsZero;
     }
     return self;
 }
@@ -93,6 +96,10 @@
         }
     }
     return one;
+}
+
+- (NSArray *)priorityList {
+    return @[];
 }
 
 @end

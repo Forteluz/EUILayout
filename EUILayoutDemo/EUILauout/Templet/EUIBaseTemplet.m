@@ -8,6 +8,8 @@
 
 #import "EUIBaseTemplet.h"
 
+#pragma mark -
+
 UIKIT_STATIC_INLINE CGFloat EUIValue(CGFloat one) {
     return (one == NSNotFound) ? 0 : one;
 }
@@ -17,162 +19,201 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
 }
 
 typedef enum : unsigned short {
-    _PStepX = 1 << 1, ///< has Parsed origin.x
-    _PStepY = 1 << 2, ///< has Parsed origin.y
-    _PStepW = 1 << 3, ///< has Parsed size.width
-    _PStepH = 1 << 4  ///< has Parsed size.height
-} _PStep;
+    EPStepX = 1 << 0, ///< 00000010 has Parsed origin.x
+    EPStepY = 1 << 1, ///< ... has Parsed origin.y
+    EPStepW = 1 << 2, ///< ... has Parsed size.width
+    EPStepH = 1 << 3  ///< ... has Parsed size.height
+} EPStep;
 
 @implementation EUIBaseTemplet
 
 - (void)layoutNode:(EUILayout *)node {
-    CGRect frame = CGRectZero;
-    _PStep step = 0;
+    CGRect frame = {0};
+    EPStep step  = 0;
 
-    BOOL (^isFinished)(_PStep) = ^(_PStep one){
-        if ((one & _PStepX) &&
-            (one & _PStepY) &&
-            (one & _PStepW) &&
-            (one & _PStepH) )
-        {
-            return YES;
-        }
-        return NO;
-    };
-    
     [self parseNode:node frame:&frame curStep:&step];
 
-    if (!isFinished(step)) {
-//        NSCParameterAssert(@"parse error!!!!");
-        NSLog(@"parse error!!!!");
+    if ((step != 0x00F)) {
+        assert("Parse error!!!" == NULL);
     }
-    
-    [node setFrame:frame];
     if ( node.view ) {
         [node.view setFrame:frame];
     }
 }
 
-- (void)parseNode:(EUILayout *)layout frame:(CGRect *)frame curStep:(_PStep *)step {
-    [self parsePostion:layout frame:frame step:step];
+- (void)parseNode:(EUILayout *)layout frame:(CGRect *)frame curStep:(EPStep *)step {
+    [self parsePostionWithNode:layout fromNode:self frame:frame step:step];
     [self parseSize:layout frame:frame step:step];
 
-    if (!(*step & _PStepX) || !(*step & _PStepY)) {
+    if (!(*step & EPStepX) || !(*step & EPStepY)) {
         [self parseNode:layout frame:frame curStep:step];
     }
-    if (!(*step & _PStepW) || !(*step & _PStepH)) {
-        [self parseSize:layout frame:frame step:step];
+    if (!(*step & EPStepW) || !(*step & EPStepH)) {
+        [self parseNode:layout frame:frame curStep:step];
     }
 }
 
 #pragma mark - Parse Postion left & right
 
-- (void)parsePostion:(EUILayout *)layout frame:(CGRect *)frame step:(_PStep *)step {
-    if ((*step & _PStepX)) {
+- (void)parsePostionWithNode:(EUILayout *)layout
+                    fromNode:(EUILayout *)fromNode
+                       frame:(CGRect *)frame
+                        step:(EPStep *)step
+{
+    if ((*step & EPStepX)) {
         goto StepY;
     }
     
+    CGFloat sw = NODE_VALID_WIDTH(fromNode);
+    CGFloat lw = layout.size.width;
+    
     if (EUIValid(layout.origin.x)) {
-        if (self.isHolder) {
+        if (fromNode.isHolder) {
             frame->origin.x = layout.origin.x;
         } else {
-            frame->origin.x = layout.origin.x + CGRectGetMinX(self.frame);
+            frame->origin.x = layout.origin.x + CGRectGetMinX(fromNode.frame);
         }
-        *step |= _PStepX;
+        *step |= EPStepX;
         
-        if (!(*step & _PStepY)) {
+        if (!(*step & EPStepY)) {
             goto StepY;
         }
     }
-
-    if (EUIValid(self.origin.x) &&
-        EUILayoutAlignStart == layout.hAlign)
-    {
-        if (self.isHolder) {
-            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(self.padding.left);
+    
+    if (EUILayoutAlignStart == layout.hAlign) {
+        if (fromNode.isHolder) {
+            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left);
         } else {
-            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(self.padding.left) + CGRectGetMinX(self.frame);
+            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left) + CGRectGetMinX(fromNode.frame);
         }
-        *step |= _PStepX;
+        *step |= EPStepX;
     }
     else if (EUILayoutAlignEnd == layout.hAlign &&
-             EUIValid(layout.size.width) &&
-             EUIValid(self.size.width))
+             EUIValid(lw) && EUIValid(sw))
     {
-        if (self.isHolder) {
-            frame->origin.x = CGRectGetWidth(self.frame) - EUIValue(self.padding.right) - layout.size.width - EUIValue(layout.margin.right);
+        if (fromNode.isHolder) {
+            frame->origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
         } else {
-            frame->origin.x = CGRectGetMaxX(self.frame) - EUIValue(self.padding.right) - layout.size.width - EUIValue(layout.margin.right);
+            frame->origin.x = CGRectGetMaxX(fromNode.frame) - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
         }
-        *step |= _PStepX;
+        *step |= EPStepX;
     }
-    else /*EUILayoutAlignCenter*/ {
-        if (EUIValid(self.size.width) && EUIValid(layout.size.width)) {
-            if (self.isHolder) {
-                frame->origin.x = (self.size.width - layout.size.width) * 0.5;
+    else {
+        if (EUIValid(sw) && EUIValid(lw))
+        {
+            if (fromNode.isHolder) {
+                frame->origin.x = ((NSInteger)(sw - lw) >> 1);
             } else {
-                frame->origin.x = (self.size.width  - layout.size.width) * 0.5 + self.origin.x;
+                frame->origin.x = ((NSInteger)(sw - lw) >> 1) + fromNode.origin.x;
             }
-            *step |= _PStepX;
+            *step |= EPStepX;
         }
     }
     
 StepY:
-    if ((*step & _PStepY)) {
+    if ((*step & EPStepY)) {
         return;
     }
+    
+    CGFloat sh = NODE_VALID_HEIGHT(fromNode);
+    CGFloat lh = layout.size.height;
     
     if (EUIValid(layout.origin.y)) {
         frame -> origin.y = layout.origin.y;
-        *step |= _PStepY;
+        *step |= EPStepY;
         return;
     }
     
-    if (EUILayoutAlignStart == self.vAlign) {
-        if (self.isHolder) {
-            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(self.padding.top);
+    if (EUILayoutAlignStart == layout.vAlign) {
+        if (fromNode.isHolder) {
+            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top);
         } else {
-            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(self.padding.top) + CGRectGetMinY(self.frame);
+            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top) + CGRectGetMinY(fromNode.frame);
         }
-        *step |= _PStepY;
+        *step |= EPStepY;
     }
     else if (EUILayoutAlignEnd == layout.vAlign &&
-             EUIValid(layout.size.height) &&
-             EUIValid(self.size.height))
+             EUIValid(lh) && EUIValid(sh))
     {
-        if (self.isHolder) {
-            frame->origin.y = self.size.height - EUIValue(self.padding.bottom) - layout.size.height - EUIValue(layout.margin.bottom);
+        if (fromNode.isHolder) {
+            frame->origin.y = sh - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
         } else {
-            frame->origin.y = CGRectGetMaxY(self.frame) - EUIValue(self.padding.bottom) - layout.size.height - EUIValue(layout.margin.bottom);
+            frame->origin.y = CGRectGetMaxY(fromNode.frame) - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
         }
-        *step |= _PStepY;
+        *step |= EPStepY;
     }
-    else /*EUILayoutAlignCenter*/ {
-        if (EUIValid(self.size.height) && EUIValid(layout.size.height)) {
-            if (self.isHolder) {
-                frame->origin.y = (self.size.height - layout.size.height) * 0.5;
+    else {
+        if (EUIValid(sh) && EUIValid(lh)) {
+            if (fromNode.isHolder) {
+                frame->origin.y = ((NSInteger)(sh - lh) >> 1);
             } else {
-                frame->origin.y = (self.size.height  - layout.size.height) * 0.5 + self.origin.y;
+                frame->origin.y = ((NSInteger)(sh - lh) >> 1) + fromNode.origin.y;
             }
-            *step |= _PStepY;
+            *step |= EPStepY;
         }
     }
 }
 
 #pragma mark - Parse Postion top & bottom
 
-- (void)parseSize:(EUILayout *)layut frame:(CGRect *)frame step:(_PStep *)step {
-    if (self.size.width != NSNotFound) {
-        frame -> size.width = self.size.width;
-        *step = _PStepW;
+- (void)parseSize:(EUILayout *)layout frame:(CGRect *)frame step:(EPStep *)step {
+    CGSize fitSize = {0};
+    if ((*step & EPStepW)) {
+        goto StepH;
     }
-    if (!(*step & _PStepW)) {
-        
+    
+    if (EUIValid(layout.size.width)) {
+        frame -> size.width = layout.size.width;
+        *step |= EPStepW;
+        goto StepH;
     }
-    if (self.size.height != NSNotFound) {
-        frame -> size.height = self.size.height;
-        *step = _PStepH;
+    
+    if (EUILayoutSizeToFit == layout.sizeType) {
+        CGFloat h = MAXFLOAT;
+        if (frame->size.height) {
+            h = frame->size.height;
+        } else if (EUIValid(layout.size.height)) {
+            h = layout.size.height;
+        }
+        fitSize = [layout sizeThatFits:(CGSize){MAXFLOAT, h}];
+    } else if (EUILayoutSizeToFill == layout.sizeType) {
+        CGFloat l = layout.margin.left;
+        CGFloat r = layout.margin.right;
+        frame -> size.width = NODE_VALID_WIDTH(self) - l - r;
+    } else {
+        assert("Opps!!!" == NULL);
     }
+    
+    *step |= EPStepW;
+    
+StepH:
+    if ((*step & EPStepH)) {
+        return;
+    }
+    
+    if (EUIValid(layout.size.height)) {
+        frame -> size.height = layout.size.height;
+        *step |= EPStepH;
+        return;
+    }
+
+    if (EUILayoutSizeToFit == layout.sizeType) {
+        CGFloat w = MAXFLOAT;
+        if (frame->size.width) {
+            w = frame->size.width;
+        } else if (EUIValid(layout.size.width)) {
+            w = layout.size.width;
+        }
+        fitSize = [layout sizeThatFits:(CGSize){w, MAXFLOAT}];
+    } else if (EUILayoutSizeToFill == layout.sizeType) {
+        CGFloat t = layout.margin.top;
+        CGFloat b = layout.margin.bottom;
+        frame -> size.height = NODE_VALID_HEIGHT(self) - t - b;
+    } else {
+        assert("Opps!!!" == NULL);
+    }
+    
+    *step |= EPStepH;
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {

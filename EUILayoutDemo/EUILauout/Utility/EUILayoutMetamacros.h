@@ -27,8 +27,8 @@
 #define NODE_VALID_WIDTH(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, width)
 #define NODE_VALID_HEIGHT(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, height)
 #define _NODE_BASED_VALUE_METHOD(_NODE_, _METHOD_)           \
-        _NODE_.size._METHOD_ > 0 ? _NODE_.size._METHOD_ :    \
-        _NODE_.view.bounds.size._METHOD_ ? _NODE_.view.bounds.size._METHOD_ : 0
+        (_NODE_.size._METHOD_ > 0 && _NODE_.size._METHOD_ != NSNotFound ? _NODE_.size._METHOD_ :    \
+        _NODE_.view.bounds.size._METHOD_ > 0 && _NODE_.view.bounds.size._METHOD_ != NSNotFound ? _NODE_.view.bounds.size._METHOD_ : 0)
 
 #pragma mark -
 

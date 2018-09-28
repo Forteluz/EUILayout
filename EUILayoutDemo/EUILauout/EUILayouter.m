@@ -38,14 +38,17 @@
 }
 
 - (void)updateTemplet:(EUITemplet *)templet {
-    [templet updateInView:self.rootContainer];
-    [templet setIsHolder:YES];
+    if ([templet isHolder]) {
+        [templet updateInView:self.rootContainer];
+    } else {
+        EUITempletView *one = [self.view viewWithTag:1001];
+        if ( one ) {
+            [one removeFromSuperview];
+            (one = nil);
+        }
+    }
     [templet layoutTemplet];
     [self setRootTemplet:templet];
-}
-
-- (EUITemplet *)bulidTemplet:(EUITemplet *)templet {
-    return nil;
 }
 
 #pragma mark - Root Container

@@ -12,21 +12,14 @@
 
 #pragma mark -
 
-typedef NS_ENUM(NSInteger, EUILayoutSizeType) {
-    ///< 模板布局时，优先使用 Node 的 size 进行布局，如果没有会自动取 View 的 size,
-    ///< 如果取不到任何有效的 size，会默认使用 EUILayoutSizeTypeTempletBased 进行排版。
-    EUILayoutSizeTypeAuto,
-    
-    ///< 如果显示使用了基于模板的布局，则会忽略掉 Node 节点和 view 的尺寸进行布局。
-    EUILayoutSizeTypeTempletBased,
-    
+typedef NS_ENUM(NSInteger, EUILayoutSizeType) {    
     EUILayoutSizeToFit,
     EUILayoutSizeToFill
 };
 
 typedef NS_ENUM(NSInteger, EUILayoutAlign) {
     EUILayoutAlignStart,
-    EUILayoutAlignCenter,
+    EUILayoutAlignCenter, ///<
     EUILayoutAlignEnd
 };
 
@@ -42,9 +35,16 @@ UIKIT_STATIC_INLINE UIEdgeInsets EUIEdgeMake(CGFloat top, CGFloat left, CGFloat 
 ///< 只支持 UIView 、EUILayout 、EUITemplet 、NSArray
 typedef id EUIObject;
 
+static const NSInteger EUINone = NSIntegerMax;
+
+///< CGSizeMake(EUINone, EUINone);
+
 #pragma mark -
 
 @interface EUILayout : NSObject
+
+///< 作为容器时是否创建模板容器视图，默认YES
+@property (nonatomic, assign) BOOL isHolder;
 
 ///<
 @property (nonatomic, weak) EUILayout *superLayout;
@@ -72,6 +72,11 @@ typedef id EUIObject;
 
 @property (nonatomic, assign) EUILayoutAlign vAlign; ///< 垂直
 @property (nonatomic, assign) EUILayoutAlign hAlign; ///< 水平
+
+//@property (nonatomic, assign) CGFloat left;
+//@property (nonatomic, assign) CGFloat right;
+//@property (nonatomic, assign) CGFloat top;
+//@property (nonatomic, assign) CGFloat bottom;
 
 ///< 走你
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
