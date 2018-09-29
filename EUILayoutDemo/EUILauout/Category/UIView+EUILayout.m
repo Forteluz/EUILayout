@@ -66,36 +66,10 @@ static const void *kDCLayoutYogaAssociatedKey = &kDCLayoutYogaAssociatedKey;
     }
 }
 
-#pragma mark - CallChaining
-
-- (__kindof UIView * (^)(CGFloat))t_height {
-    return ^UIView * (CGFloat h) {
-        self.eui_layout.t_height(h);
-        return self;
-    };
-}
-
-- (__kindof UIView * (^)(CGFloat))t_width {
-    return ^UIView * (CGFloat w) {
-        self.eui_layout.t_width(w);
-        return self;
-    };
-}
-
-- (__kindof UIView * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_padding {
-    return ^UIView * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-        self.eui_layout.padding = insets;
-        return self;
-    };
-}
-
-- (__kindof UIView * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_margin {
-    return ^UIView * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-        self.eui_layout.margin = insets;
-        return self;
-    };
+- (void)eui_configure:(EUIConfigurationBlock)block {
+    if (block) {
+        block(self.eui_layout);
+    }
 }
 
 @end

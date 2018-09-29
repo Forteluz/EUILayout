@@ -24,9 +24,8 @@
         layout.justifyContent = YGJustifyFlexStart;
         layout.flexDirection = YGFlexDirectionColumn;
         layout.position = YGPositionTypeRelative;
-        
-        YOGASetPadding(layout, self.padding);
-        YOGASetMargin(layout, self.margin);
+        YOGA_SET_MARGIN(layout, self.margin);
+        YOGA_SET_PADDING(layout, self.padding);
     };
     [self.view configureLayoutWithBlock:configBlock];
     [self.view.yoga applyLayoutPreservingOrigin:YES];
@@ -40,8 +39,8 @@
         } else {
             [self layoutTempletBased:node yoga:layout];
         }
-        YOGASetMargin(layout, node.margin);
-        YOGASetPadding(layout, node.padding);
+        YOGA_SET_MARGIN(layout, node.margin);
+        YOGA_SET_PADDING(layout, node.padding);
     };
     [node.view configureLayoutWithBlock:configBlock];
 }

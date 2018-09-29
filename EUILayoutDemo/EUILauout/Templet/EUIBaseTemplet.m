@@ -19,10 +19,10 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
 }
 
 typedef enum : unsigned short {
-    EPStepX = 1 << 0, ///< 00000010 has Parsed origin.x
-    EPStepY = 1 << 1, ///< ... has Parsed origin.y
-    EPStepW = 1 << 2, ///< ... has Parsed size.width
-    EPStepH = 1 << 3  ///< ... has Parsed size.height
+    EPStepX = 1 << 0, ///< has Parsed origin.x
+    EPStepY = 1 << 1, ///< ... origin.y
+    EPStepW = 1 << 2, ///< ... size.width
+    EPStepH = 1 << 3  ///< ... size.height
 } EPStep;
 
 @implementation EUIBaseTemplet
@@ -65,13 +65,13 @@ typedef enum : unsigned short {
     }
     
     CGFloat sw = NODE_VALID_WIDTH(fromNode);
-    CGFloat lw = layout.size.width;
+    CGFloat lw = frame -> size.width ?: layout.size.width;
     
     if (EUIValid(layout.origin.x)) {
         if (fromNode.isHolder) {
-            frame->origin.x = layout.origin.x;
+            frame -> origin.x = layout.origin.x;
         } else {
-            frame->origin.x = layout.origin.x + CGRectGetMinX(fromNode.frame);
+            frame -> origin.x = layout.origin.x + CGRectGetMinX(fromNode.frame);
         }
         *step |= EPStepX;
         
@@ -82,29 +82,28 @@ typedef enum : unsigned short {
     
     if (EUILayoutAlignStart == layout.hAlign) {
         if (fromNode.isHolder) {
-            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left);
+            frame -> origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left);
         } else {
-            frame->origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left) + CGRectGetMinX(fromNode.frame);
+            frame -> origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left) + CGRectGetMinX(fromNode.frame);
         }
         *step |= EPStepX;
     }
     else if (EUILayoutAlignEnd == layout.hAlign &&
-             EUIValid(lw) && EUIValid(sw))
-    {
+             EUIValid(lw) &&
+             EUIValid(sw)) {
         if (fromNode.isHolder) {
-            frame->origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
+            frame -> origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
         } else {
-            frame->origin.x = CGRectGetMaxX(fromNode.frame) - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
+            frame -> origin.x = CGRectGetMaxX(fromNode.frame) - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
         }
         *step |= EPStepX;
     }
     else {
-        if (EUIValid(sw) && EUIValid(lw))
-        {
+        if (EUIValid(sw) && EUIValid(lw)) {
             if (fromNode.isHolder) {
-                frame->origin.x = ((NSInteger)(sw - lw) >> 1);
+                frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
             } else {
-                frame->origin.x = ((NSInteger)(sw - lw) >> 1) + fromNode.origin.x;
+                frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + fromNode.origin.x;
             }
             *step |= EPStepX;
         }
@@ -116,7 +115,7 @@ StepY:
     }
     
     CGFloat sh = NODE_VALID_HEIGHT(fromNode);
-    CGFloat lh = layout.size.height;
+    CGFloat lh = frame -> size.height ?: layout.size.height;
     
     if (EUIValid(layout.origin.y)) {
         frame -> origin.y = layout.origin.y;
@@ -126,28 +125,29 @@ StepY:
     
     if (EUILayoutAlignStart == layout.vAlign) {
         if (fromNode.isHolder) {
-            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top);
+            frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top);
         } else {
-            frame->origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top) + CGRectGetMinY(fromNode.frame);
+            frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top) + CGRectGetMinY(fromNode.frame);
         }
         *step |= EPStepY;
     }
     else if (EUILayoutAlignEnd == layout.vAlign &&
-             EUIValid(lh) && EUIValid(sh))
+             EUIValid(lh) &&
+             EUIValid(sh))
     {
         if (fromNode.isHolder) {
-            frame->origin.y = sh - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
+            frame -> origin.y = sh - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
         } else {
-            frame->origin.y = CGRectGetMaxY(fromNode.frame) - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
+            frame -> origin.y = CGRectGetMaxY(fromNode.frame) - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
         }
         *step |= EPStepY;
     }
     else {
         if (EUIValid(sh) && EUIValid(lh)) {
             if (fromNode.isHolder) {
-                frame->origin.y = ((NSInteger)(sh - lh) >> 1);
+                frame -> origin.y = ((NSInteger)(sh - lh) >> 1);
             } else {
-                frame->origin.y = ((NSInteger)(sh - lh) >> 1) + fromNode.origin.y;
+                frame -> origin.y = ((NSInteger)(sh - lh) >> 1) + fromNode.origin.y;
             }
             *step |= EPStepY;
         }
@@ -157,7 +157,6 @@ StepY:
 #pragma mark - Parse Postion top & bottom
 
 - (void)parseSize:(EUILayout *)layout frame:(CGRect *)frame step:(EPStep *)step {
-    CGSize fitSize = {0};
     if ((*step & EPStepW)) {
         goto StepH;
     }
@@ -168,14 +167,23 @@ StepY:
         goto StepH;
     }
     
+    BOOL isMaxFits = NO;
     if (EUILayoutSizeToFit == layout.sizeType) {
         CGFloat h = MAXFLOAT;
-        if (frame->size.height) {
-            h = frame->size.height;
+        if (frame -> size.height) {
+            h = frame -> size.height;
         } else if (EUIValid(layout.size.height)) {
             h = layout.size.height;
+        } else {
+            isMaxFits = YES;
         }
-        fitSize = [layout sizeThatFits:(CGSize){MAXFLOAT, h}];
+        CGSize s = [layout sizeThatFits:(CGSize){MAXFLOAT, h}];
+        if (isMaxFits) {
+            frame -> size = s;
+            *step |= EPStepH;
+        } else {
+            frame -> size.width = s.width;
+        }
     } else if (EUILayoutSizeToFill == layout.sizeType) {
         CGFloat l = layout.margin.left;
         CGFloat r = layout.margin.right;
@@ -199,12 +207,13 @@ StepH:
 
     if (EUILayoutSizeToFit == layout.sizeType) {
         CGFloat w = MAXFLOAT;
-        if (frame->size.width) {
-            w = frame->size.width;
+        if (frame -> size.width) {
+            w = frame -> size.width;
         } else if (EUIValid(layout.size.width)) {
             w = layout.size.width;
         }
-        fitSize = [layout sizeThatFits:(CGSize){w, MAXFLOAT}];
+        CGSize s = [layout sizeThatFits:(CGSize){w, MAXFLOAT}];
+        frame -> size.height = s.height;
     } else if (EUILayoutSizeToFill == layout.sizeType) {
         CGFloat t = layout.margin.top;
         CGFloat b = layout.margin.bottom;

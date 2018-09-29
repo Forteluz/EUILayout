@@ -19,7 +19,9 @@
 		D57CFCDD215A08DB002D137F /* EUILayoutDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCDC215A08DB002D137F /* EUILayoutDemoTests.m */; };
 		D57CFCE8215A08DB002D137F /* EUILayoutDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */; };
 		D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */; };
-		D5A8D623215DD31100EE881E /* TestTEasyViewController+View1.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D622215DD31100EE881E /* TestTEasyViewController+View1.m */; };
+		D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D626215F227100EE881E /* EUILayoutPos.m */; };
+		D5A8D630215F28B200EE881E /* EUILayoutEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */; };
+		D5A8D633215F58C600EE881E /* EUILayoutValue.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D632215F58C600EE881E /* EUILayoutValue.m */; };
 		D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A3215A0A4F007D9CFF /* EUILayouter.m */; };
 		D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A7215A0A92007D9CFF /* EUILayout.m */; };
 		D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852AA215A0AAA007D9CFF /* EUITemplet.m */; };
@@ -80,8 +82,12 @@
 		D57CFCE9215A08DB002D137F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5A8D61E215CBF0200EE881E /* EUIBaseTemplet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIBaseTemplet.h; sourceTree = "<group>"; };
 		D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIBaseTemplet.m; sourceTree = "<group>"; };
-		D5A8D621215DD31100EE881E /* TestTEasyViewController+View1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestTEasyViewController+View1.h"; sourceTree = "<group>"; };
-		D5A8D622215DD31100EE881E /* TestTEasyViewController+View1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestTEasyViewController+View1.m"; sourceTree = "<group>"; };
+		D5A8D625215F227100EE881E /* EUILayoutPos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutPos.h; sourceTree = "<group>"; };
+		D5A8D626215F227100EE881E /* EUILayoutPos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutPos.m; sourceTree = "<group>"; };
+		D5A8D62E215F28B200EE881E /* EUILayoutEdge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutEdge.h; sourceTree = "<group>"; };
+		D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutEdge.m; sourceTree = "<group>"; };
+		D5A8D631215F58C600EE881E /* EUILayoutValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutValue.h; sourceTree = "<group>"; };
+		D5A8D632215F58C600EE881E /* EUILayoutValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutValue.m; sourceTree = "<group>"; };
 		D5D852A2215A0A4F007D9CFF /* EUILayouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayouter.h; sourceTree = "<group>"; };
 		D5D852A3215A0A4F007D9CFF /* EUILayouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayouter.m; sourceTree = "<group>"; };
 		D5D852A6215A0A92007D9CFF /* EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayout.h; sourceTree = "<group>"; };
@@ -223,6 +229,19 @@
 			path = EUILayoutDemoUITests;
 			sourceTree = "<group>";
 		};
+		D5A8D624215F225500EE881E /* LayoutModel */ = {
+			isa = PBXGroup;
+			children = (
+				D5A8D625215F227100EE881E /* EUILayoutPos.h */,
+				D5A8D626215F227100EE881E /* EUILayoutPos.m */,
+				D5A8D62E215F28B200EE881E /* EUILayoutEdge.h */,
+				D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */,
+				D5A8D631215F58C600EE881E /* EUILayoutValue.h */,
+				D5A8D632215F58C600EE881E /* EUILayoutValue.m */,
+			);
+			path = LayoutModel;
+			sourceTree = "<group>";
+		};
 		D5D852A1215A0A1B007D9CFF /* EUILauout */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +252,7 @@
 				D5D852A3215A0A4F007D9CFF /* EUILayouter.m */,
 				D5D852A6215A0A92007D9CFF /* EUILayout.h */,
 				D5D852A7215A0A92007D9CFF /* EUILayout.m */,
+				D5A8D624215F225500EE881E /* LayoutModel */,
 				D5D852A5215A0A65007D9CFF /* Templet */,
 			);
 			path = EUILauout;
@@ -324,8 +344,6 @@
 			children = (
 				D5DE6C32215A2E0E002ACBAF /* TestTEasyViewController.h */,
 				D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */,
-				D5A8D621215DD31100EE881E /* TestTEasyViewController+View1.h */,
-				D5A8D622215DD31100EE881E /* TestTEasyViewController+View1.m */,
 			);
 			path = "TEasy 模板";
 			sourceTree = "<group>";
@@ -642,12 +660,14 @@
 				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
+				D5A8D630215F28B200EE881E /* EUILayoutEdge.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
 				D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
 				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
-				D5A8D623215DD31100EE881E /* TestTEasyViewController+View1.m in Sources */,
+				D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */,
 				D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */,
+				D5A8D633215F58C600EE881E /* EUILayoutValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

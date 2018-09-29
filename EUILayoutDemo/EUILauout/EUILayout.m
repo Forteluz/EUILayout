@@ -24,13 +24,18 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        ///< A
+        _x = _y = _width = _height = NSNotFound;
+
+        ///< B
         _hAlign   = EUILayoutAlignStart;
         _vAlign   = EUILayoutAlignStart;
         _sizeType = EUILayoutSizeToFill;
-        _size     = CGSizeMake(NSNotFound, NSNotFound);
-        _origin   = CGPointMake(NSNotFound, NSNotFound);
-        _margin   = UIEdgeInsetsZero;
-        _padding  = UIEdgeInsetsZero;
+        _margin   = EUIEdgeMake(0, 0, 0, 0);
+        _padding  = EUIEdgeMake(0, 0, 0, 0);;
+
+        ///< C
+        _zPosition = EUILayoutZPostionNormal;
     }
     return self;
 }
@@ -45,18 +50,43 @@
     return CGSizeZero;
 }
 
+- (EUILayout *)configure:(void(^)(EUILayout *))block {
+    if (block) {
+        block(self);
+    }
+    return self;
+}
+
 #pragma mark -
 
+- (void)setSize:(CGSize)size {
+    self.width = size.width;
+    self.height = size.height;
+}
+
+- (CGSize)size {
+    return (CGSize) {
+        self.width, self.height
+    };
+}
+
+- (void)setOrigin:(CGPoint)origin {
+    self.x = origin.x;
+    self.y = origin.y;
+}
+
+- (CGPoint)origin {
+    return (CGPoint) {
+        self.x, self.y
+    };
+}
+
 - (void)setFrame:(CGRect)frame {
-    self.origin = frame.origin;
     self.size = frame.size;
+    self.origin = frame.origin;
 }
 
 - (CGRect)frame {
-    if (CGSizeEqualToSize(self.size, CGSizeZero) && CGPointEqualToPoint(self.origin, CGPointZero))
-    {
-        return CGRectZero;
-    }
     return (CGRect) {
         .origin = self.origin, .size = self.size
     };
@@ -127,20 +157,20 @@
     };
 }
 
-- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))e_padding {
-    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-        self.padding = insets;
-        return self;
-    };
-}
-
-- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_margin {
-    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-        self.margin = insets;
-        return self;
-    };
-}
+//- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))e_padding {
+//    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
+//        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
+//        self.padding = insets;
+//        return self;
+//    };
+//}
+//
+//- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_margin {
+//    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
+//        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
+//        self.margin = insets;
+//        return self;
+//    };
+//}
 
 @end

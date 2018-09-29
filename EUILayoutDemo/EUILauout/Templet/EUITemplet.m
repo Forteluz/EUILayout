@@ -129,6 +129,10 @@
             [self.view bringSubviewToFront:nodeView];
         }
         
+        if (node.zPosition > 0) {
+            [nodeView.layer setZPosition:node.zPosition];
+        }
+        
         lastNode = node;
         index ++;
     }

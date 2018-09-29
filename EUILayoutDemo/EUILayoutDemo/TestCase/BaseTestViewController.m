@@ -45,7 +45,7 @@
 - (void)action:(UIButton *)button {}
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TRow(self.backBtn).t_margin(30,0,0,0);
+    return TRow(self.backBtn);
 }
 
 

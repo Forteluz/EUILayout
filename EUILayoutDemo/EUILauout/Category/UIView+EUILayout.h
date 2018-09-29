@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "EUILayouter.h"
 
+typedef void (^EUIConfigurationBlock)(EUILayout *layout);
+
 @interface UIView (EUILayout)
 
 ///< 获得当前视图的布局管理器，默认是空
@@ -23,12 +25,6 @@
 @property (nonatomic, strong, readonly) EUILayout *eui_layout;
 
 - (void)eui_setLayout:(EUILayout *)layout;
-
-#pragma mark - CallChaining
-
-- (__kindof UIView * (^)(CGFloat))t_height;
-- (__kindof UIView * (^)(CGFloat))t_width;
-- (__kindof UIView * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_margin;
-- (__kindof UIView * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_padding;
+- (void)eui_configure:(EUIConfigurationBlock)block;
 
 @end

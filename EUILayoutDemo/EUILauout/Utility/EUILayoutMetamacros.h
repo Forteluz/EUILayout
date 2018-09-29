@@ -11,24 +11,28 @@
 
 #pragma mark -
 
-#define YOGA_UPDATE_INSERTS(layout, pre , edge)                         \
-    if (!UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, edge)) {       \
-        layout.pre##Left   = YGPointValue(edge.left);                   \
-        layout.pre##Right  = YGPointValue(edge.right);                  \
-        layout.pre##Top    = YGPointValue(edge.top);                    \
-        layout.pre##Bottom = YGPointValue(edge.bottom);                 \
+#define YOGA_UPDATE_INSERTS(_LAYOUT_, _METHOD_ , _FROM_)                       \
+    YOGA_UPDATE_INSERTS_EDGEMETHOD(_LAYOUT_,_METHOD_,_FROM_, top, Top)         \
+    YOGA_UPDATE_INSERTS_EDGEMETHOD(_LAYOUT_,_METHOD_,_FROM_, left, Left)       \
+    YOGA_UPDATE_INSERTS_EDGEMETHOD(_LAYOUT_,_METHOD_,_FROM_, right, Right)     \
+    YOGA_UPDATE_INSERTS_EDGEMETHOD(_LAYOUT_,_METHOD_,_FROM_, bottom, Bottom)   \
+
+#define YOGA_UPDATE_INSERTS_EDGEMETHOD(_LAYOUT_, _METHOD_ , _FROM_, _EDGE_, _YEDGE_) \
+    if (_FROM_._EDGE_ > 0 && _FROM_._EDGE_ != NSNotFound) {                          \
+        _LAYOUT_._METHOD_##_YEDGE_ = YGPointValue(_FROM_._EDGE_);                    \
     }
 
-#define YOGASetPadding(layout, edge) YOGA_UPDATE_INSERTS(layout, padding, edge)
-#define YOGASetMargin(layout, edge) YOGA_UPDATE_INSERTS(layout, margin, edge)
+#define YOGA_SET_MARGIN(_LAYOUT_, _FROM_) YOGA_UPDATE_INSERTS(_LAYOUT_, margin, _FROM_)
+#define YOGA_SET_PADDING(_LAYOUT_, _FROM_) YOGA_UPDATE_INSERTS(_LAYOUT_, padding, _FROM_)
 
 #pragma mark -
 
 #define NODE_VALID_WIDTH(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, width)
 #define NODE_VALID_HEIGHT(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, height)
-#define _NODE_BASED_VALUE_METHOD(_NODE_, _METHOD_)           \
-        (_NODE_.size._METHOD_ > 0 && _NODE_.size._METHOD_ != NSNotFound ? _NODE_.size._METHOD_ :    \
-        _NODE_.view.bounds.size._METHOD_ > 0 && _NODE_.view.bounds.size._METHOD_ != NSNotFound ? _NODE_.view.bounds.size._METHOD_ : 0)
+#define _NODE_BASED_VALUE_METHOD(_NODE_, _METHOD_)                           \
+        ( _NODE_.size._METHOD_ > 0 && _NODE_.size._METHOD_ != NSNotFound     \
+        ? _NODE_.size._METHOD_ : _NODE_.view.bounds.size._METHOD_ > 0 && _NODE_.view.bounds.size._METHOD_ != NSNotFound \
+        ? _NODE_.view.bounds.size._METHOD_ : 0 )
 
 #pragma mark -
 

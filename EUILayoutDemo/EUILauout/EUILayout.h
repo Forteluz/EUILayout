@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "EUILayoutMetamacros.h"
+///< Models
+#import "EUILayoutPos.h"
+#import "EUILayoutEdge.h"
 
 #pragma mark -
 
@@ -23,11 +26,18 @@ typedef NS_ENUM(NSInteger, EUILayoutAlign) {
     EUILayoutAlignEnd
 };
 
+typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
+    EUILayoutZPostionLow     = 100,
+    EUILayoutZPostionNormal  = 1000,  ///< Default
+    EUILayoutZPostionHigh    = 10000,
+};
+
 #pragma mark -
 
-UIKIT_STATIC_INLINE UIEdgeInsets EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
-    UIEdgeInsets insets = {top, left, bottom, right};
-    return insets;
+UIKIT_STATIC_INLINE EUILayoutEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
+    return [EUILayoutEdge edgeWithInsets:(UIEdgeInsets) {
+        top, left, bottom, right
+    }];
 }
 
 #pragma mark -
@@ -37,7 +47,14 @@ typedef id EUIObject;
 
 static const NSInteger EUINone = NSIntegerMax;
 
-///< CGSizeMake(EUINone, EUINone);
+/** Large positive number signifies that the property(float) is undefined.
+ *Earlier we used to have YGundefined as NAN, but the downside of this is that
+ *we can't use -ffast-math compiler flag as it assumes all floating-point
+ *calculation involve and result into finite numbers. For more information
+ *regarding -ffast-math compiler flag in clang, have a look at
+ *https://clang.llvm.org/docs/UsersManual.html#cmdoption-ffast-math
+ **/
+#define EUIUndefined 10E20F
 
 #pragma mark -
 
@@ -52,8 +69,22 @@ static const NSInteger EUINone = NSIntegerMax;
 ///< Node 的 view 视图，通常该属性不需要显式处理
 @property (nonatomic, weak) UIView *view;
 
+#pragma mark - 关于尺寸
+
+///< 绝对宽
+@property (nonatomic, assign) CGFloat width;
+
+///< 绝对高
+@property (nonatomic, assign) CGFloat height;
+
 ///< 绝对尺寸
 @property (nonatomic, assign) CGSize size;
+
+///< 绝对 x 坐标
+@property (nonatomic, assign) CGFloat x;
+
+///< 绝对 y 坐标
+@property (nonatomic, assign) CGFloat y;
 
 ///< 绝对坐标
 @property (nonatomic, assign) CGPoint origin;
@@ -61,22 +92,23 @@ static const NSInteger EUINone = NSIntegerMax;
 ///< origin + size
 @property (nonatomic, assign) CGRect frame;
 
-///< 外边距(只作用于布局 Node)
-@property (nonatomic, assign) UIEdgeInsets margin;
+///< 外边距
+@property (nonatomic, strong) EUILayoutEdge *margin;
 
-///< 内边距(只作用于 Templet)
-@property (nonatomic, assign) UIEdgeInsets padding;
+///< 内边距
+@property (nonatomic, strong) EUILayoutEdge *padding;
 
 ///< DCUILayoutSizeTypeDefault
 @property (nonatomic, assign) EUILayoutSizeType sizeType;
 
+///<
 @property (nonatomic, assign) EUILayoutAlign vAlign; ///< 垂直
+
+///<
 @property (nonatomic, assign) EUILayoutAlign hAlign; ///< 水平
 
-//@property (nonatomic, assign) CGFloat left;
-//@property (nonatomic, assign) CGFloat right;
-//@property (nonatomic, assign) CGFloat top;
-//@property (nonatomic, assign) CGFloat bottom;
+///< z 轴层次
+@property (nonatomic, assign) NSInteger zPosition;
 
 ///< 走你
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
@@ -86,6 +118,8 @@ static const NSInteger EUINone = NSIntegerMax;
 + (instancetype)node:(UIView *)view;
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
+
+- (EUILayout *)configure:(void(^)(EUILayout *))block;
 
 @end
 
@@ -100,7 +134,7 @@ static const NSInteger EUINone = NSIntegerMax;
 - (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType;
 - (__kindof EUILayout * (^)(CGFloat))t_height;
 - (__kindof EUILayout * (^)(CGFloat))t_width;
-- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_margin;
-- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))e_padding;
+//- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_margin;
+//- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))e_padding;
 @end
 

@@ -24,7 +24,6 @@
     [one.layer setShadowRadius:8];
     [one setClipsToBounds:YES];
     [one.titleLabel setFont:[UIFont systemFontOfSize:16.]];
-    [one.eui_layout setMargin:EUIEdgeMake(0, 0, 10, 0)];
     return one;
 }
 

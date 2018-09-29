@@ -7,7 +7,6 @@
 //
 
 #import "TestTEasyViewController.h"
-#import "TestTEasyViewController+View1.h"
 
 @interface TestTEasyViewController () <EUILayouterDataSource>
 
@@ -30,17 +29,47 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    self.backBtn.eui_layout.margin = EUIEdgeMake(10, 30, 0, 0);
-    self.backBtn.eui_layout.sizeType = EUILayoutSizeToFit;
+    [self.backBtn eui_configure:^(EUILayout *layout) {
+        layout.margin = EUIEdgeMake(20, 20, 0, 0);
+        layout.width = 50;
+        layout.sizeType = EUILayoutSizeToFit;
+        layout.zPosition = EUILayoutZPostionHigh;
+    }];
+    [self.view1 eui_configure:^(EUILayout *layout) {
+        layout.margin = EUIEdgeMake(10, 10, 10, 10);
+        layout.zPosition = EUILayoutZPostionLow;
+    }];
+    [self.view2 eui_configure:^(EUILayout *layout) {
+        layout.margin = EUIEdgeMake(60, 20, 20, 0);
+        layout.width = 50;
+    }];
+    [self.view3 eui_configure:^(EUILayout *layout) {
+        layout.margin.top   = self.view2.eui_layout.margin.top;
+        layout.margin.left  = 80;
+        layout.margin.right = 20;
+        layout.height = 50;
+    }];
+    [self.view4 eui_configure:^(EUILayout *layout) {
+        layout.hAlign = EUILayoutAlignEnd;
+        layout.vAlign = EUILayoutAlignEnd;
+        layout.zPosition = EUILayoutZPostionNormal - 1;
+        layout.sizeType = EUILayoutSizeToFit;
+    }];
     
-//    self.view1.eui_layout.margin = EUIEdgeMake(10, 10, 10, 10);
+//    return TBase(self.backBtn, self.view1, self.view2, self.view3, self.view4);
     
-    return TBase(self.backBtn);
+    ///< 模板嵌套
+    return TBase(self.view1,
+                 [TBase(self.view2, self.view3, self.view4) configure:^(EUILayout *layout) {
+                    layout.height = 200;
+                    layout.margin.left = layout.margin.right = 20;
+                    layout.margin.top  = 30;
+                 }]);
 }
 
 - (void)action:(UIButton *)button {
     switch (button.tag) {
-        case 1: [self setupView1]; break;
+        
     }
     [self.view.eui_layouter update];
 }

@@ -23,8 +23,8 @@
         layout.alignItems = YGAlignStretch;
         layout.justifyContent = YGJustifyFlexStart;
         layout.flexDirection = YGFlexDirectionRow;
-        YOGASetMargin(layout, self.margin);
-        YOGASetPadding(layout, self.padding);
+        YOGA_SET_MARGIN(layout, self.margin);
+        YOGA_SET_PADDING(layout, self.padding);
     };
     [self.view configureLayoutWithBlock:configBlock];
     [self.view.yoga applyLayoutPreservingOrigin:YES];
