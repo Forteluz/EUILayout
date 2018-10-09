@@ -11,7 +11,7 @@
 #import "EUILayoutMetamacros.h"
 ///< Models
 #import "EUILayoutPos.h"
-#import "EUILayoutEdge.h"
+#import "EUIEdge.h"
 
 #pragma mark -
 
@@ -39,8 +39,8 @@ typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
 
 #pragma mark -
 
-UIKIT_STATIC_INLINE EUILayoutEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
-    return [EUILayoutEdge edgeWithInsets:(UIEdgeInsets) {
+UIKIT_STATIC_INLINE EUIEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
+    return [EUIEdge edgeWithInsets:(UIEdgeInsets) {
         top, left, bottom, right
     }];
 }
@@ -98,10 +98,10 @@ static const NSInteger EUINone = NSIntegerMax;
 @property (nonatomic, assign) CGRect frame;
 
 ///< 外边距
-@property (nonatomic, strong) EUILayoutEdge *margin;
+@property (nonatomic, strong) EUIEdge *margin;
 
 ///< 内边距
-@property (nonatomic, strong) EUILayoutEdge *padding;
+@property (nonatomic, strong) EUIEdge *padding;
 
 ///< DCUILayoutSizeTypeDefault
 @property (nonatomic, assign) EUISizeType sizeType;

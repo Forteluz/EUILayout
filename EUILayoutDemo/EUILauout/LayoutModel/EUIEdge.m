@@ -6,12 +6,12 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUILayoutEdge.h"
+#import "EUIEdge.h"
 
-@implementation EUILayoutEdge
+@implementation EUIEdge
 
 + (instancetype)edgeWithInsets:(UIEdgeInsets)insts {
-    EUILayoutEdge *one = [self.class new];
+    EUIEdge *one = [self.class new];
     one.left = insts.left;
     one.top = insts.top;
     one.bottom = insts.bottom;

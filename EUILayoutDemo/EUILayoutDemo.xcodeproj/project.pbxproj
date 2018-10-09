@@ -20,7 +20,7 @@
 		D57CFCE8215A08DB002D137F /* EUILayoutDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */; };
 		D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */; };
 		D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D626215F227100EE881E /* EUILayoutPos.m */; };
-		D5A8D630215F28B200EE881E /* EUILayoutEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */; };
+		D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUIEdge.m */; };
 		D5A8D633215F58C600EE881E /* EUILayoutValue.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D632215F58C600EE881E /* EUILayoutValue.m */; };
 		D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A3215A0A4F007D9CFF /* EUILayouter.m */; };
 		D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A7215A0A92007D9CFF /* EUILayout.m */; };
@@ -84,8 +84,8 @@
 		D5A8D61F215CBF0200EE881E /* EUIBaseTemplet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIBaseTemplet.m; sourceTree = "<group>"; };
 		D5A8D625215F227100EE881E /* EUILayoutPos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutPos.h; sourceTree = "<group>"; };
 		D5A8D626215F227100EE881E /* EUILayoutPos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutPos.m; sourceTree = "<group>"; };
-		D5A8D62E215F28B200EE881E /* EUILayoutEdge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutEdge.h; sourceTree = "<group>"; };
-		D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutEdge.m; sourceTree = "<group>"; };
+		D5A8D62E215F28B200EE881E /* EUIEdge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIEdge.h; sourceTree = "<group>"; };
+		D5A8D62F215F28B200EE881E /* EUIEdge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIEdge.m; sourceTree = "<group>"; };
 		D5A8D631215F58C600EE881E /* EUILayoutValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutValue.h; sourceTree = "<group>"; };
 		D5A8D632215F58C600EE881E /* EUILayoutValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutValue.m; sourceTree = "<group>"; };
 		D5D852A2215A0A4F007D9CFF /* EUILayouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayouter.h; sourceTree = "<group>"; };
@@ -234,8 +234,8 @@
 			children = (
 				D5A8D625215F227100EE881E /* EUILayoutPos.h */,
 				D5A8D626215F227100EE881E /* EUILayoutPos.m */,
-				D5A8D62E215F28B200EE881E /* EUILayoutEdge.h */,
-				D5A8D62F215F28B200EE881E /* EUILayoutEdge.m */,
+				D5A8D62E215F28B200EE881E /* EUIEdge.h */,
+				D5A8D62F215F28B200EE881E /* EUIEdge.m */,
 				D5A8D631215F58C600EE881E /* EUILayoutValue.h */,
 				D5A8D632215F58C600EE881E /* EUILayoutValue.m */,
 			);
@@ -660,7 +660,7 @@
 				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
-				D5A8D630215F28B200EE881E /* EUILayoutEdge.m in Sources */,
+				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
 				D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,

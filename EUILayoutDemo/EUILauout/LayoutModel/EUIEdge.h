@@ -1,5 +1,5 @@
 //
-//  EUILayoutEdge.h
+//  EUIEdge.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/29.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EUILayoutEdge : NSObject
+@interface EUIEdge : NSObject
 @property (nonatomic, assign) CGFloat top;
 @property (nonatomic, assign) CGFloat bottom;
 @property (nonatomic, assign) CGFloat left;
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)edgeWithInsets:(UIEdgeInsets)insts;
 @end
 
-@interface EUILayoutMargin  : EUILayoutEdge @end
-@interface EUILayoutPadding : EUILayoutEdge @end
+@interface EUILayoutMargin  : EUIEdge @end
+@interface EUILayoutPadding : EUIEdge @end
 
 NS_ASSUME_NONNULL_END
