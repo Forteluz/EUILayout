@@ -15,15 +15,20 @@
 
 #pragma mark -
 
-typedef NS_ENUM(NSInteger, EUILayoutSizeType) {    
-    EUILayoutSizeToFit,
-    EUILayoutSizeToFill
+typedef NS_OPTIONS(NSUInteger, EUIGravity) {
+    EUIGravityHorzStart  = 1 << 1,
+    EUIGravityHorzCenter = 1 << 2,
+    EUIGravityHorzEnd    = 1 << 3,
+    EUIGravityVertStart  = 1 << 4,
+    EUIGravityVertCenter = 1 << 5,
+    EUIGravityVertEnd    = 1 << 6,
 };
 
-typedef NS_ENUM(NSInteger, EUILayoutAlign) {
-    EUILayoutAlignStart,
-    EUILayoutAlignCenter, ///<
-    EUILayoutAlignEnd
+typedef NS_ENUM(NSInteger, EUISizeType) {
+    EUISizeTypeToFit = 1,
+    EUISizeTypeToHorzFill = (EUIGravityHorzStart | EUIGravityHorzEnd),
+    EUISizeTypeToVertFill = (EUIGravityVertStart | EUIGravityVertEnd),
+    EUISizeTypeToFill = (EUISizeTypeToHorzFill + EUISizeTypeToVertFill),
 };
 
 typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
@@ -99,15 +104,11 @@ static const NSInteger EUINone = NSIntegerMax;
 @property (nonatomic, strong) EUILayoutEdge *padding;
 
 ///< DCUILayoutSizeTypeDefault
-@property (nonatomic, assign) EUILayoutSizeType sizeType;
+@property (nonatomic, assign) EUISizeType sizeType;
 
-///<
-@property (nonatomic, assign) EUILayoutAlign vAlign; ///< 垂直
+///< EUIGravityHorzStart | EUIGravityVertStart
+@property (nonatomic, assign) EUIGravity gravity;
 
-///<
-@property (nonatomic, assign) EUILayoutAlign hAlign; ///< 水平
-
-///< z 轴层次
 @property (nonatomic, assign) NSInteger zPosition;
 
 ///< 走你
@@ -131,9 +132,9 @@ static const NSInteger EUINone = NSIntegerMax;
 @end
 
 @interface  EUILayout (CallChaining)
-- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType;
-- (__kindof EUILayout * (^)(CGFloat))t_height;
-- (__kindof EUILayout * (^)(CGFloat))t_width;
+//- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType;
+//- (__kindof EUILayout * (^)(CGFloat))t_height;
+//- (__kindof EUILayout * (^)(CGFloat))t_width;
 //- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_margin;
 //- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))e_padding;
 @end

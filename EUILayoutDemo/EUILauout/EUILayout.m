@@ -24,17 +24,11 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        ///< A
         _x = _y = _width = _height = NSNotFound;
-
-        ///< B
-        _hAlign   = EUILayoutAlignStart;
-        _vAlign   = EUILayoutAlignStart;
-        _sizeType = EUILayoutSizeToFill;
+        _gravity  = EUIGravityVertStart | EUIGravityHorzStart;
+        _sizeType = EUISizeTypeToFill;
         _margin   = EUIEdgeMake(0, 0, 0, 0);
         _padding  = EUIEdgeMake(0, 0, 0, 0);;
-
-        ///< C
         _zPosition = EUILayoutZPostionNormal;
     }
     return self;
@@ -136,26 +130,26 @@
 
 @implementation EUILayout (ForChain)
 
-- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType {
-    return ^EUILayout * (EUILayoutSizeType type) {
-        self.sizeType = type;
-        return self;
-    };
-}
-
-- (__kindof EUILayout * (^)(CGFloat))t_height {
-    return ^EUILayout * (CGFloat h) {
-        self.size = (CGSize) {self.size.width, h};
-        return self;
-    };
-}
-
-- (__kindof EUILayout * (^)(CGFloat))t_width {
-    return ^EUILayout * (CGFloat w) {
-        self.size = (CGSize) {w, self.size.height};
-        return self;
-    };
-}
+//- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType {
+//    return ^EUILayout * (EUILayoutSizeType type) {
+//        self.sizeType = type;
+//        return self;
+//    };
+//}
+//
+//- (__kindof EUILayout * (^)(CGFloat))t_height {
+//    return ^EUILayout * (CGFloat h) {
+//        self.size = (CGSize) {self.size.width, h};
+//        return self;
+//    };
+//}
+//
+//- (__kindof EUILayout * (^)(CGFloat))t_width {
+//    return ^EUILayout * (CGFloat w) {
+//        self.size = (CGSize) {w, self.size.height};
+//        return self;
+//    };
+//}
 
 //- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))e_padding {
 //    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {

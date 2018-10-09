@@ -28,7 +28,7 @@
     if (self) {
         _nodes = [EUILayout nodesFromItems:items];
         self.isHolder = YES;
-        self.sizeType = EUILayoutSizeToFill;
+        self.sizeType = EUISizeTypeToFill;
     }
     return self;
 }
@@ -109,7 +109,7 @@
         [self layoutNode:node];
         
         if (isTempletNode) {
-            if (EUILayoutSizeToFit == node.sizeType) {
+            if (EUISizeTypeToFit == node.sizeType) {
                 [(EUITemplet *)node layoutTemplet];
             } else {
                 if (!templets) {

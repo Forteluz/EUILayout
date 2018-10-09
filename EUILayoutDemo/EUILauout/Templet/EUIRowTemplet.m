@@ -34,7 +34,7 @@
 - (void)layoutNode:(EUILayout *)node {
     void (^configBlock)(YGLayout *) = ^(YGLayout *layout) {
         layout.isEnabled = YES;
-        if (EUILayoutSizeToFit == node.sizeType) {
+        if (EUISizeTypeToFit == node.sizeType) {
             [self layoutNodeBased:node yoga:layout];
         } else {
             [self layoutTempletBased:node yoga:layout];
