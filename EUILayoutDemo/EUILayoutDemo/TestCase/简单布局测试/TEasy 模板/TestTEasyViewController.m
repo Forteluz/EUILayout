@@ -29,6 +29,8 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+    return [self testTempViews];
+    
     [self.backBtn eui_configure:^(EUILayout *layout) {
         layout.margin = EUIEdgeMake(20, 20, 0, 0);
         layout.width = 50;
@@ -65,6 +67,27 @@
         
     }
     [self.view.eui_layouter update];
+}
+
+- (EUITemplet *)testTempViews {
+    UIView *a = ({
+        UIView *one = [UIView new];
+        one.backgroundColor = DCRandomColor;
+        one.eui_layout.sizeType = EUISizeTypeToVertFit | EUISizeTypeToHorzFill;
+        one.eui_layout.margin.bottom = one.eui_layout.margin.top = 10;
+        one.eui_layout.maxHeight = 40;
+        one;
+    });
+    UIView *b = ({
+        UIView *one = [UIView new];
+        one.backgroundColor = DCRandomColor;
+        one.eui_layout.sizeType = EUISizeTypeToVertFill | EUISizeTypeToHorzFit;
+        one.eui_layout.maxHeight = 60;
+        one.eui_layout.maxWidth = 100;
+        one.eui_layout.gravity = EUIGravityVertCenter;
+        one;
+    });
+    return TBase(b);
 }
 
 - (EUITemplet *)absoultBaseTemplet {

@@ -16,7 +16,7 @@
 #pragma mark -
 
 typedef NS_OPTIONS(NSUInteger, EUIGravity) {
-    EUIGravityHorzStart  = 1 << 1,
+    EUIGravityHorzStart  = 1 << 1, ///1 ,2 ,4 ,8 , 16, 32
     EUIGravityHorzCenter = 1 << 2,
     EUIGravityHorzEnd    = 1 << 3,
     EUIGravityVertStart  = 1 << 4,
@@ -24,12 +24,15 @@ typedef NS_OPTIONS(NSUInteger, EUIGravity) {
     EUIGravityVertEnd    = 1 << 6,
 };
 
-typedef NS_ENUM(NSInteger, EUISizeType) {
-    EUISizeTypeToFit = 1,
+typedef enum : unsigned short {
+    EUISizeTypeToHorzFit = 2 << 1,
+    EUISizeTypeToVertFit = 2 << 2,
+    EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),
+    
     EUISizeTypeToHorzFill = (EUIGravityHorzStart | EUIGravityHorzEnd),
     EUISizeTypeToVertFill = (EUIGravityVertStart | EUIGravityVertEnd),
     EUISizeTypeToFill = (EUISizeTypeToHorzFill + EUISizeTypeToVertFill),
-};
+} EUISizeType;
 
 typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
     EUILayoutZPostionLow     = 100,
@@ -72,29 +75,18 @@ static const NSInteger EUINone = NSIntegerMax;
 @property (nonatomic, weak) EUILayout *superLayout;
 
 ///< Node 的 view 视图，通常该属性不需要显式处理
-@property (nonatomic, weak) UIView *view;
+@property (nonatomic, strong) UIView *view;
 
 #pragma mark - 关于尺寸
 
-///< 绝对宽
-@property (nonatomic, assign) CGFloat width;
-
-///< 绝对高
-@property (nonatomic, assign) CGFloat height;
-
-///< 绝对尺寸
-@property (nonatomic, assign) CGSize size;
-
-///< 绝对 x 坐标
 @property (nonatomic, assign) CGFloat x;
-
-///< 绝对 y 坐标
 @property (nonatomic, assign) CGFloat y;
-
-///< 绝对坐标
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat maxWidth;
+@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat maxHeight;
 @property (nonatomic, assign) CGPoint origin;
-
-///< origin + size
+@property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGRect frame;
 
 ///< 外边距

@@ -24,12 +24,14 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _x = _y = _width = _height = NSNotFound;
-        _gravity  = EUIGravityVertStart | EUIGravityHorzStart;
-        _sizeType = EUISizeTypeToFill;
-        _margin   = EUIEdgeMake(0, 0, 0, 0);
-        _padding  = EUIEdgeMake(0, 0, 0, 0);;
+        _gravity   = EUIGravityVertStart | EUIGravityHorzStart;
+        _sizeType  = EUISizeTypeToFill;
+        _margin    = EUIEdgeMake(0, 0, 0, 0);
+        _padding   = EUIEdgeMake(0, 0, 0, 0);
         _zPosition = EUILayoutZPostionNormal;
+        _maxWidth  = NSNotFound;
+        _maxHeight = NSNotFound;
+        [self setFrame:(CGRect){NSNotFound,NSNotFound,NSNotFound,NSNotFound}];
     }
     return self;
 }

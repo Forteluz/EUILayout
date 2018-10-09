@@ -79,6 +79,13 @@ typedef enum : unsigned short {
             goto StepY;
         }
     }
+
+    if (!((layout.gravity & EUIGravityHorzStart) &&
+          (layout.gravity & EUIGravityHorzCenter) &&
+          (layout.gravity & EUIGravityHorzEnd)))
+    {
+        layout.gravity |= EUIGravityHorzStart;
+    }
     
     if (layout.gravity & EUIGravityHorzStart) {
         if (fromNode.isHolder) {
@@ -88,7 +95,8 @@ typedef enum : unsigned short {
         }
         *step |= EPStepX;
     }
-    else if (layout.gravity & EUIGravityHorzEnd && EUIValid(lw) && EUIValid(sw)) {
+    else
+        if (layout.gravity & EUIGravityHorzEnd && EUIValid(lw) && EUIValid(sw)) {
         if (fromNode.isHolder) {
             frame -> origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
         } else {
@@ -96,16 +104,17 @@ typedef enum : unsigned short {
         }
         *step |= EPStepX;
     }
-    else if (layout.gravity & EUIGravityHorzCenter) {
-        if (EUIValid(sw) && EUIValid(lw)) {
-            if (fromNode.isHolder) {
-                frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
-            } else {
-                frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + fromNode.origin.x;
+    else
+        if (layout.gravity & EUIGravityHorzCenter) {
+            if (EUIValid(sw) && EUIValid(lw)) {
+                if (fromNode.isHolder) {
+                    frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
+                } else {
+                    frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + fromNode.origin.x;
+                }
+                *step |= EPStepX;
             }
-            *step |= EPStepX;
         }
-    }
     
 StepY:
     if ((*step & EPStepY)) {
@@ -119,6 +128,13 @@ StepY:
         frame -> origin.y = layout.origin.y;
         *step |= EPStepY;
         return;
+    }
+    
+    if (!((layout.gravity & EUIGravityVertStart) &&
+          (layout.gravity & EUIGravityVertCenter) &&
+          (layout.gravity & EUIGravityVertEnd)))
+    {
+        layout.gravity |= EUIGravityVertStart;
     }
     
     if (layout.gravity & EUIGravityVertStart) {
@@ -137,7 +153,7 @@ StepY:
         }
         *step |= EPStepY;
     }
-    else if (layout.gravity & EUIGravityHorzCenter) {
+    else if (layout.gravity & EUIGravityVertCenter) {
         if (EUIValid(sh) && EUIValid(lh)) {
             if (fromNode.isHolder) {
                 frame -> origin.y = ((NSInteger)(sh - lh) >> 1);
@@ -161,28 +177,34 @@ StepY:
         *step |= EPStepW;
         goto StepH;
     }
-    
-    BOOL isMaxFits = NO;
-    if (EUISizeTypeToFit == layout.sizeType) {
-        CGFloat h = MAXFLOAT;
+
+    if (EUISizeTypeToFit == layout.sizeType || EUISizeTypeToHorzFit & layout.sizeType) {
+        CGFloat h = EUIValid(layout.maxHeight) ? layout.maxHeight: MAXFLOAT;
         if (frame -> size.height) {
             h = frame -> size.height;
         } else if (EUIValid(layout.size.height)) {
             h = layout.size.height;
-        } else {
-            isMaxFits = YES;
         }
         CGSize s = [layout sizeThatFits:(CGSize){MAXFLOAT, h}];
-        if (isMaxFits) {
+        if (CGSizeEqualToSize(CGSizeZero, s) && [layout.view isMemberOfClass:UIView.class]) {
+            s = (CGSize) {
+                EUIValid(layout.maxWidth) ? layout.maxWidth : NODE_VALID_WIDTH(self),
+                EUIValid(layout.maxHeight) ? layout.maxHeight : NODE_VALID_HEIGHT(self),
+            };
+        }
+        if (EUISizeTypeToFit == layout.sizeType) {
             frame -> size = s;
             *step |= EPStepH;
         } else {
             frame -> size.width = s.width;
         }
-    } else if (EUISizeTypeToFill == self.sizeType || EUISizeTypeToHorzFill == self.sizeType) {
+    } else if (EUISizeTypeToHorzFill & layout.sizeType) {
         CGFloat l = layout.margin.left;
         CGFloat r = layout.margin.right;
         frame -> size.width = NODE_VALID_WIDTH(self) - l - r;
+        if (EUIValid(layout.maxWidth) && frame->size.width > layout.maxWidth) {
+            frame -> size.width = layout.maxWidth;
+        }
     } else {
         assert("Opps!!!" == NULL);
     }
@@ -200,19 +222,33 @@ StepH:
         return;
     }
 
-    if (EUISizeTypeToFit == layout.sizeType) {
-        CGFloat w = MAXFLOAT;
+    if (EUISizeTypeToFit == layout.sizeType || EUISizeTypeToVertFit & layout.sizeType) {
+        CGFloat w = EUIValid(layout.maxWidth) ? layout.maxWidth :  MAXFLOAT;
         if (frame -> size.width) {
             w = frame -> size.width;
         } else if (EUIValid(layout.size.width)) {
             w = layout.size.width;
         }
         CGSize s = [layout sizeThatFits:(CGSize){w, MAXFLOAT}];
-        frame -> size.height = s.height;
-    } else if (EUISizeTypeToFill == self.sizeType || EUISizeTypeToVertFill == self.sizeType) {
+        if (CGSizeEqualToSize(CGSizeZero, s) && [layout.view isMemberOfClass:UIView.class]) {
+            s = (CGSize) {
+                EUIValid(layout.maxWidth) ? layout.maxWidth : NODE_VALID_WIDTH(self),
+                EUIValid(layout.maxHeight) ? layout.maxHeight : NODE_VALID_HEIGHT(self),
+            };
+        }
+        if (EUISizeTypeToFit == layout.sizeType) {
+            frame -> size = s;
+            *step |= EPStepW;
+        } else {
+            frame -> size.height = s.height;
+        }
+    } else if (EUISizeTypeToVertFill & layout.sizeType) {
         CGFloat t = layout.margin.top;
         CGFloat b = layout.margin.bottom;
         frame -> size.height = NODE_VALID_HEIGHT(self) - t - b;
+        if (EUIValid(layout.maxHeight) && frame->size.height > layout.maxHeight) {
+            frame -> size.height = layout.maxHeight;
+        }
     } else {
         assert("Opps!!!" == NULL);
     }

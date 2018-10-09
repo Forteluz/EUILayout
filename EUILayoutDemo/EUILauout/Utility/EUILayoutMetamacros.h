@@ -27,6 +27,7 @@
 
 #pragma mark -
 
+#define NODE_VALID_SIZE(_NODE_) CGSizeMake(NODE_VALID_WIDTH(_NODE_),NODE_VALID_HEIGHT(_NODE_))
 #define NODE_VALID_WIDTH(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, width)
 #define NODE_VALID_HEIGHT(_NODE_) _NODE_BASED_VALUE_METHOD(_NODE_, height)
 #define _NODE_BASED_VALUE_METHOD(_NODE_, _METHOD_)                           \
