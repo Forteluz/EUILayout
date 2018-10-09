@@ -87,7 +87,7 @@
         one.eui_layout.gravity = EUIGravityVertCenter;
         one;
     });
-    return TBase(b);
+    return TBase(a, b);
 }
 
 - (EUITemplet *)absoultBaseTemplet {

@@ -10,6 +10,9 @@
 
 #pragma mark -
 
+#define _HasGravityHorz(_NODE_,_METHOD_) (_NODE_.gravity & EUIGravityHorz##_METHOD_)
+#define _HasGravityVert(_NODE_,_METHOD_) (_NODE_.gravity & EUIGravityVert##_METHOD_)
+
 UIKIT_STATIC_INLINE CGFloat EUIValue(CGFloat one) {
     return (one == NSNotFound) ? 0 : one;
 }
@@ -79,15 +82,15 @@ typedef enum : unsigned short {
             goto StepY;
         }
     }
-
-    if (!((layout.gravity & EUIGravityHorzStart) &&
-          (layout.gravity & EUIGravityHorzCenter) &&
-          (layout.gravity & EUIGravityHorzEnd)))
+    
+    if (!_HasGravityHorz(layout, Start)  &&
+        !_HasGravityHorz(layout, Center) &&
+        !_HasGravityHorz(layout, End))
     {
         layout.gravity |= EUIGravityHorzStart;
     }
     
-    if (layout.gravity & EUIGravityHorzStart) {
+    if (_HasGravityHorz(layout, Start)) {
         if (fromNode.isHolder) {
             frame -> origin.x = EUIValue(layout.margin.left) + EUIValue(fromNode.padding.left);
         } else {
@@ -96,16 +99,16 @@ typedef enum : unsigned short {
         *step |= EPStepX;
     }
     else
-        if (layout.gravity & EUIGravityHorzEnd && EUIValid(lw) && EUIValid(sw)) {
-        if (fromNode.isHolder) {
-            frame -> origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
-        } else {
-            frame -> origin.x = CGRectGetMaxX(fromNode.frame) - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
-        }
-        *step |= EPStepX;
+        if (_HasGravityHorz(layout, End) && EUIValid(lw) && EUIValid(sw)) {
+            if (fromNode.isHolder) {
+                frame -> origin.x = sw - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
+            } else {
+                frame -> origin.x = CGRectGetMaxX(fromNode.frame) - EUIValue(fromNode.padding.right) - lw - EUIValue(layout.margin.right);
+            }
+            *step |= EPStepX;
     }
     else
-        if (layout.gravity & EUIGravityHorzCenter) {
+        if (_HasGravityHorz(layout, Center)) {
             if (EUIValid(sw) && EUIValid(lw)) {
                 if (fromNode.isHolder) {
                     frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
@@ -130,14 +133,15 @@ StepY:
         return;
     }
     
-    if (!((layout.gravity & EUIGravityVertStart) &&
-          (layout.gravity & EUIGravityVertCenter) &&
-          (layout.gravity & EUIGravityVertEnd)))
+    
+    if (!_HasGravityVert(layout, Start)  &&
+        !_HasGravityVert(layout, Center) &&
+        !_HasGravityVert(layout, End))
     {
         layout.gravity |= EUIGravityVertStart;
     }
     
-    if (layout.gravity & EUIGravityVertStart) {
+    if (_HasGravityVert(layout, Start)) {
         if (fromNode.isHolder) {
             frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(fromNode.padding.top);
         } else {
@@ -145,7 +149,7 @@ StepY:
         }
         *step |= EPStepY;
     }
-    else if (layout.gravity & EUIGravityVertEnd && EUIValid(lh) && EUIValid(sh)) {
+    else if (_HasGravityVert(layout, End) && EUIValid(lh) && EUIValid(sh)) {
         if (fromNode.isHolder) {
             frame -> origin.y = sh - EUIValue(fromNode.padding.bottom) - lh - EUIValue(layout.margin.bottom);
         } else {
@@ -153,7 +157,7 @@ StepY:
         }
         *step |= EPStepY;
     }
-    else if (layout.gravity & EUIGravityVertCenter) {
+    else if (_HasGravityVert(layout, Center)) {
         if (EUIValid(sh) && EUIValid(lh)) {
             if (fromNode.isHolder) {
                 frame -> origin.y = ((NSInteger)(sh - lh) >> 1);
