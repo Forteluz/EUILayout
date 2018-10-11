@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074185"
+            filePath = "EUILauout/Templet/EUITemplet.m"
+            timestampString = "560963266.14092"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "-layoutNode:"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-layoutSubNode:preSubNode:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,14 +25,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074266"
+            filePath = "EUILayoutDemo/TestCase/&#x7b80;&#x5355;&#x5e03;&#x5c40;&#x6d4b;&#x8bd5;/TEasy &#x6a21;&#x677f;/TestTEasyViewController.m"
+            timestampString = "560963266.141016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "-parseNode:frame:curStep:"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "-testTempViews"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TestTEasyViewController testTempViews]"
+                  moduleName = "EUILayoutDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lux/Project/MyGitProject/EUILayout/EUILayoutDemo/EUILayoutDemo/TestCase/%E7%AE%80%E5%8D%95%E5%B8%83%E5%B1%80%E6%B5%8B%E8%AF%95/TEasy%20%E6%A8%A1%E6%9D%BF/TestTEasyViewController.m"
+                  timestampString = "560963224.7758681"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "1401">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__40-[TestTEasyViewController testTempViews]_block_invoke"
+                  moduleName = "EUILayoutDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lux/Project/MyGitProject/EUILayout/EUILayoutDemo/EUILayoutDemo/TestCase/%E7%AE%80%E5%8D%95%E5%B8%83%E5%B1%80%E6%B5%8B%E8%AF%95/TEasy%20%E6%A8%A1%E6%9D%BF/TestTEasyViewController.m"
+                  timestampString = "560963224.7788399"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.0743361"
+            timestampString = "560963266.141084"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "-parsePostionWithNode:fromNode:frame:step:"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "-calculateSizeForSubLayout:preSubLayout:canvers:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074402"
+            filePath = "EUILauout/Templet/EUITemplet.m"
+            timestampString = "560963266.141462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "-parseSize:frame:step:"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-layoutTemplet"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,45 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074465"
+            filePath = "EUILauout/Templet/EUITemplet.m"
+            timestampString = "560963266.14152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "-layoutNode:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074527"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "-parseNode:frame:curStep:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "560775376.074589"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-parsePostionWithNode:fromNode:frame:step:"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "-layoutSubNode:preSubNode:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

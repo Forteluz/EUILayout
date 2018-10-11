@@ -31,7 +31,7 @@
     [self.view.yoga applyLayoutPreservingOrigin:YES];
 }
 
-- (void)layoutNode:(EUILayout *)node {
+- (void)layoutSubNode:(EUILayout *)node preSubNode:(EUILayout *)preSubNode {
     void (^configBlock)(YGLayout *) = ^(YGLayout *layout) {
         layout.isEnabled = YES;
         if (EUISizeTypeToFit == node.sizeType) {

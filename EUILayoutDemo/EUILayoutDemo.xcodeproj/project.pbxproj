@@ -64,6 +64,7 @@
 		AD92E2E40A0AEABBC8C7212D /* Pods-EUILayoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoUITests/Pods-EUILayoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AEEDAD7ECA1C639AE61742CF /* Pods-EUILayoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemo/Pods-EUILayoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D51E7B1AAA716A5C15048894 /* Pods-EUILayoutDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoTests/Pods-EUILayoutDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D5379416216F010D0071E624 /* EUIUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIUtilities.h; sourceTree = "<group>"; };
 		D57CFCC0215A08DA002D137F /* EUILayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EUILayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57CFCC3215A08DA002D137F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D57CFCC4215A08DA002D137F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -277,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				D5D852B3215A0AED007D9CFF /* EUILayoutMetamacros.h */,
+				D5379416216F010D0071E624 /* EUIUtilities.h */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

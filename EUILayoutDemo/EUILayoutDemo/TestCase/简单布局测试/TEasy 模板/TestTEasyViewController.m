@@ -24,8 +24,7 @@
     _SETButton(5, @"视图5");
     _SETButton(6, @"视图6");
     
-    [self.view eui_creatLayouterByDelegate:self];
-    [self.view.eui_layouter update];
+    [self updateLayout];
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
@@ -79,20 +78,29 @@
         one;
     });
     UIView *b = ({
-        UIView *one = [UIView new];
+        UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         one.backgroundColor = DCRandomColor;
         one.eui_layout.sizeType = EUISizeTypeToVertFill | EUISizeTypeToHorzFit;
         one.eui_layout.maxHeight = 60;
         one.eui_layout.maxWidth = 100;
         one.eui_layout.gravity = EUIGravityVertCenter;
+        [one addTarget:self action:@selector(updateLayout) forControlEvents:UIControlEventTouchUpInside];
         one;
     });
-    return TBase(a, b);
+    
+    return TBase(
+//                 [self.backBtn eui_configure:^(EUILayout *layout) {
+//                    layout.margin.top = 20;
+//                 }],
+                 [TBase(a) configure:^(EUILayout *layout) {
+                    layout.margin.top = 60;
+                    layout.maxHeight = 100;
+                 }],
+//                 [TBase(b) configure:^(EUILayout *layout) {
+//                    layout.margin.top = 60 + 100 + 20 + 20;
+//                    layout.maxHeight = 130;
+//                 }]
+                );
 }
-
-- (EUITemplet *)absoultBaseTemplet {
-    return TBase(self.view1);
-}
-
 
 @end

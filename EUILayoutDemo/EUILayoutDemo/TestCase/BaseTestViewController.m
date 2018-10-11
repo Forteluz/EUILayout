@@ -35,7 +35,6 @@
     })];
     
     [self.view eui_creatLayouterByDelegate:self];
-    [self.view.eui_layouter update];
 }
 
 - (void)backAction {
@@ -46,6 +45,10 @@
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
     return TRow(self.backBtn);
+}
+
+- (void)updateLayout {
+    [self.view.eui_layouter update];
 }
 
 

@@ -80,6 +80,7 @@
 - (void)setFrame:(CGRect)frame {
     self.size = frame.size;
     self.origin = frame.origin;
+    
 }
 
 - (CGRect)frame {
@@ -122,10 +123,6 @@
         }
     }
     return one;
-}
-
-- (NSArray *)priorityList {
-    return @[];
 }
 
 @end

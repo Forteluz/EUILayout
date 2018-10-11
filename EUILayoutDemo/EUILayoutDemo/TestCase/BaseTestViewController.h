@@ -23,5 +23,6 @@
 @property (nonatomic, strong) UIButton *view9;
 
 - (void)action:(UIButton *)button;
+- (void)updateLayout;
 
 @end

@@ -25,6 +25,6 @@ typedef void (^EUIConfigurationBlock)(EUILayout *layout);
 @property (nonatomic, strong, readonly) EUILayout *eui_layout;
 
 - (void)eui_setLayout:(EUILayout *)layout;
-- (void)eui_configure:(EUIConfigurationBlock)block;
+- (EUILayout *)eui_configure:(EUIConfigurationBlock)block;
 
 @end

@@ -37,6 +37,15 @@
     NSLog(@"dealloc templet:%@", self);
 }
 
+#pragma mark -
+
+///< 生命周期处理
+- (void)layoutSubnodes {
+    
+}
+
+#pragma mark -
+
 - (void)updateInView:(UIView *)view {
     [self setView:view];
     if ( view ) {
@@ -44,7 +53,7 @@
     }
 }
 
-- (void)cleanTempletIfNeeded {
+- (void)cleanTempletSubViewsIfNeeded {
     NSInteger count = self.view.subviews.count;
     if (count == 0) {
         return;
@@ -54,7 +63,7 @@
      {
          if ([obj.eui_layout isKindOfClass:EUITemplet.class]) {
              EUITemplet *one = (EUITemplet *)obj.eui_layout;
-             [one cleanTempletIfNeeded];
+             [one cleanTempletSubViewsIfNeeded];
              [one.view removeFromSuperview];
              (one.view = nil);
          } else {
@@ -80,76 +89,143 @@
 }
 
 - (void)reset {
-    [self cleanTempletIfNeeded];
+    [self cleanTempletSubViewsIfNeeded];
+}
+
+- (UIView *)viewForLayout:(EUILayout *)layout {
+    UIView *view = layout.view;
+    BOOL isTempletNode = [layout isKindOfClass:EUITemplet.class];
+    if ( isTempletNode && [(EUITemplet *)layout isHolder] ) {
+        if (!view) {
+             view = [EUITempletView imitateByView:nil];
+            [(EUITemplet *)layout updateInView:view];
+        }
+    }
+    return view;
+}
+
+- (CGSize)suggestConstraintSize {
+    ///< 当遇到计算边缘时（bounds）,
+    CGSize ssize = [(EUITemplet *)self.templet suggestConstraintSize];
+    CGSize msize = (CGSize) {
+        NODE_VALID_WIDTH(self) ?: ssize.width,
+        NODE_VALID_HEIGHT(self) ?: ssize.height
+    };
+    return msize;
 }
 
 - (void)layoutTemplet {
+    NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+    
     [self reset];
     
     NSMutableArray <EUITemplet *> *templets = nil;
-    NSArray <EUILayout *> *nodes = self.nodes;
-    
-    NSInteger index = 0;
     EUILayout *lastNode = nil;
-    
-    for (EUILayout *node in nodes) {
-        UIView *nodeView = node.view;
-        BOOL isTempletNode = [node isKindOfClass:EUITemplet.class];
-        if ( isTempletNode && [(EUITemplet *)node isHolder] ) {
-            if (!nodeView) {
-                 nodeView = [EUITempletView imitateByView:nil];
-                [(EUITemplet *)node updateInView:nodeView];
-            }
+    NSInteger index = 0;
+    do {
+        EUILayout *layout = [self.nodes objectAtIndex:index];
+        if (!layout) {
+            return;
         }
-        if (!nodeView) {
-            continue;
-        }
-
-        [node setSuperLayout:self];
-        [self layoutNode:node];
+        [layout setTemplet:self];
         
-        if (isTempletNode) {
-            if (EUISizeTypeToFit == node.sizeType) {
-                [(EUITemplet *)node layoutTemplet];
-            } else {
-                if (!templets) {
-                     templets = @[].mutableCopy;
-                }
-                [templets addObject:(EUITemplet *)node];
-            }
-        }
-        if ( nodeView.superview ) {
-            [nodeView removeFromSuperview];
+        UIView *view = [self viewForLayout:layout];
+#ifdef DEBUG
+        NSCAssert(view, @"EUIError: 找不到 layout:[%@] 的视图!", layout);
+#endif
+        ///< 强制修正视图关系------------->
+        if ( view.superview ) {
+            [view removeFromSuperview];
         }
         if (lastNode) {
-            [self.view insertSubview:nodeView aboveSubview:lastNode.view];
-        } else if (!nodeView.superview) {
-            [self.view addSubview:nodeView];
+            [self.view insertSubview:view aboveSubview:lastNode.view];
         } else {
-            [self.view bringSubviewToFront:nodeView];
+            [self.view addSubview:view];
         }
-        
-        if (node.zPosition > 0) {
-            [nodeView.layer setZPosition:node.zPosition];
+        ///< -------------------------->
+        if ([layout zPosition] > 0) {
+            [view.layer setZPosition:layout.zPosition];
         }
-        
-        lastNode = node;
+        BOOL isTemplet = [layout isKindOfClass:EUITemplet.class];
+        if ( isTemplet ) {
+            if (!templets) {
+                 templets = @[].mutableCopy;
+            }
+            EUITemplet *templet = (EUITemplet *)layout;
+            [templets addObject:templet];
+        }
+        [self layoutSubNode:layout preSubNode:lastNode];
         index ++;
-    }
+        lastNode = layout;
+    } while (!(index >= self.nodes.count - 1));
     
-    ///< Skip a runloop for yoga
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^
-                   {
-                       for (EUITemplet *one in templets) {
-                           [one layoutTemplet];
-                       }
-                   });
+    if (templets.count) {
+        ///< 为 Yoga 等待一个 runloop 重新计算 templet (for fill)
+        EUIAfter(dispatch_get_main_queue(), 0.f, ^{
+            for (EUITemplet *templet in templets) {
+                [templet layoutTemplet];
+            }
+            ///< 可以增加一个生命周期回调
+        });
+    } else {
+        ///< 可以增加一个生命周期回调
+    }
 }
 
-- (void)layoutNode:(EUILayout *)node {
-    ///< 子类自己实现去
+- (void)calculateMaxBounds:(CGRect *)bounds byLayout:(EUILayout *)layout {
+    EUISizeType type = self.sizeType & 0XFF;
+    if (type & EUISizeTypeToFit) {
+        if (type & EUISizeTypeToHorzFit) {
+            bounds -> size.width = MAX(bounds->size.width, CGRectGetMaxX(layout.view.frame));
+        } else if (type & EUISizeTypeToVertFit) {
+            bounds -> size.height = MAX(bounds->size.height, CGRectGetMaxY(layout.view.frame));
+        } else {
+#ifdef DEBUG
+            NSCAssert(NO, @"EUIError: layout:[%@] 的 sizeType 异常 !", layout);
+#endif
+        }
+    }
 }
+
+- (void)layoutSubNode:(EUILayout *)layout preSubNode:(EUILayout *)preSubNode {
+    CalculatCanvers canvers = (CalculatCanvers) {
+        .frame = {0},
+        .step  = EPStepNone
+    };
+    NSInteger loop = 0;
+    do {
+        if (!(canvers.step & EPStepX) || !(canvers.step & EPStepY)) {
+            [self calculatePostionForSubLayout:layout
+                                  preSubLayout:preSubNode
+                                       canvers:&canvers];
+        }
+        if (!(canvers.step & EPStepW) || !(canvers.step & EPStepH)) {
+            [self calculateSizeForSubLayout:layout
+                               preSubLayout:preSubNode
+                                    canvers:&canvers];
+        }
+        loop ++;
+        if (loop >= 3) {
+            NSLog(@"捕捉异常计算!!");
+        }
+    } while (!(loop <= 3) || (canvers.step & 0xFF) != EPStepFinished);
+    
+    if ( layout.view ) {
+        [layout.view setFrame:canvers.frame];
+    }
+}
+
+- (void)calculateSizeForSubLayout:(EUILayout *)layout
+                     preSubLayout:(EUILayout *)preSubLayout
+                          canvers:(CalculatCanvers *)canvers
+{}
+
+- (void)calculatePostionForSubLayout:(EUILayout *)layout
+                        preSubLayout:(EUILayout *)preSubLayout
+                             canvers:(CalculatCanvers *)canvers
+{}
+
+#pragma mark -
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
     CGSize size = {0};
@@ -169,6 +245,9 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    if (self.layoutSubviewsBlock) {
+        self.layoutSubviewsBlock();
+    }
 }
 
 @end

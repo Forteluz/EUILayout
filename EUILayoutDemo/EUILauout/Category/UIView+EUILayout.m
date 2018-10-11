@@ -66,10 +66,11 @@ static const void *kDCLayoutYogaAssociatedKey = &kDCLayoutYogaAssociatedKey;
     }
 }
 
-- (void)eui_configure:(EUIConfigurationBlock)block {
+- (EUILayout *)eui_configure:(EUIConfigurationBlock)block {
     if (block) {
         block(self.eui_layout);
     }
+    return self.eui_layout;
 }
 
 @end

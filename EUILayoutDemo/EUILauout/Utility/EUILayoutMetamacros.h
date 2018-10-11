@@ -53,4 +53,10 @@
 #define RGBCOLOR(r, g, b)     [UIColor colorWithRed: (r) / 255.0f green: (g) / 255.0f blue: (b) / 255.0f alpha : 1]
 #define DCRandomColor RGBCOLOR(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 
+#pragma mark -
+#define EUIAfter(_QUEUE_, _SEC_ , _BLOCK_) \
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_SEC_ * NSEC_PER_SEC)), _QUEUE_, _BLOCK_)
+
+#define EUIKeyPath(_OBJ_,_KEYPATH_) @(((void)_OBJ_._KEYPATH_,#_KEYPATH_))
+
 #endif /* EUILayoutMetamacros_h */
