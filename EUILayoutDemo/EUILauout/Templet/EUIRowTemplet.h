@@ -6,16 +6,16 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUITemplet.h"
+#import "EUIBaseTemplet.h"
 #import <YogaKit/UIView+Yoga.h>
 
 #define TRow(...) [EUIRowTemplet templetWithItems:@[__VA_ARGS__]]
 
-
 /**
  Row 模板，从上往下顺序布局
  */
-@interface EUIRowTemplet : EUITemplet
+@interface EUIRowTemplet : EUIBaseTemplet
+
 @property (nonatomic, assign) BOOL flexable;
 
 - (void)layoutNodeBased:(EUILayout *)node yoga:(YGLayout *)layout;

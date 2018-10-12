@@ -111,14 +111,16 @@
 
 - (void)layoutTemplet {
     NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
-    
     [self reset];
-    
+    [self layoutNodes:self.nodes];
+}
+
+- (void)layoutNodes:(NSArray *)nodes {
     NSMutableArray <EUITemplet *> *templets = nil;
     EUILayout *lastNode = nil;
     NSInteger index = 0;
     do {
-        EUILayout *layout = [self.nodes objectAtIndex:index];
+        EUILayout *layout = [nodes objectAtIndex:index];
         if (!layout) {
             return;
         }
@@ -128,19 +130,27 @@
 #ifdef DEBUG
         NSCAssert(view, @"EUIError: 找不到 layout:[%@] 的视图!", layout);
 #endif
-        ///< 强制修正视图关系------------->
-        if ( view.superview ) {
-            [view removeFromSuperview];
-        }
-        if (lastNode) {
-            [self.view insertSubview:view aboveSubview:lastNode.view];
+        ///< 强制修正视图关系------------- >
+        if (view.superview) {
+            if (view.superview != self.view) {
+                [view removeFromSuperview];
+            } else {
+                [self.view bringSubviewToFront:view];
+            }
         } else {
-            [self.view addSubview:view];
+            if (lastNode) {
+                [self.view insertSubview:view aboveSubview:lastNode.view];
+            } else {
+                [self.view addSubview:view];
+            }
         }
-        ///< -------------------------->
+        ///< -------------------------- >
+        ///< 视图层级管理 TODO:待修复 UIControl 系列的视图
         if ([layout zPosition] > 0 && layout.zPosition != EUILayoutZPostionDefault) {
             [view.layer setZPosition:layout.zPosition];
         }
+        ///< -------------------------- >
+        ///< 捕捉嵌套模板
         BOOL isTemplet = [layout isKindOfClass:EUITemplet.class];
         if ( isTemplet ) {
             if (!templets) {
@@ -149,13 +159,18 @@
             EUITemplet *templet = (EUITemplet *)layout;
             [templets addObject:templet];
         }
-        [self layoutSubNode:layout preSubNode:lastNode];
+        ///< -------------------------- >
+        ///< Layout 计算
+        [self layoutaSubNode:layout
+                  preSubNode:lastNode
+                      status:&(EUICalculatStatus){}
+                     context:NULL];
+        ///< -------------------------- >
         index ++;
         lastNode = layout;
-    } while (!(index >= self.nodes.count));
+    } while (!(index >= nodes.count));
     
     if (templets.count) {
-        ///< 为 Yoga 等待一个 runloop 重新计算 templet (for fill)
         EUIAfter(dispatch_get_main_queue(), 0.f, ^{
             for (EUITemplet *templet in templets) {
                 [templet layoutTemplet];
@@ -182,42 +197,42 @@
     }
 }
 
-- (void)layoutSubNode:(EUILayout *)layout preSubNode:(EUILayout *)preSubNode {
-    CalculatCanvers canvers = (CalculatCanvers) {
-        .frame = {0},
-        .step  = EPStepNone
-    };
+- (void)layoutaSubNode:(EUILayout *)node
+            preSubNode:(EUILayout *)preSubNode
+                status:(EUICalculatStatus *)canvers
+               context:(EUICalculatContext *)context
+{
     NSInteger loop = 0;
     do {
-        if (!(canvers.step & EPStepX) || !(canvers.step & EPStepY)) {
-            [self calculatePostionForSubLayout:layout
+        if (!(canvers->step & EPStepX) || !(canvers->step & EPStepY)) {
+            [self calculatePostionForSubLayout:node
                                   preSubLayout:preSubNode
-                                       canvers:&canvers];
+                                       canvers:canvers];
         }
-        if (!(canvers.step & EPStepW) || !(canvers.step & EPStepH)) {
-            [self calculateSizeForSubLayout:layout
+        if (!(canvers->step & EPStepW) || !(canvers->step & EPStepH)) {
+            [self calculateSizeForSubLayout:node
                                preSubLayout:preSubNode
-                                    canvers:&canvers];
+                                    canvers:canvers];
         }
         loop ++;
         if (loop >= 3) {
             NSLog(@"捕捉异常计算!!");
         }
-    } while (!(loop <= 3) || (canvers.step & 0xFF) != EPStepFinished);
+    } while (!(loop <= 3) || (canvers->step & 0xFF) != EPStepFinished);
     
-    if ( layout.view ) {
-        [layout.view setFrame:canvers.frame];
+    if ( node.view ) {
+        [node.view setFrame:canvers->frame];
     }
 }
 
 - (void)calculateSizeForSubLayout:(EUILayout *)layout
                      preSubLayout:(EUILayout *)preSubLayout
-                          canvers:(CalculatCanvers *)canvers
+                          canvers:(EUICalculatStatus *)canvers
 {}
 
 - (void)calculatePostionForSubLayout:(EUILayout *)layout
                         preSubLayout:(EUILayout *)preSubLayout
-                             canvers:(CalculatCanvers *)canvers
+                             canvers:(EUICalculatStatus *)canvers
 {}
 
 #pragma mark -

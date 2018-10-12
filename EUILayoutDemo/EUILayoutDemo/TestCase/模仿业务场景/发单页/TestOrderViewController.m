@@ -43,20 +43,17 @@
 
 - (EUITemplet *)orderInputTemplet {
     EUITemplet *one = TRow(self.fromPOIView,
-//                           self.toPOIView,
-//                           TColumn(self.timeView),
-//                           TColumn(self.pNumView, self.tipsView)
+                           self.toPOIView,
+                           TColumn(self.timeView),
+                           TColumn(self.pNumView, self.tipsView)
                            );
-    [one configure:^(EUILayout *layout) {
-        layout.sizeType = EUISizeTypeToVertFit | EUISizeTypeToHorzFill;
-        layout.margin = EUIEdgeMake(10, 10, NSNotFound, 10);
-    }];
-    return one;
+    return TBase(one,
+                 TRow(self.view2,
+                      self.view3));
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TRow(self.backBtn,
-                [self orderInputTemplet]);
+    return TRow(self.backBtn);
 }
 
 @end

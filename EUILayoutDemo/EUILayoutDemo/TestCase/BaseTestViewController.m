@@ -49,7 +49,7 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TRow(self.backBtn);
+    return TRow(self.backBtn, self.view1);
 }
 
 - (void)updateLayout {

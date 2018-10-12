@@ -9,29 +9,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUITemplet.m"
-            timestampString = "561022379.761073"
+            filePath = "EUILauout/Templet/EUIRowTemplet.m"
+            timestampString = "561043356.879099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "-layoutSubNode:preSubNode:"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "-layoutTemplet"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EUILauout/Templet/EUITemplet.m"
-            timestampString = "561022379.761162"
+            timestampString = "561043356.879199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "-layoutSubNode:preSubNode:"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-layoutNodes:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
+            timestampString = "561043356.879261"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "-calculateSizeForSubLayout:preSubLayout:canvers:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

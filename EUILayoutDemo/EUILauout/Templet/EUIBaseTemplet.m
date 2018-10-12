@@ -8,24 +8,6 @@
 
 #import "EUIBaseTemplet.h"
 
-#pragma mark -
-
-#define UpdateGravity(_LAYOUT_,_METHOD_) \
-if (!((_LAYOUT_.gravity & 0XFF) & \
-     (EUIGravity##_METHOD_##Start | EUIGravity##_METHOD_##Center | EUIGravity##_METHOD_##End))) {\
-    _LAYOUT_.gravity |= EUIGravity##_METHOD_##Start;\
-}
-
-#pragma mark -
-
-UIKIT_STATIC_INLINE CGFloat EUIValue(CGFloat one) {
-    return (one == NSNotFound) ? 0 : one;
-}
-
-UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
-    return one != NSNotFound;
-}
-
 @implementation EUIBaseTemplet
 
 @synthesize sizeType = _sizeType;
@@ -40,7 +22,7 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
 
 - (void)calculateSizeForSubLayout:(EUILayout *)layout
                      preSubLayout:(EUILayout *)preSubLayout
-                          canvers:(CalculatCanvers *)canvers
+                          canvers:(EUICalculatStatus *)canvers
 {
     EPStep *step = &(canvers->step);
     CGRect *frame = &(canvers->frame);
@@ -70,6 +52,8 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
         *step |= (EPStepH | EPStepW);
         return;
     }
+    
+    UpdateSizeType(layout, Horz);
 
     if (EUISizeTypeToHorzFit & layout.sizeType) {
         if (frame -> size.height) {
@@ -115,6 +99,8 @@ StepH:
         return;
     }
     
+    UpdateSizeType(layout, Vert)
+    
     if (EUISizeTypeToVertFit & layout.sizeType) {
         if (frame -> size.width) {
             suggestSize.width = frame -> size.width;
@@ -153,7 +139,7 @@ StepH:
 
 - (void)calculatePostionForSubLayout:(EUILayout *)layout
                         preSubLayout:(EUILayout *)preSubLayout
-                             canvers:(CalculatCanvers *)canvers
+                             canvers:(EUICalculatStatus *)canvers
 {
     EPStep *step = &(canvers->step);
     CGRect *frame = &(canvers->frame);
@@ -164,7 +150,7 @@ StepH:
     
     CGFloat sw = NODE_VALID_WIDTH(self);
     if (!sw) {
-        sw = [self suggestConstraintSize].width;
+         sw = [self suggestConstraintSize].width;
     }
     CGFloat lw = frame -> size.width ?: layout.size.width;
     
@@ -175,7 +161,6 @@ StepH:
             frame -> origin.x = layout.origin.x + CGRectGetMinX(self.frame);
         }
         *step |= EPStepX;
-        
         if (!(*step & EPStepY)) {
             goto StepY;
         }
@@ -191,26 +176,24 @@ StepH:
         }
         *step |= EPStepX;
     }
-    else
-        if ((layout.gravity & EUIGravityHorzEnd) && EUIValid(lw) && EUIValid(sw)) {
+    else if ((layout.gravity & EUIGravityHorzEnd) && EUIValid(lw) && EUIValid(sw)) {
+        if (self.isHolder) {
+            frame -> origin.x = sw - EUIValue(self.padding.right) - lw - EUIValue(layout.margin.right);
+        } else {
+            frame -> origin.x = CGRectGetMaxX(self.frame) - EUIValue(self.padding.right) - lw - EUIValue(layout.margin.right);
+        }
+        *step |= EPStepX;
+    }
+    else if (layout.gravity & EUIGravityHorzCenter) {
+        if (EUIValid(sw) && EUIValid(lw)) {
             if (self.isHolder) {
-                frame -> origin.x = sw - EUIValue(self.padding.right) - lw - EUIValue(layout.margin.right);
+                frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
             } else {
-                frame -> origin.x = CGRectGetMaxX(self.frame) - EUIValue(self.padding.right) - lw - EUIValue(layout.margin.right);
+                frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + self.origin.x;
             }
             *step |= EPStepX;
         }
-        else
-            if (layout.gravity & EUIGravityHorzCenter) {
-                if (EUIValid(sw) && EUIValid(lw)) {
-                    if (self.isHolder) {
-                        frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
-                    } else {
-                        frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + self.origin.x;
-                    }
-                    *step |= EPStepX;
-                }
-            }
+    }
     
 StepY:
     if ((*step & EPStepY)) {
@@ -263,7 +246,7 @@ StepY:
     CGSize size = {0};
     EUILayout *lastNode = nil;
     for (EUILayout *one in self.nodes) {
-        [self layoutSubNode:one preSubNode:lastNode];
+//        [self layoutSubNode:one preSubNode:lastNode];
         one.size = one.view.frame.size;
         lastNode = one;
         size.width = MAX(size.width, CGRectGetMaxX(one.view.frame));
@@ -275,15 +258,16 @@ StepY:
 #pragma mark -
 
 - (void)setSizeType:(EUISizeType)sizeType {
-#ifdef DEBUG
-    if (sizeType & (EUISizeTypeToVertFit | EUISizeTypeToHorzFit)) {
-        NSCAssert(NO, @"EUIError : TBase模板无论水平还是垂直都不支持 Fit 计算");
-        return;
-    }
-#endif
-    if (!(_sizeType & sizeType)) {
-        _sizeType |= sizeType;
-    }
+//#ifdef DEBUG
+//    if (sizeType & (EUISizeTypeToVertFit | EUISizeTypeToHorzFit)) {
+//        NSCAssert(NO, @"EUIError : TBase模板无论水平还是垂直都不支持 Fit 计算");
+//        return;
+//    }
+//#endif
+    _sizeType = sizeType;
+//    if (!(_sizeType & sizeType)) {
+//        _sizeType |= sizeType;
+//    }
 }
 
 - (EUISizeType)sizeType {

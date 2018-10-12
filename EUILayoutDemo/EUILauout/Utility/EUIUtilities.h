@@ -26,6 +26,19 @@ typedef enum : unsigned short {
 typedef struct {
     CGRect frame;
     EPStep step;
-} CalculatCanvers;
+} EUICalculatStatus;
+
+typedef struct {
+    CGRect maxBounds;
+    NSInteger index;
+} EUICalculatContext;
+
+UIKIT_STATIC_INLINE CGFloat EUIValue(CGFloat one) {
+    return (one == NSNotFound) ? 0 : one;
+}
+
+UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
+    return one != NSNotFound;
+}
 
 NS_ASSUME_NONNULL_END

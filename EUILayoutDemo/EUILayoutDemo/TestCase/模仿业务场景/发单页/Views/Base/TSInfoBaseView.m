@@ -24,7 +24,7 @@
         [self setHasIcon:YES];
         [self eui_configure:^(EUILayout *layout) {
             layout.maxHeight = 50;
-            layout.sizeType = EUISizeTypeToFit;
+            layout.sizeType = EUISizeTypeToVertFit;
         }];
     }
     return self;

@@ -28,6 +28,7 @@ typedef NS_OPTIONS(NSUInteger, EUIGravity) {
 typedef enum : unsigned short {
     ///< Fit 计算不利于性能优化，且大部分模板不支持 Fit 计算；
     ///< 总是建议多使用 Fill 布局；
+    EUISizeTypeNone = 0,
     EUISizeTypeToHorzFit = 1 << 7, /// 64
     EUISizeTypeToVertFit = 1 << 8, /// 256
     EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),

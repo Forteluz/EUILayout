@@ -34,10 +34,6 @@
 ///< 刷新模板
 - (void)layoutTemplet __attribute__((objc_requires_super));
 
-- (void)layoutSubNode:(EUILayout *)node;
-- (void)layoutSubNode:(EUILayout *)layout preSubNode:(EUILayout *)preSubNode;
-
-
 - (void)addNode:(EUIObject)node;
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
 - (void)removeNode:(EUIObject)node;
@@ -48,6 +44,22 @@
 
 - (CGSize)suggestConstraintSize;
 
+#pragma mark - For Calculate
+
+- (void)layoutNodes:(NSArray *)nodes;
+
+- (void)layoutaSubNode:(EUILayout *)node
+            preSubNode:(EUILayout *)preSubNode
+                status:(EUICalculatStatus *)canvers
+               context:(EUICalculatContext *)context;
+
+- (void)calculateSizeForSubLayout:(EUILayout *)layout
+                     preSubLayout:(EUILayout *)preSubLayout
+                          canvers:(EUICalculatStatus *)canvers;
+
+- (void)calculatePostionForSubLayout:(EUILayout *)layout
+                        preSubLayout:(EUILayout *)preSubLayout
+                             canvers:(EUICalculatStatus *)canvers;
 @end
 
 #pragma mark -

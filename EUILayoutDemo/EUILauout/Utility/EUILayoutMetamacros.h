@@ -59,4 +59,20 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_SEC_ * NSEC_PER_SEC))
 
 #define EUIKeyPath(_OBJ_,_KEYPATH_) @(((void)_OBJ_._KEYPATH_,#_KEYPATH_))
 
+#define UpdateGravity(_LAYOUT_,_METHOD_) \
+if (!((_LAYOUT_.gravity) & \
+(EUIGravity##_METHOD_##Start | EUIGravity##_METHOD_##Center | EUIGravity##_METHOD_##End))) {\
+_LAYOUT_.gravity |= EUIGravity##_METHOD_##Start;\
+}
+
+#define UpdateSizeType(_LAYOUT_, _METHOD_) \
+    if (!(_LAYOUT_.sizeType & (EUISizeTypeTo##_METHOD_##Fill | EUISizeTypeTo##_METHOD_##Fit))) { \
+        EUISizeType type = self.sizeType & (EUISizeTypeTo##_METHOD_##Fill | EUISizeTypeTo##_METHOD_##Fit); \
+        if (type != EUISizeTypeNone) { \
+            _LAYOUT_.sizeType |= type; \
+        } else { \
+            _LAYOUT_.sizeType |= EUISizeTypeTo##_METHOD_##Fill; \
+        } \
+    }
+
 #endif /* EUILayoutMetamacros_h */
