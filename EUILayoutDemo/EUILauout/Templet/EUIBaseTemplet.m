@@ -96,7 +96,7 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
     else if (EUISizeTypeToHorzFill & layout.sizeType) {
         CGFloat l = layout.margin.left;
         CGFloat r = layout.margin.right;
-        CGFloat w = suggestSize.width;
+        CGFloat w = NODE_VALID_WIDTH(self);
         frame -> size.width = w;
         if (EUIValid(l) && EUIValid(r)) {
             frame -> size.width -= l + r;
@@ -140,7 +140,7 @@ StepH:
     else if (EUISizeTypeToVertFill & layout.sizeType) {
         CGFloat t = layout.margin.top;
         CGFloat b = layout.margin.bottom;
-        CGFloat h = suggestSize.height;
+        CGFloat h = NODE_VALID_HEIGHT(self);
         frame -> size.height = h;
         if (EUIValid(t) && EUIValid(b)) {
             frame -> size.height -= t + b;

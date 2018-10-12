@@ -157,7 +157,7 @@
         [self layoutSubNode:layout preSubNode:lastNode];
         index ++;
         lastNode = layout;
-    } while (!(index >= self.nodes.count - 1));
+    } while (!(index >= self.nodes.count));
     
     if (templets.count) {
         ///< 为 Yoga 等待一个 runloop 重新计算 templet (for fill)

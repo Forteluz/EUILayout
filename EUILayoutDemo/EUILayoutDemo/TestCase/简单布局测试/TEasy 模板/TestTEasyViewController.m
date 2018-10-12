@@ -28,7 +28,7 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return [self testTempViews];
+//    return [self testTempViews];
     
     [self.backBtn eui_configure:^(EUILayout *layout) {
         layout.margin = EUIEdgeMake(20, 20, 0, 0);
@@ -89,17 +89,17 @@
     });
     
     return TBase(
-//                 [self.backBtn eui_configure:^(EUILayout *layout) {
-//                    layout.margin.top = 20;
-//                 }],
+                 [self.backBtn eui_configure:^(EUILayout *layout) {
+                    layout.margin.top = 20;
+                 }],
                  [TBase(a) configure:^(EUILayout *layout) {
                     layout.margin.top = 60;
                     layout.maxHeight = 100;
                  }],
-//                 [TBase(b) configure:^(EUILayout *layout) {
-//                    layout.margin.top = 60 + 100 + 20 + 20;
-//                    layout.maxHeight = 130;
-//                 }]
+                 [TBase(b) configure:^(EUILayout *layout) {
+                    layout.margin.top = 60 + 100 + 20 + 20;
+                    layout.maxHeight = 130;
+                 }]
                 );
 }
 
