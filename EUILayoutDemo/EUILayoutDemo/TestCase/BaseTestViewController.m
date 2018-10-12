@@ -43,6 +43,11 @@
 
 - (void)action:(UIButton *)button {}
 
+- (void)gotoVC:(Class)clas {
+    UIViewController *one = [clas new];
+    [self presentViewController:one animated:YES completion:NULL];
+}
+
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
     return TRow(self.backBtn);
 }
@@ -50,6 +55,5 @@
 - (void)updateLayout {
     [self.view.eui_layouter update];
 }
-
 
 @end

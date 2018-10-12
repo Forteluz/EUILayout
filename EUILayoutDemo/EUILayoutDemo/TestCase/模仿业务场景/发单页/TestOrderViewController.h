@@ -6,8 +6,8 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseTestViewController.h"
 
-@interface TestOrderViewController : UIViewController
+@interface TestOrderViewController : BaseTestViewController
 
 @end

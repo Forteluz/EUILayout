@@ -73,4 +73,8 @@ static const void *kDCLayoutYogaAssociatedKey = &kDCLayoutYogaAssociatedKey;
     return self.eui_layout;
 }
 
+- (void)eui_updates:(EUITemplet *)templet {
+    [self.eui_layouter updateTemplet:templet];
+}
+
 @end

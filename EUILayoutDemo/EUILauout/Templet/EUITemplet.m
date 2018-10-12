@@ -15,7 +15,7 @@
 
 @implementation EUITemplet
 
-+ (instancetype)templetWithItems:(NSArray <id> *)items {
++ (instancetype)templetWithItems:(NSArray <EUIObject> *)items {
     if (!items || items.count == 0) {
         return nil;
     }
@@ -38,11 +38,6 @@
 }
 
 #pragma mark -
-
-///< 生命周期处理
-- (void)layoutSubnodes {
-    
-}
 
 #pragma mark -
 
@@ -143,7 +138,7 @@
             [self.view addSubview:view];
         }
         ///< -------------------------->
-        if ([layout zPosition] > 0) {
+        if ([layout zPosition] > 0 && layout.zPosition != EUILayoutZPostionDefault) {
             [view.layer setZPosition:layout.zPosition];
         }
         BOOL isTemplet = [layout isKindOfClass:EUITemplet.class];

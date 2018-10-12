@@ -23,26 +23,25 @@
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUILayout *> *nodes;
 
-@property (assign) CGSize templetSize;
-
 + (instancetype)templetWithItems:(NSArray <EUIObject> *)items;
 
 - (instancetype)init __attribute__((unavailable("use initWithItems: for templet")));
-- (instancetype)initWithItems:(NSArray <id> *)items;
+- (instancetype)initWithItems:(NSArray <EUIObject> *)items;
 
 ///< 在 view 上创建一个布局模板
 - (void)updateInView:(UIView *)view;
 
-///< 刷新布局模板
+///< 刷新模板
 - (void)layoutTemplet __attribute__((objc_requires_super));
-
-///< 刷新布局节点
-- (void)layoutSubnodes;
 
 - (void)layoutSubNode:(EUILayout *)node;
 - (void)layoutSubNode:(EUILayout *)layout preSubNode:(EUILayout *)preSubNode;
 
-- (void)insertNode:(EUIObject)node;
+
+- (void)addNode:(EUIObject)node;
+- (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
+- (void)removeNode:(EUIObject)node;
+- (void)removeNodeAtIndex:(NSInteger)index;
 
 ///< Reset
 - (void)reset;

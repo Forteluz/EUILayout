@@ -60,6 +60,13 @@
     if (w > 0) layout.width  = YGPointValue(w);
     if (h > 0) layout.height = YGPointValue(h);
     
+    if (node.maxHeight) {
+        layout.maxHeight = YGPointValue(node.maxHeight);
+    }
+    if (node.maxWidth) {
+        layout.maxWidth = YGPointValue(node.maxWidth);
+    }
+    
     layout.flexGrow = h == 0 ? 1 : 0;
     layout.flexShrink = h == 0 ? 1 : 0;
     layout.alignSelf = YGAlignFlexStart;
@@ -73,6 +80,11 @@
     layout.flexGrow = 1;
     layout.flexShrink = 1;
     layout.alignSelf = YGAlignStretch;
+}
+
+- (CGSize)sizeThatFits:(CGSize)constrainedSize {
+    CGSize size = CGSizeZero;
+    return size;
 }
 
 @end

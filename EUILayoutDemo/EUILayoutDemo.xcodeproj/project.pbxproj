@@ -10,6 +10,13 @@
 		0DB8DFBF3CAE2F6AC24B83A8 /* Pods_EUILayoutDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0E1BA40A0FB6019010A613 /* Pods_EUILayoutDemoTests.framework */; };
 		16380FF197815A9D3F3B959E /* Pods_EUILayoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E32BCD7DA2E9C6B05CE483A /* Pods_EUILayoutDemoUITests.framework */; };
 		914EA5141BBDB884A53B6D1B /* Pods_EUILayoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863E148CD689D85239C01AB5 /* Pods_EUILayoutDemo.framework */; };
+		D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B0217053BA00C2D920 /* TestViewController2.m */; };
+		D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B72170763C00C2D920 /* TSInfoBaseView.m */; };
+		D54756BA2170777400C2D920 /* icon_detail_g@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D54756B92170777400C2D920 /* icon_detail_g@3x.png */; };
+		D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756BF21707DA500C2D920 /* TSPOIInfoView.m */; };
+		D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756C221707DBE00C2D920 /* TSTimeInfoView.m */; };
+		D54756C921707E0C00C2D920 /* TSPNumInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756C821707E0C00C2D920 /* TSPNumInfoView.m */; };
+		D54756CC21707E2000C2D920 /* TSTipsInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756CB21707E2000C2D920 /* TSTipsInfoView.m */; };
 		D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCC4215A08DA002D137F /* AppDelegate.m */; };
 		D57CFCC8215A08DA002D137F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCC7215A08DA002D137F /* ViewController.m */; };
 		D57CFCCB215A08DA002D137F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57CFCC9215A08DA002D137F /* Main.storyboard */; };
@@ -65,6 +72,19 @@
 		AEEDAD7ECA1C639AE61742CF /* Pods-EUILayoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemo/Pods-EUILayoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D51E7B1AAA716A5C15048894 /* Pods-EUILayoutDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoTests/Pods-EUILayoutDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D5379416216F010D0071E624 /* EUIUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIUtilities.h; sourceTree = "<group>"; };
+		D54756AF217053BA00C2D920 /* TestViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController2.h; sourceTree = "<group>"; };
+		D54756B0217053BA00C2D920 /* TestViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController2.m; sourceTree = "<group>"; };
+		D54756B62170763C00C2D920 /* TSInfoBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSInfoBaseView.h; sourceTree = "<group>"; };
+		D54756B72170763C00C2D920 /* TSInfoBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSInfoBaseView.m; sourceTree = "<group>"; };
+		D54756B92170777400C2D920 /* icon_detail_g@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_detail_g@3x.png"; sourceTree = "<group>"; };
+		D54756BE21707DA500C2D920 /* TSPOIInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPOIInfoView.h; sourceTree = "<group>"; };
+		D54756BF21707DA500C2D920 /* TSPOIInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPOIInfoView.m; sourceTree = "<group>"; };
+		D54756C121707DBE00C2D920 /* TSTimeInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTimeInfoView.h; sourceTree = "<group>"; };
+		D54756C221707DBE00C2D920 /* TSTimeInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSTimeInfoView.m; sourceTree = "<group>"; };
+		D54756C721707E0C00C2D920 /* TSPNumInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPNumInfoView.h; sourceTree = "<group>"; };
+		D54756C821707E0C00C2D920 /* TSPNumInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPNumInfoView.m; sourceTree = "<group>"; };
+		D54756CA21707E2000C2D920 /* TSTipsInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTipsInfoView.h; sourceTree = "<group>"; };
+		D54756CB21707E2000C2D920 /* TSTipsInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSTipsInfoView.m; sourceTree = "<group>"; };
 		D57CFCC0215A08DA002D137F /* EUILayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EUILayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57CFCC3215A08DA002D137F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D57CFCC4215A08DA002D137F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -168,6 +188,32 @@
 				4E32BCD7DA2E9C6B05CE483A /* Pods_EUILayoutDemoUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D54756B22170754100C2D920 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D54756BB21707D4F00C2D920 /* Base */,
+				D54756BE21707DA500C2D920 /* TSPOIInfoView.h */,
+				D54756BF21707DA500C2D920 /* TSPOIInfoView.m */,
+				D54756C121707DBE00C2D920 /* TSTimeInfoView.h */,
+				D54756C221707DBE00C2D920 /* TSTimeInfoView.m */,
+				D54756C721707E0C00C2D920 /* TSPNumInfoView.h */,
+				D54756C821707E0C00C2D920 /* TSPNumInfoView.m */,
+				D54756CA21707E2000C2D920 /* TSTipsInfoView.h */,
+				D54756CB21707E2000C2D920 /* TSTipsInfoView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D54756BB21707D4F00C2D920 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D54756B92170777400C2D920 /* icon_detail_g@3x.png */,
+				D54756B62170763C00C2D920 /* TSInfoBaseView.h */,
+				D54756B72170763C00C2D920 /* TSInfoBaseView.m */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		D57CFCB7215A08DA002D137F = {
@@ -317,6 +363,8 @@
 		D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */ = {
 			isa = PBXGroup;
 			children = (
+				D54756AF217053BA00C2D920 /* TestViewController2.h */,
+				D54756B0217053BA00C2D920 /* TestViewController2.m */,
 				D5DE6C29215A242D002ACBAF /* 发单页 */,
 				D5DE6C25215A23F0002ACBAF /* 列表页 */,
 			);
@@ -337,6 +385,7 @@
 			children = (
 				D5DE6C2A215A243F002ACBAF /* TestOrderViewController.h */,
 				D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */,
+				D54756B22170754100C2D920 /* Views */,
 			);
 			path = "发单页";
 			sourceTree = "<group>";
@@ -474,6 +523,7 @@
 				D57CFCD0215A08DB002D137F /* LaunchScreen.storyboard in Resources */,
 				D57CFCCD215A08DB002D137F /* Assets.xcassets in Resources */,
 				D57CFCCB215A08DA002D137F /* Main.storyboard in Resources */,
+				D54756BA2170777400C2D920 /* icon_detail_g@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,18 +706,24 @@
 				D5D852A4215A0A4F007D9CFF /* EUILayouter.m in Sources */,
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
+				D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
+				D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */,
 				D57CFCD3215A08DB002D137F /* main.m in Sources */,
 				D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */,
 				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
+				D54756C921707E0C00C2D920 /* TSPNumInfoView.m in Sources */,
+				D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
 				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
+				D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */,
 				D5A8D620215CBF0200EE881E /* EUIBaseTemplet.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
 				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
 				D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */,
+				D54756CC21707E2000C2D920 /* TSTipsInfoView.m in Sources */,
 				D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */,
 				D5A8D633215F58C600EE881E /* EUILayoutValue.m in Sources */,
 			);

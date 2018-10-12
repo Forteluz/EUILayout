@@ -47,6 +47,7 @@
     return TRow(self.backBtn,
                 self.view1,
                 self.view2,
+                self.view3
                 );
 }
 

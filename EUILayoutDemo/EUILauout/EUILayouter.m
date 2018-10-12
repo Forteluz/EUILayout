@@ -40,16 +40,12 @@
 - (void)updateTemplet:(EUITemplet *)templet {
     if ([templet isHolder]) {
         [templet updateInView:self.rootContainer];
-        __weak typeof(templet) theTp = templet;
-        [self.rootContainer setLayoutSubviewsBlock:^{
-            [theTp layoutSubnodes];
-        }];
     } else {
         EUITempletView *one = [self.view viewWithTag:1001];
-        if ( one ) {
+        if ( one && one.superview ) {
             [one removeFromSuperview];
-            (one = nil);
         }
+        one = nil;
     }
     EUIAfter(dispatch_get_main_queue(), 0, ^{
         [templet layoutTemplet];

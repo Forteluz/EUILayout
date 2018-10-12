@@ -28,8 +28,6 @@
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-//    return [self testTempViews];
-    
     [self.backBtn eui_configure:^(EUILayout *layout) {
         layout.margin = EUIEdgeMake(20, 20, 0, 0);
         layout.width = 50;
@@ -57,8 +55,8 @@
         layout.sizeType = EUISizeTypeToFit;
     }];
     
-//    ///< 模板嵌套
-    return TBase(self.view1,self.view2, self.view3, self.view4);
+    ///< 模板嵌套
+    return TBase(self.view1,self.view2, self.view3, self.view4, self.backBtn);
 }
 
 - (void)action:(UIButton *)button {

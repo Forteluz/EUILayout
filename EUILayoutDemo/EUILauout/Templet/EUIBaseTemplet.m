@@ -38,10 +38,6 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
     return self;
 }
 
-- (void)layoutSubnodes {
-    [super layoutSubnodes];
-}
-
 - (void)calculateSizeForSubLayout:(EUILayout *)layout
                      preSubLayout:(EUILayout *)preSubLayout
                           canvers:(CalculatCanvers *)canvers

@@ -24,5 +24,6 @@
 
 - (void)action:(UIButton *)button;
 - (void)updateLayout;
+- (void)gotoVC:(Class)clas;
 
 @end

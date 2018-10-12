@@ -28,7 +28,7 @@
         _sizeType  = EUISizeTypeToFill;
         _margin    = EUIEdgeMake(0, 0, 0, 0);
         _padding   = EUIEdgeMake(0, 0, 0, 0);
-        _zPosition = EUILayoutZPostionNormal;
+        _zPosition = EUILayoutZPostionDefault;
         _maxWidth  = NSNotFound;
         _maxHeight = NSNotFound;
         [self setFrame:(CGRect){NSNotFound,NSNotFound,NSNotFound,NSNotFound}];

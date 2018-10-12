@@ -11,7 +11,12 @@
 
 #define TRow(...) [EUIRowTemplet templetWithItems:@[__VA_ARGS__]]
 
+
+/**
+ Row 模板，从上往下顺序布局
+ */
 @interface EUIRowTemplet : EUITemplet
+@property (nonatomic, assign) BOOL flexable;
 
 - (void)layoutNodeBased:(EUILayout *)node yoga:(YGLayout *)layout;
 - (void)layoutTempletBased:(EUILayout *)node yoga:(YGLayout *)layout;

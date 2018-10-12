@@ -22,6 +22,8 @@
     _SETButton(4, @"");
     _SETButton(5, @"");
     _SETButton(6, @"");
+    
+    [self updateLayout];
 }
 
 - (void)action:(UIButton *)button {
@@ -32,7 +34,7 @@
 
 - (void)insertLayout {
     UIButton *button = [TestFactory creatButton:@"插入的 button" tag:100];
-    [self.view.eui_layouter.rootTemplet insertNode:button];
+    [self.view.eui_layouter.rootTemplet addNode:button];
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {

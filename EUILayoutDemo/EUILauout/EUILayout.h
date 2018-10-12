@@ -40,8 +40,9 @@ typedef enum : unsigned short {
 
 ///<
 typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
+    EUILayoutZPostionDefault = 1,    ///< Default
     EUILayoutZPostionLow     = 100,
-    EUILayoutZPostionNormal  = 1000,  ///< Default
+    EUILayoutZPostionNormal  = 1000,
     EUILayoutZPostionHigh    = 10000,
 };
 
