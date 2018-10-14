@@ -91,8 +91,4 @@
     return one;
 }
 
-- (BOOL)needYogaRootContainer {
-    return YES;
-}
-
 @end

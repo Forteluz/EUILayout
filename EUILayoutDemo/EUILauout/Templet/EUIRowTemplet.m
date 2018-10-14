@@ -26,6 +26,14 @@
                       preSubNode:nil
                           status:&status
                          context:NULL];
+            if (status.frame.size.height == 0) {
+#ifdef DEBUG
+                NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", node);
+#endif
+            }
+            ///< -------------------------- >
+            node.height = status.frame.size.height;
+            ///< -------------------------- >
             totalHeight += status.frame.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
         } else {
             [fillNodes addObject:node];
@@ -77,10 +85,10 @@
     CGSize size = CGSizeZero;
     EUIEdge *margin = self.margin;
     if (self.sizeType & EUISizeTypeToHorzFill) {
-        size.width = constrainedSize.width - margin.left - margin.right;
+        size.width = constrainedSize.width - EUIValue(margin.left) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToVertFill) {
-        size.height = constrainedSize.height - margin.top - margin.right;
+        size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.bottom);
     }
     if (self.sizeType & EUISizeTypeToFit) {
         EUILayout *lastOne = nil;
@@ -96,7 +104,7 @@
                 size.width = MAX(size.width, one.size.width);
             }
             if (self.sizeType & EUISizeTypeToVertFit) {
-                size.height += (one.size.height + one.margin.top + one.margin.bottom);
+                size.height += (one.size.height + EUIValue(one.margin.top) + EUIValue(one.margin.bottom));
             }
         }
     }

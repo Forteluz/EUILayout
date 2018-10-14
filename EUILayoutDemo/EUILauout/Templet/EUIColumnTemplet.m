@@ -26,6 +26,9 @@
                       preSubNode:nil
                           status:&status
                          context:NULL];
+            ///< -------------------------- >
+            node.width = status.frame.size.width;
+            ///< -------------------------- >
             totalWidth += status.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
         } else {
             [fillNodes addObject:node];
@@ -76,10 +79,10 @@
     CGSize size = CGSizeZero;
     EUIEdge *margin = self.margin;
     if (self.sizeType & EUISizeTypeToHorzFill) {
-        size.width = constrainedSize.width - margin.left - margin.right;
+        size.width = constrainedSize.width - EUIValue(margin.left) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToVertFill) {
-        size.height = constrainedSize.height - margin.top - margin.right;
+        size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.bottom);
     }
     if (self.sizeType & EUISizeTypeToFit) {
         EUILayout *lastOne = nil;
@@ -90,9 +93,17 @@
             [self calculateSizeForSubLayout:one
                                preSubLayout:lastOne
                                     canvers:&status];
-            one.size = status.frame.size;
+            ///< -------------------------- >
+            ///< 缓存已经计算过的子节点size
+            if (status.frame.size.height > 0) {
+                one.height = status.frame.size.height;
+            }
+            if (status.frame.size.width > 0) {
+                one.width = status.frame.size.width;
+            }
+            ///< -------------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
-                size.width += (one.size.width + one.margin.left + one.margin.right);
+                size.width += (one.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
             }
             if (self.sizeType & EUISizeTypeToVertFit) {
                 size.height = MAX(size.height, one.size.height);

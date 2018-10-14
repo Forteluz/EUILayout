@@ -22,10 +22,7 @@
     _SETButton(4, @"测试4");
     _SETButton(5, @"测试5");
     _SETButton(6, @"测试6");
-    
-    EUITemplet *one = nil;
-    [one addNode:nil];
-    
+
     [self.view eui_creatLayouterByDelegate:self];
     [self.view.eui_layouter update];
 }
@@ -36,6 +33,10 @@
     [self.view1 eui_configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
     }];
+    [self.view3 eui_configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
+        layout.gravity = EUIGravityHorzEnd;
+    }];
     [self.view4 eui_configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
         layout.gravity = EUIGravityVertCenter;
@@ -43,10 +44,12 @@
     [self.view6 eui_configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFit;
     }];
+    
     EUITemplet *one = TRow(self.view1,
                            self.view2,
                            self.view3,
                            TColumn(self.view4, self.view5, self.view6));
+    
     [one configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
         layout.margin.top = 20;

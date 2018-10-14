@@ -43,9 +43,4 @@
  */
 - (void)updateTemplet:(EUITemplet *)templet;
 
-/*!
- *  @brief 创建一个模板
- */
-- (EUITemplet *)bulidTemplet:(EUITemplet *)templet;
-
 @end

@@ -54,7 +54,12 @@
             suggestSize.height = layout.size.height;
         }
         CGSize size = [layout sizeThatFits:suggestSize];
-        frame -> size.width = size.width ?: suggestSize.width;
+        if (size.width == 0) {
+            if (EUIValid(layout.maxWidth)) {
+                size.width = layout.maxWidth;
+            }
+        }
+        frame -> size.width = size.width;
     }
     else if (EUISizeTypeToHorzFill & layout.sizeType) {
         CGFloat w = NODE_VALID_WIDTH(self) - EUIValue(layout.margin.left) - EUIValue(layout.margin.right);
@@ -86,7 +91,12 @@ StepH:
             suggestSize.width = layout.size.width;
         }
         CGSize size = [layout sizeThatFits:suggestSize];
-        frame -> size.height = size.height ?: suggestSize.height;
+        if (size.height == 0) {
+            if (EUIValid(layout.maxHeight)) {
+                size.height = layout.maxHeight;
+            }
+        }
+        frame -> size.height = size.height;
     }
     else if (EUISizeTypeToVertFill & layout.sizeType) {
         CGFloat t = layout.margin.top;
