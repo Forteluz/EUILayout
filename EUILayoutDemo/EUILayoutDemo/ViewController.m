@@ -36,18 +36,21 @@
     [self.view1 eui_configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
     }];
-//    [self.view4 eui_configure:^(EUILayout *layout) {
-//        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-//        layout.gravity = EUIGravityVertCenter;
-//    }];
+    [self.view4 eui_configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+        layout.gravity = EUIGravityVertCenter;
+    }];
+    [self.view6 eui_configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFit;
+    }];
     EUITemplet *one = TRow(self.view1,
                            self.view2,
                            self.view3,
                            TColumn(self.view4, self.view5, self.view6));
-//    [one configure:^(EUILayout *layout) {
-//        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-//        layout.margin.top = 20;
-//    }];
+    [one configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+        layout.margin.top = 20;
+    }];
     return one;
 }
 
