@@ -37,13 +37,14 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+    CGSize one = CGSizeZero;
     if (self.sizeThatFits) {
-        return self.sizeThatFits(size);
+        one = self.sizeThatFits(size);
     }
     if (self.view && [self.view respondsToSelector:@selector(sizeThatFits:)]) {
-        return [self.view sizeThatFits:size];
+        one = [self.view sizeThatFits:size];
     }
-    return CGSizeZero;
+    return one;
 }
 
 - (EUILayout *)configure:(void(^)(EUILayout *))block {

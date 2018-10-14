@@ -33,14 +33,17 @@
 #pragma mark - EUILayouterDataSource
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-//    [self.view1 eui_configure:^(EUILayout *layout) {
+    [self.view1 eui_configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+    }];
+//    [self.view4 eui_configure:^(EUILayout *layout) {
 //        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+//        layout.gravity = EUIGravityVertCenter;
 //    }];
     EUITemplet *one = TRow(self.view1,
                            self.view2,
                            self.view3,
-                           TColumn(self.view5, self.view6));
-    
+                           TColumn(self.view4, self.view5, self.view6));
 //    [one configure:^(EUILayout *layout) {
 //        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
 //        layout.margin.top = 20;

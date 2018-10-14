@@ -16,30 +16,28 @@
     
     NSArray <EUILayout *> *nodes = self.nodes;
     NSMutableArray <EUILayout *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
+    CGFloat totalHeight = 0;
     for (EUILayout *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUICalculatStatus canvers = (EUICalculatStatus) {
-                .frame = {0}, .step = (EPStepX | EPStepY)
+            EUICalculatStatus status = (EUICalculatStatus) {
+                .frame={0}, .step = (EPStepX | EPStepY)
             };
             [self layoutaSubNode:node
                       preSubNode:nil
-                          status:&canvers
+                          status:&status
                          context:NULL];
+            totalHeight += status.frame.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
         } else {
             [fillNodes addObject:node];
         }
     }
-    [self updateFilterNodes:fillNodes];
-    [self layoutNodes:nodes];
-}
-
-- (void)updateFilterNodes:(NSArray *)fillNodes {
     if (fillNodes.count > 0) {
-        CGFloat ah = NODE_VALID_HEIGHT(self) / fillNodes.count;
+        CGFloat ah = (NODE_VALID_HEIGHT(self) - totalHeight) / fillNodes.count;
         for (EUILayout *node in fillNodes) {
             node.height = ah;
         }
     }
+    [self layoutNodes:nodes];
 }
 
 - (BOOL)isFilterNode:(EUILayout *)layout {

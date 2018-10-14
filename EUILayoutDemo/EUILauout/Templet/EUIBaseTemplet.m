@@ -57,12 +57,7 @@
         frame -> size.width = size.width ?: suggestSize.width;
     }
     else if (EUISizeTypeToHorzFill & layout.sizeType) {
-        CGFloat l = layout.margin.left;
-        CGFloat r = layout.margin.right;
-        CGFloat w = NODE_VALID_WIDTH(self);
-        if (EUIValid(l) && EUIValid(r)) {
-            w -= l + r;
-        }
+        CGFloat w = NODE_VALID_WIDTH(self) - EUIValue(layout.margin.left) - EUIValue(layout.margin.right);
         if (EUIValid(layout.maxWidth) && (frame -> size.width > layout.maxWidth)) {
             w = layout.maxWidth;
         }

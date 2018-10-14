@@ -16,20 +16,27 @@
     
     NSArray <EUILayout *> *nodes = self.nodes;
     NSMutableArray <EUILayout *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
+    CGFloat totalWidth = 0;
     for (EUILayout *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUICalculatStatus canvers = (EUICalculatStatus) {
-                .frame = {0}, .step = (EPStepX | EPStepY)
+            EUICalculatStatus status = (EUICalculatStatus) {
+                .frame={0}, .step = (EPStepX | EPStepY)
             };
             [self layoutaSubNode:node
                       preSubNode:nil
-                          status:&canvers
+                          status:&status
                          context:NULL];
+            totalWidth += status.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
         } else {
             [fillNodes addObject:node];
         }
     }
-    [self updateFilterNodes:fillNodes];
+    if (fillNodes.count > 0) {
+        CGFloat value = (NODE_VALID_WIDTH(self) - totalWidth) / fillNodes.count;
+        for (EUILayout *node in fillNodes) {
+            node.width = value;
+        }
+    }
     [self layoutNodes:nodes];
 }
 
@@ -41,15 +48,6 @@
         return YES;
     }
     return NO;
-}
-
-- (void)updateFilterNodes:(NSArray *)fillNodes {
-    if (fillNodes.count > 0) {
-        CGFloat value = NODE_VALID_WIDTH(self) / fillNodes.count;
-        for (EUILayout *node in fillNodes) {
-            node.width = value;
-        }
-    }
 }
 
 - (void)calculatePostionForSubLayout:(EUILayout *)layout
