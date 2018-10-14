@@ -6,10 +6,10 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUIRowTemplet.h"
+#import "EUIBaseTemplet.h"
 
 #define TColumn(...) [EUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
 
-@interface EUIColumnTemplet : EUIRowTemplet
+@interface EUIColumnTemplet : EUIBaseTemplet
 
 @end

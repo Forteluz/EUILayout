@@ -48,7 +48,6 @@
         one = nil;
     }
     EUIAfter(dispatch_get_main_queue(), 0, ^{
-        
         [templet layoutTemplet];
     });
     [self setRootTemplet:templet];

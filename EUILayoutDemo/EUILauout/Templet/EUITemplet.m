@@ -39,8 +39,6 @@
 
 #pragma mark -
 
-#pragma mark -
-
 - (void)updateInView:(UIView *)view {
     [self setView:view];
     if ( view ) {
@@ -68,7 +66,7 @@
      }];
 }
 
-- (void)insertNode:(EUIObject)item {
+- (void)addNode:(EUIObject)item {
     if (!item) {
         return;
     }
@@ -77,9 +75,9 @@
         return;
     }
     NSMutableArray *one = _nodes.mutableCopy;
-//    [one insertObject:node atIndex:0];
     [one addObject:node];
     _nodes = one.copy;
+
     [self layoutTemplet];
 }
 
@@ -100,11 +98,9 @@
 }
 
 - (CGSize)suggestConstraintSize {
-    ///< 当遇到计算边缘时（bounds）,
-    CGSize ssize = [(EUITemplet *)self.templet suggestConstraintSize];
     CGSize msize = (CGSize) {
-        NODE_VALID_WIDTH(self) ?: ssize.width,
-        NODE_VALID_HEIGHT(self) ?: ssize.height
+        EUIValid(self.maxWidth) ? self.maxWidth :NODE_VALID_WIDTH(self),
+        EUIValid(self.maxHeight) ? self.maxHeight : NODE_VALID_HEIGHT(self)
     };
     return msize;
 }
@@ -137,7 +133,8 @@
             } else {
                 [self.view bringSubviewToFront:view];
             }
-        } else {
+        }
+        if (!view.superview) {
             if (lastNode) {
                 [self.view insertSubview:view aboveSubview:lastNode.view];
             } else {
@@ -150,7 +147,6 @@
             [view.layer setZPosition:layout.zPosition];
         }
         ///< -------------------------- >
-        ///< 捕捉嵌套模板
         BOOL isTemplet = [layout isKindOfClass:EUITemplet.class];
         if ( isTemplet ) {
             if (!templets) {
@@ -160,7 +156,6 @@
             [templets addObject:templet];
         }
         ///< -------------------------- >
-        ///< Layout 计算
         [self layoutaSubNode:layout
                   preSubNode:lastNode
                       status:&(EUICalculatStatus){}

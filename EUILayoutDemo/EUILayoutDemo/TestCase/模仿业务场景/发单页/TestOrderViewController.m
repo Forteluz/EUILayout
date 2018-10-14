@@ -47,13 +47,12 @@
                            TColumn(self.timeView),
                            TColumn(self.pNumView, self.tipsView)
                            );
-    return TBase(one,
-                 TRow(self.view2,
-                      self.view3));
+    return one;
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TRow(self.backBtn);
+    return TRow(self.backBtn,
+                [self orderInputTemplet]);
 }
 
 @end

@@ -28,13 +28,12 @@
 - (instancetype)init __attribute__((unavailable("use initWithItems: for templet")));
 - (instancetype)initWithItems:(NSArray <EUIObject> *)items;
 
-///< 在 view 上创建一个布局模板
 - (void)updateInView:(UIView *)view;
 
-///< 刷新模板
-- (void)layoutTemplet __attribute__((objc_requires_super));
+- (void)layoutTemplet; //__attribute__((objc_requires_super));
 
 - (void)addNode:(EUIObject)node;
+
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
 - (void)removeNode:(EUIObject)node;
 - (void)removeNodeAtIndex:(NSInteger)index;

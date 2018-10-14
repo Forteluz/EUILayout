@@ -23,6 +23,9 @@
     _SETButton(5, @"测试5");
     _SETButton(6, @"测试6");
     
+    EUITemplet *one = nil;
+    [one addNode:nil];
+    
     [self.view eui_creatLayouterByDelegate:self];
     [self.view.eui_layouter update];
 }
@@ -30,18 +33,18 @@
 #pragma mark - EUILayouterDataSource
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    [self.view1 eui_configure:^(EUILayout *layout) {
-        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-    }];
-
+//    [self.view1 eui_configure:^(EUILayout *layout) {
+//        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+//    }];
     EUITemplet *one = TRow(self.view1,
                            self.view2,
                            self.view3,
-                           self.view4);
-    [one configure:^(EUILayout *layout) {
-        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-        layout.margin.top = 20;
-    }];
+                           TColumn(self.view5, self.view6));
+    
+//    [one configure:^(EUILayout *layout) {
+//        layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+//        layout.margin.top = 20;
+//    }];
     return one;
 }
 
