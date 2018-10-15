@@ -7,7 +7,6 @@
 //
 
 #import "EUIBaseTemplet.h"
-#import <YogaKit/UIView+Yoga.h>
 
 #define TRow(...) [EUIRowTemplet templetWithItems:@[__VA_ARGS__]]
 
@@ -17,8 +16,5 @@
 @interface EUIRowTemplet : EUIBaseTemplet
 
 @property (nonatomic, assign) BOOL flexable;
-
-- (void)layoutNodeBased:(EUILayout *)node yoga:(YGLayout *)layout;
-- (void)layoutTempletBased:(EUILayout *)node yoga:(YGLayout *)layout;
 
 @end
