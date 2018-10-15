@@ -19,6 +19,10 @@
     return one;
 }
 
++ (instancetype)edgeZero {
+    return [self edgeWithInsets:UIEdgeInsetsZero];
+}
+
 @end
 
 @implementation EUILayoutMargin

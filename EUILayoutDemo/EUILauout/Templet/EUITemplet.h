@@ -38,6 +38,8 @@
 - (void)removeNode:(EUIObject)node;
 - (void)removeNodeAtIndex:(NSInteger)index;
 
+- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index;
+
 ///< Reset
 - (void)reset;
 

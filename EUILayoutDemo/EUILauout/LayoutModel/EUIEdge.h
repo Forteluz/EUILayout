@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat left;
 @property (nonatomic, assign) CGFloat right;
 + (instancetype)edgeWithInsets:(UIEdgeInsets)insts;
++ (instancetype)edgeZero;
 @end
 
 @interface EUILayoutMargin  : EUIEdge @end

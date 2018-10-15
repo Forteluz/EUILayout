@@ -29,6 +29,12 @@ typedef void (^EUIConfigurationBlock)(EUILayout *layout);
  */
 - (void)eui_creatLayouterByDelegate:(__weak id <EUILayouterDataSource>)delegate;
 
+
+/**
+ Call layouter update!
+ */
+- (void)eui_update;
+
 /**
  将自己作为容器，设置一个布局模板，并更新模板指定的视图
  @param templet 一个模板

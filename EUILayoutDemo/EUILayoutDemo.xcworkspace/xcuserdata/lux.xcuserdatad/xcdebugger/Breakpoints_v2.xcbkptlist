@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EUILauout/Templet/EUITemplet.m"
-            timestampString = "561268986.2185791"
+            timestampString = "561273577.613656"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "-layoutNodes:"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "561268986.218654"
+            timestampString = "561273577.613736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -41,13 +41,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/Templet/EUIBaseTemplet.m"
-            timestampString = "561268986.218708"
+            filePath = "EUILauout/Templet/EUIRowTemplet.m"
+            timestampString = "561273610.1573811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "-calculatePostionForSubLayout:preSubLayout:canvers:"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "-layoutTemplet"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EUILauout/Templet/EUIRowTemplet.m"
+            timestampString = "561273639.2991821"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-isFilterNode:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

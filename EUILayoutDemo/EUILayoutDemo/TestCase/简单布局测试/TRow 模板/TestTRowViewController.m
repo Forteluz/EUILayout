@@ -15,26 +15,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view eui_update];
+}
 
-    _SETButton(1, @"插入 TRow Layout");
-    _SETButton(2, @"按钮2");
-    _SETButton(3, @"按钮3");
-    _SETButton(4, @"");
-    _SETButton(5, @"");
-    _SETButton(6, @"");
+- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+    EUITemplet *edgeT =
+    TRow([self lable:@"边距测试"],
+         TColumn([self button:@"“根模板”内边距测试" tag:1],
+//                 [self button:@"“边距测试模板”内边距距测试" tag:2],
+//                 [self button:@"“边距测试模板”外边距距测试" tag:3]
+                 )
+         );
     
-    [self updateLayout];
-}
-
-- (void)action:(UIButton *)button {
-    switch (button.tag) {
-        case 1: [self insertLayout]; break;
-    }
-}
-
-- (void)insertLayout {
-    UIButton *button = [TestFactory creatButton:@"插入的 button" tag:100];
-    [self.view.eui_layouter.rootTemplet addNode:button];
+    return TRow(edgeT,
+//                [self lable:@"测试2"]
+                );
 }
 
 - (UILabel *)lable:(NSString *)title {
@@ -45,11 +40,40 @@
     return one;
 }
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    EUITemplet *a = TRow([self lable:@"测试1"]);
-    a.padding = EUIEdgeMake(10, 10, 10, 10);
-//    EUITemplet *b = TRow([self lable:@"测试2"]);
-    return a;
+- (UIButton *)button:(NSString *)title tag:(NSInteger)tag {
+    UIButton *one = [UIButton buttonWithType:UIButtonTypeCustom];
+    [one setTitle:title forState:UIControlStateNormal];
+    [one.titleLabel setNumberOfLines:10];
+    [one setTag:tag];
+    [one addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [one setBackgroundColor:DCRandomColor];
+    return one;
+}
+
+- (void)buttonAction:(UIButton *)button {
+    EUITemplet *root = self.view.eui_layouter.rootTemplet;
+    switch (button.tag) {
+        case 1: {
+            [self testPaddingWithTemplet:root];
+        }  break;
+        case 2: {
+            EUITemplet *one = [root nodeAtIndex:0];
+            [self testPaddingWithTemplet:one];
+        } break;
+    }
+    [self.view eui_updates:root];
+}
+
+#pragma mark -
+
+- (void)testPaddingWithTemplet:(EUITemplet *)templet {
+    EUIEdge *padding = EUIEdge.edgeZero;
+    if (templet.padding.left == 0) {
+        padding = EUIEdgeMake(10, 10, 10, 10);
+    }
+    [templet configure:^(EUILayout *layout) {
+        layout.padding = padding;
+    }];
 }
 
 

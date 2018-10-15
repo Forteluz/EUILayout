@@ -66,20 +66,7 @@
      }];
 }
 
-- (void)addNode:(EUIObject)item {
-    if (!item) {
-        return;
-    }
-    EUILayout *node = [EUILayout findNode:item];
-    if (!node) {
-        return;
-    }
-    NSMutableArray *one = _nodes.mutableCopy;
-    [one addObject:node];
-    _nodes = one.copy;
-
-    [self layoutTemplet];
-}
+#pragma mark -
 
 - (void)reset {
     [self cleanTempletSubViewsIfNeeded];
@@ -229,6 +216,31 @@
                         preSubLayout:(EUILayout *)preSubLayout
                              canvers:(EUICalculatStatus *)canvers
 {}
+
+#pragma mark - Node Control
+
+- (void)addNode:(EUIObject)item {
+    if (!item) {
+        return;
+    }
+    EUILayout *node = [EUILayout findNode:item];
+    if (!node) {
+        return;
+    }
+    NSMutableArray *one = _nodes.mutableCopy;
+    [one addObject:node];
+    _nodes = one.copy;
+    
+    [self layoutTemplet];
+}
+
+- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index {
+    NSArray *nodes = self.nodes;
+    if (!nodes || index < 0 || index > nodes.count) {
+        return nil;
+    }
+    return nodes[index];
+}
 
 #pragma mark -
 
