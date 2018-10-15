@@ -15,7 +15,7 @@
                       tag:(NSInteger)tag
 {
     UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [one setBackgroundColor:DCRandomColor];
+    [one setBackgroundColor:EUIRandomColor];
     [one setTitle:title forState:UIControlStateNormal];
     [one setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [one setTag:tag];

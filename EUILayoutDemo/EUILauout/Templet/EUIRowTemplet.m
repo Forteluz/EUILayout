@@ -33,21 +33,21 @@
     CGFloat totalHeight = 0;
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUIParseContext status = (EUIParseContext) {
+            EUIParseContext ctx = (EUIParseContext) {
                 .frame={0},
                 .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
                 .recalculate = YES
             };
-            [self.parser parse:node _:nil _:&status];
-            if (status.frame.size.height == 0) {
+            [self.parser parse:node _:nil _:&ctx];
+            if (ctx.frame.size.height == 0) {
 #ifdef DEBUG
                 NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", node);
 #endif
             }
             ///< -------------------------- >
-            node.height = status.frame.size.height;
+            node.height = ctx.frame.size.height;
             ///< -------------------------- >
-            totalHeight += status.frame.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
+            totalHeight += ctx.frame.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
         } else {
             [fillNodes addObject:node];
         }
@@ -102,12 +102,14 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUIParseContext status = (EUIParseContext) {
+            EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
-            [self.parser parse:one _:lastOne _:&status];
-            one.size = status.frame.size;
+            [self.parser parse:one _:lastOne _:&ctx];
+            ///< ----- Cache size ----- >
+            one.size = ctx.frame.size;
+            ///< ---------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width = MAX(size.width, one.size.width);
             }

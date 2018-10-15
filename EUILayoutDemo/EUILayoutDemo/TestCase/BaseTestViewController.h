@@ -10,7 +10,7 @@
 #import "EUILayoutKit.h"
 #import "TestFactory.h"
 
-@interface BaseTestViewController : UIViewController <EUILayouterDelegate>
+@interface BaseTestViewController : UIViewController <EUILayoutDelegate>
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UIButton *view1;
 @property (nonatomic, strong) UIButton *view2;

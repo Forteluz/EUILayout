@@ -33,16 +33,16 @@
     CGFloat __tw = 0;
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUIParseContext status = (EUIParseContext) {
+            EUIParseContext ctx = (EUIParseContext) {
                 .frame = {0},
                 .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
                 .recalculate = YES
             };
-            [self.parser parse:node _:nil _:&status];
+            [self.parser parse:node _:nil _:&ctx];
             ///< -------------------------- >
-            node.width = status.frame.size.width;
+            node.width = ctx.frame.size.width;
             ///< -------------------------- >
-            __tw += status.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
+            __tw += ctx.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
         } else {
             [fills addObject:node];
         }
@@ -92,20 +92,19 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUIParseContext status = (EUIParseContext) {
+            EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
-            [self.parser parse:one _:lastOne _:&status];
-            ///< -------------------------- >
-            ///< 缓存已经计算过的子节点size
-            if (status.frame.size.height > 0) {
-                one.height = status.frame.size.height;
+            [self.parser parse:one _:lastOne _:&ctx];
+            ///< ----- Cache size ----- >
+            if (ctx.frame.size.height > 0) {
+                one.height = ctx.frame.size.height;
             }
-            if (status.frame.size.width > 0) {
-                one.width = status.frame.size.width;
+            if (ctx.frame.size.width > 0) {
+                one.width = ctx.frame.size.width;
             }
-            ///< -------------------------- >
+            ///< ---------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width += (one.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
             }

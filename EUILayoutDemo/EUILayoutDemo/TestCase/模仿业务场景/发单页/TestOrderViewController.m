@@ -55,7 +55,7 @@
     }];
 }
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     EUITemplet *one = TRow(self.backBtn,
                            [self orderInputTemplet]);
     [one configure:^(EUINode *layout) {

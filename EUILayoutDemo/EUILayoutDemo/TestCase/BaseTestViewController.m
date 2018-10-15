@@ -7,7 +7,6 @@
 //
 
 #import "BaseTestViewController.h"
-#import "EUILayoutMetamacros.h"
 
 @interface BaseTestViewController ()
 @end
@@ -48,12 +47,12 @@
     [self presentViewController:one animated:YES completion:NULL];
 }
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     return TRow(self.backBtn, self.view1);
 }
 
 - (void)updateLayout {
-    [self.view.eui_layouter update];
+    [self.view.eui_layout update];
 }
 
 @end

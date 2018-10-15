@@ -25,7 +25,7 @@
     _SETButton(6, @"测试6");
     
     [self.view eui_setDelegate:self];
-    [self.view.eui_layouter update];
+    [self.view.eui_layout update];
 }
 
 - (void)action:(UIButton *)button {
@@ -43,7 +43,7 @@
 
 #pragma mark - EUILayouterDataSource
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     return TRow(self.backBtn,
                 self.view1,
                 self.view2,

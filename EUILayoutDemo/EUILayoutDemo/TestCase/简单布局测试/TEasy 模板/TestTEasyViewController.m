@@ -8,7 +8,7 @@
 
 #import "TestTEasyViewController.h"
 
-@interface TestTEasyViewController () <EUILayouterDelegate>
+@interface TestTEasyViewController () <EUILayoutDelegate>
 
 @end
 
@@ -27,7 +27,7 @@
     [self updateLayout];
 }
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     [self.backBtn eui_configure:^(EUINode *layout) {
         layout.margin = EUIEdgeMake(20, 20, 0, 0);
         layout.width = 50;
@@ -63,13 +63,13 @@
     switch (button.tag) {
         
     }
-    [self.view.eui_layouter update];
+    [self.view.eui_layout update];
 }
 
 - (EUITemplet *)testTempViews {
     UIView *a = ({
         UIView *one = [UIView new];
-        one.backgroundColor = DCRandomColor;
+        one.backgroundColor = EUIRandomColor;
         one.eui_node.sizeType = EUISizeTypeToVertFit | EUISizeTypeToHorzFill;
         one.eui_node.margin.bottom = one.eui_node.margin.top = 10;
         one.eui_node.maxHeight = 40;
@@ -77,7 +77,7 @@
     });
     UIView *b = ({
         UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        one.backgroundColor = DCRandomColor;
+        one.backgroundColor = EUIRandomColor;
         one.eui_node.sizeType = EUISizeTypeToVertFill | EUISizeTypeToHorzFit;
         one.eui_node.maxHeight = 60;
         one.eui_node.maxWidth = 100;

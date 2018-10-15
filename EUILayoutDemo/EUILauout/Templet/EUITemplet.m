@@ -7,10 +7,11 @@
 //
 
 #import "EUITemplet.h"
+#import "EUINode+Filter.h"
 #import "UIView+EUILayout.h"
 
 @interface EUITemplet()
-@property (nonatomic, copy, readwrite) NSArray <EUINode *> *nodes;
+@property (copy, readwrite) NSArray <EUINode *> *nodes;
 @end
 
 @implementation EUITemplet
@@ -71,21 +72,10 @@
     if ( isTempletNode && [(EUITemplet *)layout isHolder] ) {
         if (!view) {
              view = [EUITempletView new];
-#ifdef DEBUG
-            [view setBackgroundColor:DCRandomColor];
-#endif
             [(EUITemplet *)layout setView:view];
         }
     }
     return view;
-}
-
-- (CGSize)suggestConstraintSize {
-    CGSize msize = (CGSize) {
-        EUIValid(self.maxWidth) ? self.maxWidth :NODE_VALID_WIDTH(self),
-        EUIValid(self.maxHeight) ? self.maxHeight : NODE_VALID_HEIGHT(self)
-    };
-    return msize;
 }
 
 - (void)layoutTemplet {
@@ -157,21 +147,6 @@
     }
 }
 
-- (void)calculateMaxBounds:(CGRect *)bounds byLayout:(EUINode *)layout {
-    EUISizeType type = self.sizeType & 0XFF;
-    if (type & EUISizeTypeToFit) {
-        if (type & EUISizeTypeToHorzFit) {
-            bounds -> size.width = MAX(bounds->size.width, CGRectGetMaxX(layout.view.frame));
-        } else if (type & EUISizeTypeToVertFit) {
-            bounds -> size.height = MAX(bounds->size.height, CGRectGetMaxY(layout.view.frame));
-        } else {
-#ifdef DEBUG
-            NSCAssert(NO, @"EUIError: layout:[%@] 的 sizeType 异常 !", layout);
-#endif
-        }
-    }
-}
-
 - (void)updateSubLayout:(EUINode *)subLayout
            preSublayout:(EUINode *)preSubLayout
                 context:(EUIParseContext *)context
@@ -183,39 +158,7 @@
     [subLayout.view setFrame:context -> frame];
 }
 
-#pragma mark - Node Control
-
-- (void)addNode:(EUIObject)item {
-    if (!item) {
-        return;
-    }
-    EUINode *node = [EUINode findNode:item];
-    if (!node) {
-        return;
-    }
-    NSMutableArray *one = _nodes.mutableCopy;
-    [one addObject:node];
-    _nodes = one.copy;
-    
-    [self layoutTemplet];
-}
-
-- (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
-    NSArray *nodes = self.nodes;
-    if (!nodes || index < 0 || index > nodes.count) {
-        return nil;
-    }
-    return nodes[index];
-}
-
-- (EUIParser *)parser {
-    if (!_parser) {
-         _parser = [EUIParser new];
-    }
-    return _parser;
-}
-
-#pragma mark -
+#pragma mark - Calculate Size
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
     CGSize size = CGSizeZero;
@@ -229,13 +172,13 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUIParseContext status = (EUIParseContext) {
+            EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY)
             };
-            [self updateSubLayout:one
-                     preSublayout:lastOne
-                          context:&status];
-            one.size = status.frame.size;
+            [self.parser parse:one _:lastOne _:&ctx];
+            ///< ----- Cache size ----- >
+            one.size = ctx.frame.size;
+            ///< ----------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width = MAX(size.width, one.size.width);
             }
@@ -245,6 +188,72 @@
         }
     }
     return size;
+}
+
+#pragma mark -
+
+- (CGSize)suggestConstraintSize {
+    CGSize msize = (CGSize) {
+        EUIValid(self.maxWidth) ? self.maxWidth :NODE_VALID_WIDTH(self),
+        EUIValid(self.maxHeight) ? self.maxHeight : NODE_VALID_HEIGHT(self)
+    };
+    return msize;
+}
+
+#pragma mark - Node Filter
+
+- (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
+    NSArray *nodes = self.nodes;
+    if (!nodes || index < 0 || index > nodes.count) {
+        return nil;
+    }
+    return nodes[index];
+}
+
+- (void)addNode:(EUIObject)item {
+    if (!item) {
+        return;
+    }
+    EUINode *node = [EUINode findNode:item];
+    if (!node) {
+        return;
+    }
+    NSMutableArray *one = _nodes.mutableCopy;
+    [one addObject:node];
+    
+    [self setNodes:one.copy];
+    [self layoutTemplet];
+}
+
+- (void)insertNode:(EUIObject)node atIndex:(NSInteger)index {
+    if (!node) {
+        return;
+    }
+    index = EUI_CLAMP(index, 0, self.nodes.count - 1);
+    
+    NSMutableArray *one = _nodes.mutableCopy;
+    [one insertObject:node atIndex:index];
+    [self setNodes:one.copy];
+    [self layoutTemplet];
+}
+
+- (void)removeNodeAtIndex:(NSInteger)index {
+    if (!_nodes || index < 0 || index > _nodes.count) {
+        return;
+    }
+    NSMutableArray *one = _nodes.mutableCopy;
+    [one removeObjectAtIndex:index];
+    [self setNodes:one.copy];
+    [self layoutTemplet];
+}
+
+#pragma mark - Getter
+
+- (EUIParser *)parser {
+    if (!_parser) {
+         _parser = [EUIParser new];
+    }
+    return _parser;
 }
 
 #pragma mark - Setter
@@ -260,11 +269,14 @@
 
 @implementation EUITempletView
 
-+ (EUITempletView *)imitateByView:(UIView *)view {
-    CGRect r = view ? view.bounds : CGRectZero;
-    EUITempletView *one = [[EUITempletView alloc] initWithFrame:r];
-    one.backgroundColor = DCRandomColor;
-    return one;
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if ( self ) {
+#ifdef DEBUG
+        [self setBackgroundColor:EUIRandomColor];
+#endif
+    }
+    return self;
 }
 
 - (void)layoutSubviews {

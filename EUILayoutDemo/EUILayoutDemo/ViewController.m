@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "TestFactory.h"
 
-@interface ViewController() <EUILayouterDelegate>
+@interface ViewController() <EUILayoutDelegate>
 @end
 @implementation ViewController
 
@@ -29,7 +29,7 @@
 
 #pragma mark - EUILayouterDataSource
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     [self.view1 eui_configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
     }];

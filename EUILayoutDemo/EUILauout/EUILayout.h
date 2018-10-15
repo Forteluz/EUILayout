@@ -10,13 +10,15 @@
 #import "EUITemplet.h"
 
 #pragma mark -
+
 @class EUILayout;
-@protocol EUILayouterDelegate <NSObject>
+
+@protocol EUILayoutDelegate <NSObject>
 
 /*!
  *  @brief 返回一个模板
  */
-- (EUITemplet *)templetWithLayouter:(EUILayout *)layouter;
+- (EUITemplet *)templetWithLayout:(EUILayout *)layout;
 
 @end
 
@@ -24,7 +26,7 @@
 
 @property (nonatomic, strong, readonly) UIView *view;
 
-@property (nonatomic, weak) id <EUILayouterDelegate> delegate;
+@property (nonatomic, weak) id <EUILayoutDelegate> delegate;
 
 @property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 

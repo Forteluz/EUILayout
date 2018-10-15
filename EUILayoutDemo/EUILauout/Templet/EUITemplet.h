@@ -15,8 +15,9 @@
 
 #pragma mark -
 
+#ifndef TBase
 #define TBase(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
-#define TEasy(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
+#endif
 
 #pragma mark -
 
@@ -41,7 +42,6 @@
 
 - (void)addNode:(EUIObject)node;
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
-- (void)removeNode:(EUIObject)node;
 - (void)removeNodeAtIndex:(NSInteger)index;
 
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;

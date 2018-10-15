@@ -6,7 +6,7 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUILayouter.h"
+#import "EUILayout.h"
 
 #pragma mark -
 
@@ -21,18 +21,18 @@ NSInteger EUIRootViewTag() {
 
 #pragma mark -
 
-@interface EUILayouter()
+@interface EUILayout()
 @property (nonatomic, strong, readwrite) UIView *view;
 @property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
 @end
 
-@implementation EUILayouter
+@implementation EUILayout
 
 + (instancetype)layouterByView:(UIView *)view {
     if (!view) {
         return nil;
     }
-    EUILayouter *one = [[EUILayouter alloc] init];
+    EUILayout *one = [[EUILayout alloc] init];
     one.view = view;
     return one;
 }
@@ -42,11 +42,11 @@ NSInteger EUIRootViewTag() {
 - (void)update {
     if (!(self.view) ||
         !(self.delegate) ||
-        ![self.delegate respondsToSelector:@selector(templetWithLayouter:)])
+        ![self.delegate respondsToSelector:@selector(templetWithLayout:)])
     {
         return;
     }
-    EUITemplet *templet = [self.delegate templetWithLayouter:self];
+    EUITemplet *templet = [self.delegate templetWithLayout:self];
     [self updateTemplet:templet];
 }
 

@@ -17,7 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = DCRandomColor;
+        self.backgroundColor = EUIRandomColor;
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
         [_button addTarget:self action:@selector(action) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_button];

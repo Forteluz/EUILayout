@@ -22,7 +22,7 @@
     [self.view eui_reload];
 }
 
-- (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
+- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     EUITemplet *edgeT =
 //    TRow([self lable:@"边距测试"],
          TColumn([self button:@"“根模板”内边距测试" tag:1],
@@ -38,7 +38,7 @@
     UILabel *one = [UILabel new];
     one.text = title;
     one.textAlignment = NSTextAlignmentCenter;
-    one.backgroundColor = DCRandomColor;
+    one.backgroundColor = EUIRandomColor;
     return one;
 }
 
@@ -48,12 +48,12 @@
     [one.titleLabel setNumberOfLines:10];
     [one setTag:tag];
     [one addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [one setBackgroundColor:DCRandomColor];
+    [one setBackgroundColor:EUIRandomColor];
     return one;
 }
 
 - (void)buttonAction:(UIButton *)button {
-    EUITemplet *root = self.view.eui_layouter.rootTemplet;
+    EUITemplet *root = self.view.eui_layout.rootTemplet;
     switch (button.tag) {
         case 1: {
             [self testPaddingWithTemplet:root];

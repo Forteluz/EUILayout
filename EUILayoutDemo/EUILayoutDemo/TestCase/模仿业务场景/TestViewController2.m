@@ -30,7 +30,7 @@
         [one addObject:btn];
     }];
     
-    [self.view.eui_layouter updateTemplet:TRow(one)];
+    [self.view.eui_layout updateTemplet:TRow(one)];
 }
 
 - (void)action:(UIButton *)button {

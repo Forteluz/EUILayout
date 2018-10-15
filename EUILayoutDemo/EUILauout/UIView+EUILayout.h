@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EUILayouter.h"
+#import "EUILayout.h"
 
 #pragma mark -
 
@@ -18,20 +18,20 @@ typedef void (^EUIConfigurationBlock)(EUINode *layout);
 @interface UIView (EUILayout)
 
 ///< 获得当前视图的布局管理器，默认是空
-@property (nonatomic, strong, readonly) EUILayouter *eui_layouter;
+@property (nonatomic, strong, readonly) EUILayout *eui_layout;
 
-///< 获得当前视图的布局 Node，该对象是懒加载创建
+///< 获得当前视图的布局 Node (懒加载创建)
 @property (nonatomic, strong, readonly) EUINode *eui_node;
 
 /**
  创建布局管理器并绑定一个 delegate
  @param delegate 指定的代理
  */
-- (void)eui_setDelegate:(__weak id <EUILayouterDelegate>)delegate;
+- (void)eui_setDelegate:(__weak id <EUILayoutDelegate>)delegate;
 
 
 /**
- Call layouter update!
+ Call layout update!
  */
 - (void)eui_reload;
 

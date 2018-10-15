@@ -6,12 +6,9 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "EUILayoutMetamacros.h"
+#import "EUILayoutMacro.h"
 #import "EUIUtilities.h"
-///< Models
-#import "EUILayoutPos.h"
 #import "EUIEdge.h"
 
 #pragma mark -
@@ -121,12 +118,5 @@ typedef id EUIObject;
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
 - (__kindof EUINode *)configure:(void(^)(EUINode *layout))block;
-
-@end
-
-@interface EUINode (Helper)
-
-+ (EUINode * __nullable)findNode:(EUIObject)object;
-+ (NSArray <EUINode *> *)nodesFromItems:(NSArray <EUIObject> *)items;
 
 @end
