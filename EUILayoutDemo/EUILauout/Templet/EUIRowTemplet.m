@@ -7,27 +7,25 @@
 //
 
 #import "EUIRowTemplet.h"
-#import "EUIYParser.h"
 
 @implementation EUIRowTemplet
 
 - (instancetype)initWithItems:(NSArray<EUIObject> *)items {
     self = [super initWithItems:items];
     if (self) {
-        __weak typeof(self) this = self;
-        self.parser.yMan.parsingBlock = ^
-        (EUINode * _Nonnull node,
-         EUINode * _Nonnull preNode,
-         EUICalculatStatus * _Nonnull context)
+        @weakify(self);
+        self.parser.yParser.parsingBlock = ^
+        (EUINode *node, EUINode *preNode, EUIParseContext *context)
         {
-            [this parseY:node _:preNode _:context];
+            @strongify(self);
+            [self parseY:node _:preNode _:context];
         };
     }
     return self;
 }
 
 - (void)layoutTemplet {
-    NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+    EUIAssertMainThread();
     [self reset];
     
     NSArray <EUINode *> *nodes = self.nodes;
@@ -35,9 +33,9 @@
     CGFloat totalHeight = 0;
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUICalculatStatus status = (EUICalculatStatus) {
+            EUIParseContext status = (EUIParseContext) {
                 .frame={0},
-                .step = (EPStepX | EPStepY | EPStepW),
+                .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
                 .recalculate = YES
             };
             [self.parser parse:node _:nil _:&status];
@@ -74,8 +72,8 @@
     return NO;
 }
 
-- (void)parseY:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUICalculatStatus *)context {
-    EPStep *step = &(context->step);
+- (void)parseY:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUIParseContext *)context {
+    EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
     
     CGRect preFrame = preSubLayout ? preSubLayout.view.frame : CGRectZero;
@@ -89,7 +87,7 @@
     } else {
         frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(self.padding.top);
     }
-    *step |= EPStepY;
+    *step |= EUIParsedStepY;
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
@@ -104,8 +102,8 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUICalculatStatus status = (EUICalculatStatus) {
-                .step = (EPStepX | EPStepY),
+            EUIParseContext status = (EUIParseContext) {
+                .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
             [self.parser parse:one _:lastOne _:&status];

@@ -13,44 +13,43 @@
 - (instancetype)initWithItems:(NSArray<EUIObject> *)items {
     self = [super initWithItems:items];
     if (self) {
-        __weak typeof(self) this = self;
-        self.parser.xMan.parsingBlock = ^
-        (EUINode * _Nonnull node,
-         EUINode * _Nonnull preNode,
-         EUICalculatStatus * _Nonnull context)
+        @weakify(self);
+        self.parser.xParser.parsingBlock = ^
+        (EUINode *node, EUINode *preNode,EUIParseContext *context)
         {
-            [this parseX:node _:preNode _:context];
+            @strongify(self);
+            [self parseX:node _:preNode _:context];
         };
     }
     return self;
 }
 
 - (void)layoutTemplet {
-    NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+    EUIAssertMainThread();
     [self reset];
     
     NSArray <EUINode *> *nodes = self.nodes;
-    NSMutableArray <EUINode *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
-    CGFloat totalWidth = 0;
+    NSMutableArray <EUINode *> *fills = [NSMutableArray arrayWithCapacity:nodes.count];
+    CGFloat __tw = 0;
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
-            EUICalculatStatus status = (EUICalculatStatus) {
-                .frame={0},
-                .step = (EPStepX | EPStepY | EPStepH),
+            EUIParseContext status = (EUIParseContext) {
+                .frame = {0},
+                .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
                 .recalculate = YES
             };
             [self.parser parse:node _:nil _:&status];
             ///< -------------------------- >
             node.width = status.frame.size.width;
             ///< -------------------------- >
-            totalWidth += status.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
+            __tw += status.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
         } else {
-            [fillNodes addObject:node];
+            [fills addObject:node];
         }
     }
-    if (fillNodes.count > 0) {
-        CGFloat value = (NODE_VALID_WIDTH(self) - totalWidth) / fillNodes.count;
-        for (EUINode *node in fillNodes) {
+    if (fills.count > 0) {
+        CGFloat value = (NODE_VALID_WIDTH(self) - __tw) / fills.count;
+        for (EUINode *node in fills) {
             node.width = value;
         }
     }
@@ -67,8 +66,8 @@
     return NO;
 }
 
-- (void)parseX:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUICalculatStatus *)context {
-    EPStep *step = &(context->step);
+- (void)parseX:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUIParseContext *)context {
+    EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
     CGRect preFrame = preSubLayout ? preSubLayout.view.frame : CGRectZero;
     if (preSubLayout && CGRectEqualToRect(CGRectZero, preFrame)) {
@@ -78,7 +77,7 @@
     }
     frame -> origin.x = EUIValue(layout.margin.left) + CGRectGetMaxX(preFrame) + EUIValue(preSubLayout.margin.right);
 
-    *step |= EPStepX;
+    *step |= EUIParsedStepX;
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
@@ -93,8 +92,8 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUICalculatStatus status = (EUICalculatStatus) {
-                .step = (EPStepX | EPStepY),
+            EUIParseContext status = (EUIParseContext) {
+                .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
             [self.parser parse:one _:lastOne _:&status];

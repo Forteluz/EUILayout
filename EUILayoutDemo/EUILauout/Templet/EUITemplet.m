@@ -89,7 +89,7 @@
 }
 
 - (void)layoutTemplet {
-    NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+    EUIAssertMainThread();
     [self reset];
     [self layoutNodes:self.nodes];
 }
@@ -139,7 +139,7 @@
             [templets addObject:templet];
         }
         ///< -------------------------- >
-        [self updateSubLayout:layout preSublayout:lastNode context:&(EUICalculatStatus){}];
+        [self updateSubLayout:layout preSublayout:lastNode context:&(EUIParseContext){}];
         ///< -------------------------- >
         index ++;
         lastNode = layout;
@@ -174,7 +174,7 @@
 
 - (void)updateSubLayout:(EUINode *)subLayout
            preSublayout:(EUINode *)preSubLayout
-                context:(EUICalculatStatus *)context
+                context:(EUIParseContext *)context
 {
     [self.parser parse:subLayout _:preSubLayout _:context];
 #ifdef DEBUG
@@ -229,8 +229,8 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            EUICalculatStatus status = (EUICalculatStatus) {
-                .step = (EPStepX | EPStepY)
+            EUIParseContext status = (EUIParseContext) {
+                .step = (EUIParsedStepX | EUIParsedStepY)
             };
             [self updateSubLayout:one
                      preSublayout:lastOne

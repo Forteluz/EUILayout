@@ -13,7 +13,6 @@
 @end
 
 @implementation EUINode
-@synthesize padding = _padding;
 
 + (instancetype)node:(UIView *)view {
     EUINode *one = [[self.class alloc] init];

@@ -11,14 +11,30 @@
 
 #import "EUINode.h"
 
-typedef void (^EUIParsingHandler) (EUINode *node, EUINode *preNode, EUICalculatStatus *context);
+typedef enum : unsigned short {
+    EUIParsedNone  = 0,
+    EUIParsedStepX = 1 << 0,
+    EUIParsedStepY = 1 << 1,
+    EUIParsedStepW = 1 << 2,
+    EUIParsedStepH = 1 << 3,
+    EUIParsedStepDone = 0x00F
+} EUIParsedStep;
+
+typedef struct {
+    CGRect frame;
+    EUIParsedStep step;
+    BOOL recalculate;
+} EUIParseContext;
+
+typedef void (^EUIParsingHandler) (EUINode *node,
+                                   EUINode *preNode,
+                                   EUIParseContext *context);
 
 @protocol EUIParsing <NSObject>
 
-///< 解析器
 - (void)parse:(EUINode *)layout
             _:(EUINode *_Nullable)preLayout
-            _:(EUICalculatStatus *)context;
+            _:(EUIParseContext *)context;
 
 @end
 

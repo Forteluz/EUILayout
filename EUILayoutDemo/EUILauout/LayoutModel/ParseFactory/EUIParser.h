@@ -6,20 +6,27 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUINode.h"
-#import "EUIXParser.h"
-#import "EUIYParser.h"
-#import "EUIWParser.h"
-#import "EUIHParser.h"
 #import "EUIParsing.h"
+
+#ifndef EUIParserClass
+#define EUIParserClass(_CLS_) \
+    @interface _CLS_ : NSObject <EUIParsing> \
+    @property (nonatomic, copy) EUIParsingHandler parsingBlock; \
+    @end
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
+EUIParserClass(EUIXParser);
+EUIParserClass(EUIYParser);
+EUIParserClass(EUIWParser);
+EUIParserClass(EUIHParser);
+
 @interface EUIParser : NSObject <EUIParsing>
-@property (nonatomic, strong) EUIXParser *xMan;
-@property (nonatomic, strong) EUIYParser *yMan;
-@property (nonatomic, strong) EUIWParser *wMan;
-@property (nonatomic, strong) EUIHParser *hMan;
+@property (nonatomic, strong) EUIXParser *xParser;
+@property (nonatomic, strong) EUIYParser *yParser;
+@property (nonatomic, strong) EUIWParser *wParser;
+@property (nonatomic, strong) EUIHParser *hParser;
 @property (nonatomic, copy) EUIParsingHandler parsingBlock;
 @end
 

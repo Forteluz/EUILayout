@@ -26,10 +26,6 @@
 		D57CFCDD215A08DB002D137F /* EUILayoutDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCDC215A08DB002D137F /* EUILayoutDemoTests.m */; };
 		D57CFCE8215A08DB002D137F /* EUILayoutDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */; };
 		D59D8B5121745B8000651060 /* EUIParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5021745B8000651060 /* EUIParser.m */; };
-		D59D8B5521745E4800651060 /* EUIXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5421745E4800651060 /* EUIXParser.m */; };
-		D59D8B5821745E5200651060 /* EUIYParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5721745E5200651060 /* EUIYParser.m */; };
-		D59D8B5B21745E5C00651060 /* EUIWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5A21745E5C00651060 /* EUIWParser.m */; };
-		D59D8B5E21745E6600651060 /* EUIHParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5D21745E6600651060 /* EUIHParser.m */; };
 		D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D626215F227100EE881E /* EUILayoutPos.m */; };
 		D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUIEdge.m */; };
 		D5A8D633215F58C600EE881E /* EUILayoutValue.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D632215F58C600EE881E /* EUILayoutValue.m */; };
@@ -107,14 +103,6 @@
 		D57CFCE9215A08DB002D137F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D59D8B4F21745B8000651060 /* EUIParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIParser.h; sourceTree = "<group>"; };
 		D59D8B5021745B8000651060 /* EUIParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIParser.m; sourceTree = "<group>"; };
-		D59D8B5321745E4800651060 /* EUIXParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIXParser.h; sourceTree = "<group>"; };
-		D59D8B5421745E4800651060 /* EUIXParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIXParser.m; sourceTree = "<group>"; };
-		D59D8B5621745E5200651060 /* EUIYParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIYParser.h; sourceTree = "<group>"; };
-		D59D8B5721745E5200651060 /* EUIYParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIYParser.m; sourceTree = "<group>"; };
-		D59D8B5921745E5C00651060 /* EUIWParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIWParser.h; sourceTree = "<group>"; };
-		D59D8B5A21745E5C00651060 /* EUIWParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIWParser.m; sourceTree = "<group>"; };
-		D59D8B5C21745E6600651060 /* EUIHParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIHParser.h; sourceTree = "<group>"; };
-		D59D8B5D21745E6600651060 /* EUIHParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIHParser.m; sourceTree = "<group>"; };
 		D59D8B5F2174BA4B00651060 /* EUIParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIParsing.h; sourceTree = "<group>"; };
 		D5A8D625215F227100EE881E /* EUILayoutPos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutPos.h; sourceTree = "<group>"; };
 		D5A8D626215F227100EE881E /* EUILayoutPos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUILayoutPos.m; sourceTree = "<group>"; };
@@ -292,17 +280,9 @@
 		D59D8B5221745B8C00651060 /* ParseFactory */ = {
 			isa = PBXGroup;
 			children = (
+				D59D8B5F2174BA4B00651060 /* EUIParsing.h */,
 				D59D8B4F21745B8000651060 /* EUIParser.h */,
 				D59D8B5021745B8000651060 /* EUIParser.m */,
-				D59D8B5321745E4800651060 /* EUIXParser.h */,
-				D59D8B5421745E4800651060 /* EUIXParser.m */,
-				D59D8B5621745E5200651060 /* EUIYParser.h */,
-				D59D8B5721745E5200651060 /* EUIYParser.m */,
-				D59D8B5921745E5C00651060 /* EUIWParser.h */,
-				D59D8B5A21745E5C00651060 /* EUIWParser.m */,
-				D59D8B5C21745E6600651060 /* EUIHParser.h */,
-				D59D8B5D21745E6600651060 /* EUIHParser.m */,
-				D59D8B5F2174BA4B00651060 /* EUIParsing.h */,
 			);
 			path = ParseFactory;
 			sourceTree = "<group>";
@@ -737,8 +717,6 @@
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
 				D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */,
-				D59D8B5821745E5200651060 /* EUIYParser.m in Sources */,
-				D59D8B5521745E4800651060 /* EUIXParser.m in Sources */,
 				D59D8B5121745B8000651060 /* EUIParser.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */,
@@ -752,9 +730,7 @@
 				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
 				D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */,
-				D59D8B5B21745E5C00651060 /* EUIWParser.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUINode.m in Sources */,
-				D59D8B5E21745E6600651060 /* EUIHParser.m in Sources */,
 				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
 				D5A8D627215F227100EE881E /* EUILayoutPos.m in Sources */,
 				D54756CC21707E2000C2D920 /* TSTipsInfoView.m in Sources */,
