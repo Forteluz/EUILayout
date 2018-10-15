@@ -1,6 +1,0 @@
-framework module Pods_EUILayoutDemo {
-  umbrella header "Pods-EUILayoutDemo-umbrella.h"
-
-  export *
-  module * { export * }
-}
