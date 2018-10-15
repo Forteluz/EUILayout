@@ -47,7 +47,7 @@
     return one;
 }
 
-- (EUILayout *)configure:(void(^)(EUILayout *))block {
+- (__kindof EUILayout *)configure:(void(^)(EUILayout *))block {
     if (block) {
         block(self);
     }

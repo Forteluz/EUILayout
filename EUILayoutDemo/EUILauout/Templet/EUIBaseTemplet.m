@@ -62,7 +62,9 @@
         frame -> size.width = size.width;
     }
     else if (EUISizeTypeToHorzFill & layout.sizeType) {
-        CGFloat w = NODE_VALID_WIDTH(self) - EUIValue(layout.margin.left) - EUIValue(layout.margin.right);
+        CGFloat margin  = EUIValue(layout.margin.left) + EUIValue(layout.margin.right);
+        CGFloat padding = EUIValue(self.padding.left) + EUIValue(self.padding.right);
+        CGFloat w = NODE_VALID_WIDTH(self) - margin - padding;
         if (EUIValid(layout.maxWidth) && (frame -> size.width > layout.maxWidth)) {
             w = layout.maxWidth;
         }
@@ -99,12 +101,9 @@ StepH:
         frame -> size.height = size.height;
     }
     else if (EUISizeTypeToVertFill & layout.sizeType) {
-        CGFloat t = layout.margin.top;
-        CGFloat b = layout.margin.bottom;
-        CGFloat h = NODE_VALID_HEIGHT(self);
-        if (EUIValid(t) && EUIValid(b)) {
-            h -= t + b;
-        }
+        CGFloat margin  = EUIValue(layout.margin.top) - EUIValue(layout.margin.bottom);
+        CGFloat padding = EUIValue(self.padding.top) + EUIValue(self.padding.bottom);
+        CGFloat h = NODE_VALID_HEIGHT(self) - margin - padding;
         if (EUIValid(layout.maxHeight) && (frame->size.height > layout.maxHeight)) {
             h = layout.maxHeight;
         }

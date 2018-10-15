@@ -37,11 +37,19 @@
     [self.view.eui_layouter.rootTemplet addNode:button];
 }
 
+- (UILabel *)lable:(NSString *)title {
+    UILabel *one = [UILabel new];
+    one.text = title;
+    one.textAlignment = NSTextAlignmentCenter;
+    one.backgroundColor = DCRandomColor;
+    return one;
+}
+
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    return TRow(self.backBtn,
-                self.view1,
-                self.view2
-                );
+    EUITemplet *a = TRow([self lable:@"测试1"]);
+    a.padding = EUIEdgeMake(10, 10, 10, 10);
+//    EUITemplet *b = TRow([self lable:@"测试2"]);
+    return a;
 }
 
 

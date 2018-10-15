@@ -42,31 +42,24 @@
 #pragma mark -
 
 - (EUITemplet *)orderInputTemplet {
-    return TRow(           [TColumn(self.timeView) configure:^(EUILayout *layout) {
+    return [TRow(self.fromPOIView,
+                 self.toPOIView,
+                 [TColumn(self.timeView) configure:^(EUILayout *layout) {
         layout.sizeType = EUISizeTypeToVertFit;
     }],
-                );
-    return TRow(self.fromPOIView,
-                self.toPOIView,
-                [TColumn(self.timeView) configure:^(EUILayout *layout) {
-                    layout.sizeType = EUISizeTypeToVertFit;
-    }],
-                [TColumn(self.pNumView, self.tipsView) configure:^(EUILayout *layout) {
-                    layout.sizeType = EUISizeTypeToVertFit;
+                 [TColumn(self.pNumView, self.tipsView) configure:^(EUILayout *layout) {
+        layout.sizeType = EUISizeTypeToVertFit;
     }]
-                );
+                 ) configure:^(EUILayout *layout) {
+        layout.padding = EUIEdgeMake(10, 10, 10, 10);
+    }];
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    EUITemplet *one = TRow(
-                           [TColumn(self.timeView) configure:^(EUILayout *layout) {
-        layout.sizeType = EUISizeTypeToVertFit;
-    }],
-                           );
-    
+    EUITemplet *one = TRow(self.backBtn,
+                           [self orderInputTemplet]);
     [one configure:^(EUILayout *layout) {
         layout.margin.top = 40;
-        layout.sizeType = EUISizeTypeToVertFit;
     }];
     return one;
 }

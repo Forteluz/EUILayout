@@ -40,7 +40,8 @@
         }
     }
     if (fillNodes.count > 0) {
-        CGFloat ah = (NODE_VALID_HEIGHT(self) - totalHeight) / fillNodes.count;
+        CGFloat tw = NODE_VALID_HEIGHT(self) - EUIValue(self.padding.top) - EUIValue(self.padding.bottom);
+        CGFloat ah = (tw - totalHeight) / fillNodes.count;
         for (EUILayout *node in fillNodes) {
             node.height = ah;
         }
@@ -72,7 +73,11 @@
             NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preSubLayout);
 #endif
         }
-        frame -> origin.y = EUIValue(layout.margin.top) + CGRectGetMaxY(preFrame) + EUIValue(preSubLayout.margin.bottom);
+        if (preSubLayout) {
+            frame -> origin.y = EUIValue(layout.margin.top) + CGRectGetMaxY(preFrame) + EUIValue(preSubLayout.margin.bottom);
+        } else {
+            frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(self.padding.top);
+        }
         
         *step |= EPStepY;
     }

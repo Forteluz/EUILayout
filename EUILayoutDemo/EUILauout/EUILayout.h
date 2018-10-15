@@ -133,7 +133,7 @@ static const NSInteger EUINone = NSIntegerMax;
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
-- (EUILayout *)configure:(void(^)(EUILayout *layout))block;
+- (__kindof EUILayout *)configure:(void(^)(EUILayout *layout))block;
 
 @end
 
