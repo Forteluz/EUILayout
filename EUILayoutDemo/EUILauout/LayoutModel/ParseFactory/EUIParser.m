@@ -11,7 +11,7 @@
 
 #pragma mark -
 
-#define EUIParsing(...) \
+#define EUIParsePackage(...) \
     [@[__VA_ARGS__] \
         enumerateObjectsUsingBlock:^ \
         (id <EUIParsing> obj, NSUInteger idx, BOOL * _Nonnull stop) { \
@@ -46,21 +46,19 @@
     NSInteger loop = 0;
     do {
         if ((node.gravity & EUIGravityHorzEnd) || (node.gravity & EUIGravityHorzCenter)) {
-            EUIParsing(self.wParser, self.xParser);
+            EUIParsePackage(self.wParser, self.xParser);
         } else {
-            EUIParsing(self.xParser, self.wParser);
+            EUIParsePackage(self.xParser, self.wParser);
         }
         if ((node.gravity & EUIGravityVertEnd) || (node.gravity & EUIGravityVertCenter)) {
-            EUIParsing(self.hParser, self.yParser);
+            EUIParsePackage(self.hParser, self.yParser);
         } else {
-            EUIParsing(self.yParser, self.hParser);
+            EUIParsePackage(self.yParser, self.hParser);
         }
-
         loop ++;
-        if (loop >= exceptions) {
-            NSLog(@"捕捉异常计算!");
-        }
-    } while (!(loop <= exceptions) || (context->step & 0xFF) != EUIParsedStepDone);
+        NSCAssert(loop < exceptions, @"EUIError : 异常的计算!");
+    } while ((loop > exceptions) ||
+         (context->step & 0xFF) != EUIParsedStepDone);
 }
 
 @end

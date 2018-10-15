@@ -117,6 +117,6 @@ typedef id EUIObject;
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
-- (__kindof EUINode *)configure:(void(^)(EUINode *layout))block;
+- (__kindof EUINode *)configure:(void(^)(__kindof EUINode *node))block;
 
 @end

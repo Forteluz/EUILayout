@@ -46,7 +46,7 @@
     return one;
 }
 
-- (__kindof EUINode *)configure:(void(^)(EUINode *))block {
+- (__kindof EUINode *)configure:(void(^)(__kindof EUINode *))block {
     if (block) {
         block(self);
     }
