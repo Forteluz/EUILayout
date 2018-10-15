@@ -11,7 +11,7 @@
 
 #pragma mark -
 @class EUILayouter;
-@protocol EUILayouterDataSource <NSObject>
+@protocol EUILayouterDelegate <NSObject>
 
 /*!
  *  @brief 返回一个模板
@@ -23,7 +23,7 @@
 @interface EUILayouter : NSObject
 
 @property (nonatomic, strong, readonly) UIView *view;
-@property (nonatomic, weak) id <EUILayouterDataSource> dataSource;
+@property (nonatomic, weak) id <EUILayouterDelegate> delegate;
 @property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 
 #pragma mark -

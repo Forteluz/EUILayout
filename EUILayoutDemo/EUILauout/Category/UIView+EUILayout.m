@@ -34,50 +34,50 @@ static const void *kDCLayoutYogaAssociatedKey = &kDCLayoutYogaAssociatedKey;
     }
 }
 
-- (void)eui_creatLayouterByDelegate:(__weak id)delegate {
+- (void)eui_setDelegate:(__weak id)delegate {
     EUILayouter *one = [self eui_layouter];
     if (one == nil) {
         one = [EUILayouter layouterByView:self];
         objc_setAssociatedObject(self, kDCLayouterAssociatedKey, one, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    if (one.dataSource != delegate) {
-        one.dataSource  = delegate;
+    if (one.delegate != delegate) {
+        one.delegate  = delegate;
     }
 }
 
 #pragma mark - DCUILayoutNode
 
-- (EUILayout *)eui_layout {
-    EUILayout *one = objc_getAssociatedObject(self, kDCLayoutNodeAssociatedKey);
+- (EUINode *)eui_node {
+    EUINode *one = objc_getAssociatedObject(self, kDCLayoutNodeAssociatedKey);
     if (one == nil) {
-        one = [EUILayout node:self];
+        one = [EUINode node:self];
         objc_setAssociatedObject(self, kDCLayoutNodeAssociatedKey, one, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return one;
 }
 
-- (void)eui_setLayout:(EUILayout *)layoutNode {
-    EUILayout *one = objc_getAssociatedObject(self, kDCLayoutNodeAssociatedKey);
-    if (!one || one != layoutNode) {
+- (void)eui_setNode:(EUINode *)node {
+    EUINode *one = objc_getAssociatedObject(self, kDCLayoutNodeAssociatedKey);
+    if (!one || one != node) {
         objc_setAssociatedObject(self,
                                  kDCLayoutNodeAssociatedKey,
-                                 layoutNode,
+                                 node,
                                  OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
 
-- (EUILayout *)eui_configure:(EUIConfigurationBlock)block {
+- (EUINode *)eui_configure:(EUIConfigurationBlock)block {
     if (block) {
-        block(self.eui_layout);
+        block(self.eui_node);
     }
-    return self.eui_layout;
+    return self.eui_node;
 }
 
-- (void)eui_update {
+- (void)eui_reload {
     [self.eui_layouter update];
 }
 
-- (void)eui_updates:(EUITemplet *)templet {
+- (void)eui_update:(EUITemplet *)templet {
     [self.eui_layouter updateTemplet:templet];
 }
 

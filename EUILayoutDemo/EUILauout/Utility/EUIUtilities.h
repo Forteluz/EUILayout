@@ -26,6 +26,7 @@ typedef enum : unsigned short {
 typedef struct {
     CGRect frame;
     EPStep step;
+    BOOL recalculate;
 } EUICalculatStatus;
 
 typedef struct {

@@ -1,22 +1,22 @@
 //
-//  EUILayout.m
+//  EUINode.m
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUILayout.h"
+#import "EUINode.h"
 #import "UIView+EUILayout.h"
 
-@interface EUILayout()
+@interface EUINode()
 @end
 
-@implementation EUILayout
+@implementation EUINode
 @synthesize padding = _padding;
 
 + (instancetype)node:(UIView *)view {
-    EUILayout *one = [[self.class alloc] init];
+    EUINode *one = [[self.class alloc] init];
     one.view = view;
     return one;
 }
@@ -47,7 +47,7 @@
     return one;
 }
 
-- (__kindof EUILayout *)configure:(void(^)(EUILayout *))block {
+- (__kindof EUINode *)configure:(void(^)(EUINode *))block {
     if (block) {
         block(self);
     }
@@ -94,14 +94,14 @@
 
 @end
 
-@implementation EUILayout (Helper)
+@implementation EUINode (Helper)
 
-+ (EUILayout * __nullable)findNode:(EUIObject)object {
++ (EUINode * __nullable)findNode:(EUIObject)object {
     if (!object) return nil;
-    EUILayout *one = nil;
+    EUINode *one = nil;
     if ([object isKindOfClass:UIView.class]) {
-        one = [(UIView *)object eui_layout];
-    } else if ([object isKindOfClass:EUILayout.class]) {
+        one = [(UIView *)object eui_node];
+    } else if ([object isKindOfClass:EUINode.class]) {
         one = object;
     } else {
         return nil;
@@ -109,7 +109,7 @@
     return one;
 }
 
-+ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <id> *)items {
++ (NSArray <EUINode *> *)nodesFromItems:(NSArray <id> *)items {
     if (!items || items.count == 0) {
         return nil;
     }
@@ -118,53 +118,12 @@
     }
     NSMutableArray *one = @[].mutableCopy;
     for (id item in items) {
-        EUILayout *node = [EUILayout findNode:item];
+        EUINode *node = [EUINode findNode:item];
         if (node) {
             [one addObject:node];
         }
     }
     return one;
 }
-
-@end
-
-@implementation EUILayout (ForChain)
-
-//- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType {
-//    return ^EUILayout * (EUILayoutSizeType type) {
-//        self.sizeType = type;
-//        return self;
-//    };
-//}
-//
-//- (__kindof EUILayout * (^)(CGFloat))t_height {
-//    return ^EUILayout * (CGFloat h) {
-//        self.size = (CGSize) {self.size.width, h};
-//        return self;
-//    };
-//}
-//
-//- (__kindof EUILayout * (^)(CGFloat))t_width {
-//    return ^EUILayout * (CGFloat w) {
-//        self.size = (CGSize) {w, self.size.height};
-//        return self;
-//    };
-//}
-
-//- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))e_padding {
-//    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-//        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-//        self.padding = insets;
-//        return self;
-//    };
-//}
-//
-//- (__kindof EUILayout * (^)(CGFloat,CGFloat,CGFloat,CGFloat))t_margin {
-//    return ^EUILayout * (CGFloat t,CGFloat l,CGFloat b,CGFloat r) {
-//        UIEdgeInsets insets = UIEdgeInsetsMake(t, l, b, r);
-//        self.margin = insets;
-//        return self;
-//    };
-//}
 
 @end

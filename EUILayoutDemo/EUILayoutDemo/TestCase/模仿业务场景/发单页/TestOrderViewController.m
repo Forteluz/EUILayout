@@ -44,13 +44,13 @@
 - (EUITemplet *)orderInputTemplet {
     return [TRow(self.fromPOIView,
                  self.toPOIView,
-                 [TColumn(self.timeView) configure:^(EUILayout *layout) {
+                 [TColumn(self.timeView) configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToVertFit;
     }],
-                 [TColumn(self.pNumView, self.tipsView) configure:^(EUILayout *layout) {
+                 [TColumn(self.pNumView, self.tipsView) configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToVertFit;
     }]
-                 ) configure:^(EUILayout *layout) {
+                 ) configure:^(EUINode *layout) {
         layout.padding = EUIEdgeMake(10, 10, 10, 10);
     }];
 }
@@ -58,7 +58,7 @@
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
     EUITemplet *one = TRow(self.backBtn,
                            [self orderInputTemplet]);
-    [one configure:^(EUILayout *layout) {
+    [one configure:^(EUINode *layout) {
         layout.margin.top = 40;
     }];
     return one;

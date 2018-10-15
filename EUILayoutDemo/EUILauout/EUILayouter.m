@@ -8,6 +8,19 @@
 
 #import "EUILayouter.h"
 
+#pragma mark -
+
+NSInteger EUIRootViewTag() {
+    static NSInteger tag;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        tag = @"EUILayouterRootContainer".hash;
+    });
+    return tag;
+}
+
+#pragma mark -
+
 @interface EUILayouter()
 @property (nonatomic, strong, readwrite) UIView *view;
 @property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
@@ -28,20 +41,20 @@
 
 - (void)update {
     if (!(self.view) ||
-        !(self.dataSource) ||
-        ![self.dataSource respondsToSelector:@selector(templetWithLayouter:)])
+        !(self.delegate) ||
+        ![self.delegate respondsToSelector:@selector(templetWithLayouter:)])
     {
         return;
     }
-    EUITemplet *templet = [self.dataSource templetWithLayouter:self];
+    EUITemplet *templet = [self.delegate templetWithLayouter:self];
     [self updateTemplet:templet];
 }
 
 - (void)updateTemplet:(EUITemplet *)templet {
     if ([templet isHolder]) {
-        [templet updateInView:self.rootContainer];
+        [templet setView:self.rootContainer];
     } else {
-        EUITempletView *one = [self.view viewWithTag:1001];
+        EUITempletView *one = [self.view viewWithTag:EUIRootViewTag()];
         if ( one && one.superview ) {
             [one removeFromSuperview];
         }
@@ -56,6 +69,7 @@
 
 - (void)updateRootTempletFrame:(EUITemplet *)templet {
     CGRect frame = (CGRect){.origin = {0}, .size = self.view.bounds.size};
+    
     if (EUIValid(templet.x)) {
         frame.origin.x = templet.x;
     } else if (EUIValid(templet.margin.left)) {
@@ -82,10 +96,10 @@
 #pragma mark - Root Container
 
 - (EUITempletView *)rootContainer {
-    EUITempletView *one = [self.view viewWithTag:1001];
+    EUITempletView *one = [self.view viewWithTag:EUIRootViewTag()];
     if (one == nil) {
-        one = [EUITempletView imitateByView:self.view];
-        one.tag = 1001;
+        one = [EUITempletView new];
+        one.tag = EUIRootViewTag();
         [self.view addSubview:one];
     }
     return one;

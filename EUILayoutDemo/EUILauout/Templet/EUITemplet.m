@@ -10,7 +10,7 @@
 #import "UIView+EUILayout.h"
 
 @interface EUITemplet()
-@property (nonatomic, copy, readwrite) NSArray <EUILayout *> *nodes;
+@property (nonatomic, copy, readwrite) NSArray <EUINode *> *nodes;
 @end
 
 @implementation EUITemplet
@@ -26,7 +26,7 @@
 - (instancetype)initWithItems:(NSArray <id> *)items {
     self = [super init];
     if (self) {
-        _nodes = [EUILayout nodesFromItems:items];
+        _nodes = [EUINode nodesFromItems:items];
         self.isHolder = YES;
         self.sizeType = EUISizeTypeToFill;
     }
@@ -39,13 +39,6 @@
 
 #pragma mark -
 
-- (void)updateInView:(UIView *)view {
-    [self setView:view];
-    if ( view ) {
-        [view eui_setLayout:self];
-    }
-}
-
 - (void)cleanTempletSubViewsIfNeeded {
     NSInteger count = self.view.subviews.count;
     if (count == 0) {
@@ -54,8 +47,8 @@
     [self.view.subviews enumerateObjectsUsingBlock:^
      (__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
      {
-         if ([obj.eui_layout isKindOfClass:EUITemplet.class]) {
-             EUITemplet *one = (EUITemplet *)obj.eui_layout;
+         if ([obj.eui_node isKindOfClass:EUITemplet.class]) {
+             EUITemplet *one = (EUITemplet *)obj.eui_node;
              [one cleanTempletSubViewsIfNeeded];
              [one.view removeFromSuperview];
              (one.view = nil);
@@ -72,13 +65,16 @@
     [self cleanTempletSubViewsIfNeeded];
 }
 
-- (UIView *)viewForLayout:(EUILayout *)layout {
+- (UIView *)viewForLayout:(EUINode *)layout {
     UIView *view = layout.view;
     BOOL isTempletNode = [layout isKindOfClass:EUITemplet.class];
     if ( isTempletNode && [(EUITemplet *)layout isHolder] ) {
         if (!view) {
-             view = [EUITempletView imitateByView:nil];
-            [(EUITemplet *)layout updateInView:view];
+             view = [EUITempletView new];
+#ifdef DEBUG
+            [view setBackgroundColor:DCRandomColor];
+#endif
+            [(EUITemplet *)layout setView:view];
         }
     }
     return view;
@@ -100,10 +96,10 @@
 
 - (void)layoutNodes:(NSArray *)nodes {
     NSMutableArray <EUITemplet *> *templets = nil;
-    EUILayout *lastNode = nil;
+    EUINode *lastNode = nil;
     NSInteger index = 0;
     do {
-        EUILayout *layout = [nodes objectAtIndex:index];
+        EUINode *layout = [nodes objectAtIndex:index];
         if (!layout) {
             return;
         }
@@ -143,10 +139,7 @@
             [templets addObject:templet];
         }
         ///< -------------------------- >
-        [self layoutaSubNode:layout
-                  preSubNode:lastNode
-                      status:&(EUICalculatStatus){}
-                     context:NULL];
+        [self updateSubLayout:layout preSublayout:lastNode context:&(EUICalculatStatus){}];
         ///< -------------------------- >
         index ++;
         lastNode = layout;
@@ -164,7 +157,7 @@
     }
 }
 
-- (void)calculateMaxBounds:(CGRect *)bounds byLayout:(EUILayout *)layout {
+- (void)calculateMaxBounds:(CGRect *)bounds byLayout:(EUINode *)layout {
     EUISizeType type = self.sizeType & 0XFF;
     if (type & EUISizeTypeToFit) {
         if (type & EUISizeTypeToHorzFit) {
@@ -179,43 +172,16 @@
     }
 }
 
-- (void)layoutaSubNode:(EUILayout *)node
-            preSubNode:(EUILayout *)preSubNode
-                status:(EUICalculatStatus *)canvers
-               context:(EUICalculatContext *)context
+- (void)updateSubLayout:(EUINode *)subLayout
+           preSublayout:(EUINode *)preSubLayout
+                context:(EUICalculatStatus *)context
 {
-    NSInteger loop = 0;
-    do {
-        if (!(canvers->step & EPStepX) || !(canvers->step & EPStepY)) {
-            [self calculatePostionForSubLayout:node
-                                  preSubLayout:preSubNode
-                                       canvers:canvers];
-        }
-        if (!(canvers->step & EPStepW) || !(canvers->step & EPStepH)) {
-            [self calculateSizeForSubLayout:node
-                               preSubLayout:preSubNode
-                                    canvers:canvers];
-        }
-        loop ++;
-        if (loop >= 3) {
-            NSLog(@"捕捉异常计算!!");
-        }
-    } while (!(loop <= 3) || (canvers->step & 0xFF) != EPStepFinished);
-    
-    if ( node.view ) {
-        [node.view setFrame:canvers->frame];
-    }
+    [self.parser parse:subLayout _:preSubLayout _:context];
+#ifdef DEBUG
+    NSCAssert(subLayout.view, @"EUIError: layout:[%@] 的 view 找不到!", subLayout);
+#endif
+    [subLayout.view setFrame:context -> frame];
 }
-
-- (void)calculateSizeForSubLayout:(EUILayout *)layout
-                     preSubLayout:(EUILayout *)preSubLayout
-                          canvers:(EUICalculatStatus *)canvers
-{}
-
-- (void)calculatePostionForSubLayout:(EUILayout *)layout
-                        preSubLayout:(EUILayout *)preSubLayout
-                             canvers:(EUICalculatStatus *)canvers
-{}
 
 #pragma mark - Node Control
 
@@ -223,7 +189,7 @@
     if (!item) {
         return;
     }
-    EUILayout *node = [EUILayout findNode:item];
+    EUINode *node = [EUINode findNode:item];
     if (!node) {
         return;
     }
@@ -234,7 +200,7 @@
     [self layoutTemplet];
 }
 
-- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index {
+- (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
     NSArray *nodes = self.nodes;
     if (!nodes || index < 0 || index > nodes.count) {
         return nil;
@@ -242,11 +208,52 @@
     return nodes[index];
 }
 
+- (EUIParser *)parser {
+    if (!_parser) {
+         _parser = [EUIParser new];
+    }
+    return _parser;
+}
+
 #pragma mark -
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
-    CGSize size = {0};
+    CGSize size = CGSizeZero;
+    EUIEdge *margin = self.margin;
+    if (self.sizeType & EUISizeTypeToHorzFill) {
+        size.width = constrainedSize.width - margin.left - margin.right;
+    }
+    if (self.sizeType & EUISizeTypeToVertFill) {
+        size.height = constrainedSize.height - margin.top - margin.right;
+    }
+    if (self.sizeType & EUISizeTypeToFit) {
+        EUINode *lastOne = nil;
+        for (EUINode *one in self.nodes) {
+            EUICalculatStatus status = (EUICalculatStatus) {
+                .step = (EPStepX | EPStepY)
+            };
+            [self updateSubLayout:one
+                     preSublayout:lastOne
+                          context:&status];
+            one.size = status.frame.size;
+            if (self.sizeType & EUISizeTypeToHorzFit) {
+                size.width = MAX(size.width, one.size.width);
+            }
+            if (self.sizeType & EUISizeTypeToVertFit) {
+                size.height = MAX(size.height, one.size.height);
+            }
+        }
+    }
     return size;
+}
+
+#pragma mark - Setter
+
+- (void)setView:(UIView *)view {
+    [super setView:view];
+    if ( view ) {
+        [view eui_setNode:self];
+    }
 }
 
 @end

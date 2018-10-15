@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "TestFactory.h"
 
-@interface ViewController() <EUILayouterDataSource>
+@interface ViewController() <EUILayouterDelegate>
 @end
 @implementation ViewController
 
@@ -23,25 +23,25 @@
     _SETButton(5, @"测试5");
     _SETButton(6, @"测试6");
 
-    [self.view eui_creatLayouterByDelegate:self];
-    [self.view.eui_layouter update];
+    [self.view eui_setDelegate:self];
+    [self.view eui_reload];
 }
 
 #pragma mark - EUILayouterDataSource
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
-    [self.view1 eui_configure:^(EUILayout *layout) {
+    [self.view1 eui_configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
     }];
-    [self.view3 eui_configure:^(EUILayout *layout) {
+    [self.view3 eui_configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
         layout.gravity = EUIGravityHorzEnd;
     }];
-    [self.view4 eui_configure:^(EUILayout *layout) {
+    [self.view4 eui_configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
         layout.gravity = EUIGravityVertCenter;
     }];
-    [self.view6 eui_configure:^(EUILayout *layout) {
+    [self.view6 eui_configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFit;
     }];
     
@@ -49,8 +49,7 @@
                            self.view2,
                            self.view3,
                            TColumn(self.view4, self.view5, self.view6));
-    
-    [one configure:^(EUILayout *layout) {
+    [one configure:^(EUINode *layout) {
         layout.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
         layout.margin.top = 20;
     }];

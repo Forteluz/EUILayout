@@ -1,5 +1,5 @@
 //
-//  EUILayout.h
+//  EUINode.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
@@ -17,20 +17,20 @@
 #pragma mark -
 
 typedef NS_OPTIONS(NSUInteger, EUIGravity) {
-    EUIGravityHorzStart  = 1 << 1, /// 1
-    EUIGravityHorzCenter = 1 << 2, /// 2
-    EUIGravityHorzEnd    = 1 << 3, /// 4
-    EUIGravityVertStart  = 1 << 4, /// 8
-    EUIGravityVertCenter = 1 << 5, /// 16
-    EUIGravityVertEnd    = 1 << 6, /// 32
+    EUIGravityHorzStart  = 1 << 1,
+    EUIGravityHorzCenter = 1 << 2,
+    EUIGravityHorzEnd    = 1 << 3,
+    EUIGravityVertStart  = 1 << 4,
+    EUIGravityVertCenter = 1 << 5,
+    EUIGravityVertEnd    = 1 << 6,
 };
 
 typedef enum : unsigned short {
     ///< Fit 计算不利于性能优化，且大部分模板不支持 Fit 计算；
     ///< 总是建议多使用 Fill 布局；
     EUISizeTypeNone = 0,
-    EUISizeTypeToHorzFit = 1 << 7, /// 64
-    EUISizeTypeToVertFit = 1 << 8, /// 256
+    EUISizeTypeToHorzFit = 1 << 7,
+    EUISizeTypeToVertFit = 1 << 8,
     EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),
     
     ///< Fill 的布局更利于性能的优化和理解 ：）
@@ -57,29 +57,18 @@ UIKIT_STATIC_INLINE EUIEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bott
 
 #pragma mark -
 
-///< 只支持 UIView 、EUILayout 、EUITemplet 、NSArray
+///< 只支持 UIView 、EUINode 、EUITemplet 、NSArray
 typedef id EUIObject;
-
-static const NSInteger EUINone = NSIntegerMax;
-
-/** Large positive number signifies that the property(float) is undefined.
- *Earlier we used to have YGundefined as NAN, but the downside of this is that
- *we can't use -ffast-math compiler flag as it assumes all floating-point
- *calculation involve and result into finite numbers. For more information
- *regarding -ffast-math compiler flag in clang, have a look at
- *https://clang.llvm.org/docs/UsersManual.html#cmdoption-ffast-math
- **/
-#define EUIUndefined 10E20F
 
 #pragma mark -
 
-@interface EUILayout : NSObject
+@interface EUINode : NSObject
 
 ///< 作为模板时是否创建容器视图，默认YES
 @property (nonatomic, assign) BOOL isHolder;
 
 ///< layout 所依赖的模板
-@property (nonatomic, weak) EUILayout *templet;
+@property (nonatomic, weak) __kindof EUINode *templet;
 
 ///< layout 负责布局的视图对象
 @property (nonatomic, strong) UIView *view;
@@ -133,22 +122,13 @@ static const NSInteger EUINone = NSIntegerMax;
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
-- (__kindof EUILayout *)configure:(void(^)(EUILayout *layout))block;
+- (__kindof EUINode *)configure:(void(^)(EUINode *layout))block;
 
 @end
 
-@interface EUILayout (Helper)
+@interface EUINode (Helper)
 
-+ (EUILayout * __nullable)findNode:(EUIObject)object;
-+ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <EUIObject> *)items;
++ (EUINode * __nullable)findNode:(EUIObject)object;
++ (NSArray <EUINode *> *)nodesFromItems:(NSArray <EUIObject> *)items;
 
 @end
-
-@interface  EUILayout (CallChaining)
-//- (__kindof EUILayout * (^)(EUILayoutSizeType))t_sizeType;
-//- (__kindof EUILayout * (^)(CGFloat))t_height;
-//- (__kindof EUILayout * (^)(CGFloat))t_width;
-//- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))t_margin;
-//- (__kindof EUILayout * (^)(CGFloat, CGFloat, CGFloat, CGFloat))e_padding;
-@end
-

@@ -22,7 +22,7 @@
         [_button addTarget:self action:@selector(action) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_button];
         [self setHasIcon:YES];
-        [self eui_configure:^(EUILayout *layout) {
+        [self eui_configure:^(EUINode *layout) {
             layout.maxHeight = 50;
             layout.sizeType = EUISizeTypeToVertFit;
         }];

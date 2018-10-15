@@ -24,7 +24,7 @@
     _SETButton(5, @"测试5");
     _SETButton(6, @"测试6");
     
-    [self.view eui_creatLayouterByDelegate:self];
+    [self.view eui_setDelegate:self];
     [self.view.eui_layouter update];
 }
 

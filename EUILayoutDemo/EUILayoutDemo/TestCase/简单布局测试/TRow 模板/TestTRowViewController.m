@@ -15,21 +15,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_update];
+    [self.view eui_reload];
+    
+    EUITemplet *one = nil;
+    one.height = 44;
+    [self.view eui_reload];
 }
 
 - (EUITemplet *)templetWithLayouter:(EUILayouter *)layouter {
     EUITemplet *edgeT =
-    TRow([self lable:@"边距测试"],
+//    TRow([self lable:@"边距测试"],
          TColumn([self button:@"“根模板”内边距测试" tag:1],
 //                 [self button:@"“边距测试模板”内边距距测试" tag:2],
 //                 [self button:@"“边距测试模板”外边距距测试" tag:3]
-                 )
-         );
+                 );
+//         );
     
-    return TRow(edgeT,
-//                [self lable:@"测试2"]
-                );
+    return edgeT;
 }
 
 - (UILabel *)lable:(NSString *)title {
@@ -61,7 +63,7 @@
             [self testPaddingWithTemplet:one];
         } break;
     }
-    [self.view eui_updates:root];
+    [self.view eui_update:root];
 }
 
 #pragma mark -
@@ -71,7 +73,7 @@
     if (templet.padding.left == 0) {
         padding = EUIEdgeMake(10, 10, 10, 10);
     }
-    [templet configure:^(EUILayout *layout) {
+    [templet configure:^(EUINode *layout) {
         layout.padding = padding;
     }];
 }

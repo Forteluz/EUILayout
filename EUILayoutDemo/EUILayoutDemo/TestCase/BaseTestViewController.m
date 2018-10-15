@@ -29,12 +29,12 @@
         UIButton *one = [TestFactory creatButton:@"返回" tag:1];
         [one addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
         [one setBounds:(CGRect){0, 0, 100, 40}];
-        [one.eui_layout setSizeType:EUISizeTypeToFit];
+        [one.eui_node setSizeType:EUISizeTypeToFit];
         self.backBtn = one;
         self.backBtn;
     })];
     
-    [self.view eui_creatLayouterByDelegate:self];
+    [self.view eui_setDelegate:self];
 }
 
 - (void)backAction {

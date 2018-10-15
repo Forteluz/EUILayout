@@ -10,9 +10,7 @@
 #define EUILayoutKit_h
 
 #import "UIView+EUILayout.h"
-
 #import "EUITemplet.h"
-#import "EUIBaseTemplet.h"
 #import "EUIRowTemplet.h"
 #import "EUIColumnTemplet.h"
 
