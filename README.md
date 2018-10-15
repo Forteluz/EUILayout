@@ -1,2 +1,2 @@
 # EUILayout
-easy layout!
+Simple and easy to use ！
