@@ -8,6 +8,9 @@
 
 #import "EUINode+Filter.h"
 #import "UIView+EUILayout.h"
+#import <objc/runtime.h>
+
+static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociatedKey;
 
 @implementation EUINode (Filter)
 
@@ -41,5 +44,22 @@
     return one;
 }
 
+#pragma mark -
+
+- (void)setCacheFrame:(CGRect)cacheFrame {
+    NSValue *one = [NSValue valueWithCGRect:cacheFrame];
+    objc_setAssociatedObject(self,
+                             kEUINodeFrameCacheAssociatedKey,
+                             one,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGRect)cacheFrame {
+    NSValue *value = objc_getAssociatedObject(self, kEUINodeFrameCacheAssociatedKey);
+    if (value) {
+        return [value CGRectValue];
+    }
+    return CGRectMake(NSNotFound, NSNotFound, NSNotFound, NSNotFound);
+}
 
 @end

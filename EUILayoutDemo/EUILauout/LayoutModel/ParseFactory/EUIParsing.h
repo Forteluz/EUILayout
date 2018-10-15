@@ -27,7 +27,7 @@ typedef struct {
 } EUIParseContext;
 
 typedef void (^EUIParsingHandler) (EUINode *node,
-                                   EUINode *preNode,
+                                   EUINode *_Nullable preNode,
                                    EUIParseContext *context);
 
 @protocol EUIParsing <NSObject>

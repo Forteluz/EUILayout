@@ -22,18 +22,18 @@ typedef NS_OPTIONS(NSUInteger, EUIGravity) {
     EUIGravityVertEnd    = 1 << 6,
 };
 
-typedef enum : unsigned short {
+typedef NS_OPTIONS(NSUInteger, EUISizeType) {
     ///< Fit 计算不利于性能优化，建议多使用 Fill 做填充式布局；
     EUISizeTypeNone = 0,
     EUISizeTypeToHorzFit = 1 << 7,
     EUISizeTypeToVertFit = 1 << 8,
     EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),
     
-    ///< Fill 的布局更利于性能的优化和理解 ：）
+    ///< Fill 更利于性能的优化和结构的理解
     EUISizeTypeToHorzFill = (EUIGravityHorzStart | EUIGravityHorzEnd),
     EUISizeTypeToVertFill = (EUIGravityVertStart | EUIGravityVertEnd),
     EUISizeTypeToFill = (EUISizeTypeToHorzFill | EUISizeTypeToVertFill),
-} EUISizeType;
+};
 
 typedef NS_ENUM(NSInteger, EUILayoutZPostion) {
     EUILayoutZPostionDefault = 1,    ///< Default
@@ -101,8 +101,8 @@ typedef id EUIObject;
 ///< 内边距，当 layout 作为 templet 容器时，该值才有意义，作用于 SubLayouts
 @property (nonatomic, strong) EUIEdge *padding;
 
-///< 设置尺寸计算类型，
-@property (nonatomic, assign) EUISizeType sizeType; ///< DCUILayoutSizeTypeDefault
+///< 设置尺寸计算类型，default EUISizeTypeToFill
+@property (nonatomic, assign) EUISizeType sizeType;
 
 ///< 可指定布局在横向和纵向的相对位置（相对于templet考虑），默认是 EUIGravityHorzStart | EUIGravityVertStart
 @property (nonatomic, assign) EUIGravity gravity;

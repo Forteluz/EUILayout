@@ -8,6 +8,7 @@
 
 #import "EUINode.h"
 #import "EUIParser.h"
+#import "EUINode+Filter.h"
 
 #pragma mark -
 

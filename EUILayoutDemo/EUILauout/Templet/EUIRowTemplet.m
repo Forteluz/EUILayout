@@ -34,8 +34,7 @@
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
             EUIParseContext ctx = (EUIParseContext) {
-                .frame={0},
-                .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
+                .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
                 .recalculate = YES
             };
             [self.parser parse:node _:nil _:&ctx];
@@ -44,10 +43,11 @@
                 NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", node);
 #endif
             }
+            ///< ----- Cache size ----- >
+            CGRect r = {NSNotFound,NSNotFound,NSNotFound,ctx.frame.size.height};
+            [node setCacheFrame:r];
             ///< -------------------------- >
-            node.height = ctx.frame.size.height;
-            ///< -------------------------- >
-            totalHeight += ctx.frame.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
+            totalHeight += r.size.height + EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
         } else {
             [fillNodes addObject:node];
         }
@@ -56,7 +56,8 @@
         CGFloat tw = NODE_VALID_HEIGHT(self) - EUIValue(self.padding.top) - EUIValue(self.padding.bottom);
         CGFloat ah = (tw - totalHeight) / fillNodes.count;
         for (EUINode *node in fillNodes) {
-            node.height = ah;
+            CGRect r = {NSNotFound,NSNotFound,NSNotFound,ah};
+            [node setCacheFrame:r];
         }
     }
     [self layoutNodes:nodes];
@@ -72,20 +73,20 @@
     return NO;
 }
 
-- (void)parseY:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUIParseContext *)context {
+- (void)parseY:(EUINode *)node _:(EUINode *)preNode _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
     
-    CGRect preFrame = preSubLayout ? preSubLayout.view.frame : CGRectZero;
-    if (preSubLayout && CGRectEqualToRect(CGRectZero, preFrame)) {
+    CGRect preFrame = preNode ? preNode.view.frame : CGRectZero;
+    if (preNode && CGRectEqualToRect(CGRectZero, preFrame)) {
 #ifdef DEBUG
-        NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preSubLayout);
+        NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preNode);
 #endif
     }
-    if (preSubLayout) {
-        frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(CGRectGetMaxY(preFrame)) + EUIValue(preSubLayout.margin.bottom);
+    if (preNode) {
+        frame -> origin.y = EUIValue(node.margin.top) + EUIValue(CGRectGetMaxY(preFrame)) + EUIValue(preNode.margin.bottom);
     } else {
-        frame -> origin.y = EUIValue(layout.margin.top) + EUIValue(self.padding.top);
+        frame -> origin.y = EUIValue(node.margin.top) + EUIValue(self.padding.top);
     }
     *step |= EUIParsedStepY;
 }
@@ -100,15 +101,22 @@
         size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.bottom);
     }
     if (self.sizeType & EUISizeTypeToFit) {
-        EUINode *lastOne = nil;
+        EUINode *preone = nil;
         for (EUINode *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
-            [self.parser parse:one _:lastOne _:&ctx];
+            [self.parser parse:one _:preone _:&ctx];
             ///< ----- Cache size ----- >
-            one.size = ctx.frame.size;
+            CGRect r = {NSNotFound,NSNotFound,NSNotFound,NSNotFound};
+            if (ctx.frame.size.height > 0) {
+                r.size.height = ctx.frame.size.height;
+            }
+            if (ctx.frame.size.width > 0) {
+                r.size.width = ctx.frame.size.width;
+            }
+            [one setCacheFrame:r];
             ///< ---------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width = MAX(size.width, one.size.width);
@@ -116,6 +124,7 @@
             if (self.sizeType & EUISizeTypeToVertFit) {
                 size.height += (one.size.height + EUIValue(one.margin.top) + EUIValue(one.margin.bottom));
             }
+            preone = one;
         }
     }
     return size;

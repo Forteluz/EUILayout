@@ -70,7 +70,7 @@
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
-    if ((*step & EUIParsedStepX) && !(context -> recalculate)) {
+    if ((*step & EUIParsedStepX)) {
         return;
     }
     
@@ -80,8 +80,11 @@
     }
     
     CGRect *frame = &(context->frame);
-    if (context -> recalculate) {
-        
+    CGRect cacheR = node.cacheFrame;
+    if (!(context -> recalculate) && EUIValid(cacheR.origin.x)) {
+        frame -> origin.x = cacheR.origin.x;
+        *step |= EUIParsedStepX;
+        return;
     }
     
     EUITemplet *templet = node.templet;
@@ -90,10 +93,10 @@
     
     if (EUIValid(node.x)) {
         if (templet.isHolder) {
-            frame -> origin.x = node.x;
+            frame -> origin.x = CGFloatPixelRound(node.x);
         } else {
             ///< 绝对坐标暂时先支持坐标系转换处理
-            frame -> origin.x = node.x + EUIValue(templet.x);
+            frame -> origin.x = CGFloatPixelRound(node.x + EUIValue(templet.x));
         }
         *step |= EUIParsedStepX;
         return;
@@ -106,11 +109,11 @@
     }
     
     if (node.gravity & EUIGravityHorzStart) {
-        if (templet.isHolder) {
-            frame -> origin.x = EUIValue(templet.padding.left) + EUIValue(node.margin.left);
-        } else {
-            frame -> origin.x = EUIValue(templet.padding.left) + EUIValue(node.margin.left) + EUIValue(templet.x);
+        CGFloat x = EUIValue(templet.padding.left) + EUIValue(node.margin.left);
+        if (!templet.isHolder) {
+            x += EUIValue(templet.x);
         }
+        frame -> origin.x = CGFloatPixelRound(x);
         *step |= EUIParsedStepX;
         return;
     }
@@ -124,23 +127,31 @@
             NSLog(@"未获得有效的 Templet 宽度");
             return;
         }
+        CGFloat x = 0;
         if (templet.isHolder) {
-            frame -> origin.x = sw - EUIValue(templet.padding.right) - lw - EUIValue(node.margin.right);
+            x = sw - EUIValue(templet.padding.right) - lw - EUIValue(node.margin.right);
         } else {
-            frame -> origin.x = EUIValue(CGRectGetMaxX(templet.frame)) - EUIValue(templet.padding.right) - lw - EUIValue(node.margin.right);
+            x = EUIValue(CGRectGetMaxX(templet.frame)) - EUIValue(templet.padding.right) - lw - EUIValue(node.margin.right);
         }
+        frame -> origin.x = CGFloatPixelRound(x);
         *step |= EUIParsedStepX;
         return;
     }
     
     if (node.gravity & EUIGravityHorzCenter) {
-        if (EUIValid(sw) && EUIValid(lw)) {
-            if (templet.isHolder) {
-                frame -> origin.x = ((NSInteger)(sw - lw) >> 1);
-            } else {
-                frame -> origin.x = ((NSInteger)(sw - lw) >> 1) + EUIValid(templet.x);
-            }
+        if (!EUIValid(lw)) {
+            NSLog(@"未获得有效的 layout 宽度");
+            return;
         }
+        if (!EUIValid(sw)) {
+            NSLog(@"未获得有效的 Templet 宽度");
+            return;
+        }
+        CGFloat x = ((NSInteger)(sw - lw) >> 1);
+        if (!templet.isHolder) {
+            x += EUIValid(templet.x);
+        }
+        frame -> origin.x = CGFloatPixelRound(x);
         *step |= EUIParsedStepX;
     }
 }
@@ -163,11 +174,14 @@
         return;
     }
     
-    if (context -> recalculate) {
-        
+    CGRect *frame = &(context->frame);
+    CGRect cacheR = node.cacheFrame;
+    if (!(context -> recalculate) && EUIValid(cacheR.origin.y)) {
+        frame -> origin.y = cacheR.origin.y;
+        *step |= EUIParsedStepY;
+        return;
     }
     
-    CGRect *frame = &(context->frame);
     EUITemplet *templet = node.templet;
     
     CGFloat sh = NODE_VALID_HEIGHT(templet);
@@ -180,7 +194,7 @@
         if (templet.isHolder) {
             frame -> origin.y = node.origin.y;
         } else {
-            ///< 绝对坐标暂时先支持坐标系转换处理
+            ///< 绝对坐标暂时也支持坐标系转换
             frame -> origin.y = node.origin.y + EUIValue(CGRectGetMinY(templet.frame));
         }
         *step |= EUIParsedStepY;
@@ -248,7 +262,7 @@
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
-    if ((*step & EUIParsedStepW) && !(context -> recalculate)) {
+    if ((*step & EUIParsedStepW)) {
         return;
     }
     
@@ -258,6 +272,12 @@
     }
     
     CGRect *frame = &(context->frame);
+    CGRect cacheR = node.cacheFrame;
+    if (!(context -> recalculate) && EUIValid(cacheR.size.width)) {
+        frame -> size.width = cacheR.size.width;
+        *step |= EUIParsedStepW;
+        return;
+    }
     
     EUITemplet *templet = node.templet;
     CGSize suggestSize = [templet suggestConstraintSize];
@@ -322,7 +342,7 @@
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
-    if ((*step & EUIParsedStepH) && !(context -> recalculate)) {
+    if ((*step & EUIParsedStepH)) {
         return;
     }
     
@@ -332,6 +352,13 @@
     }
     
     CGRect *frame = &(context->frame);
+    CGRect cacheR = node.cacheFrame;
+    if (!(context -> recalculate) && EUIValid(cacheR.size.height)) {
+        frame -> size.height = cacheR.size.height;
+        *step |= EUIParsedStepH;
+        return;
+    }
+    
     EUITemplet *templet = node.templet;
     CGSize suggestSize = [templet suggestConstraintSize];
     

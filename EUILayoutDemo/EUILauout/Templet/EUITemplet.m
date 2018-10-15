@@ -7,7 +7,6 @@
 //
 
 #import "EUITemplet.h"
-#import "EUINode+Filter.h"
 #import "UIView+EUILayout.h"
 
 @interface EUITemplet()
@@ -155,7 +154,9 @@
 #ifdef DEBUG
     NSCAssert(subLayout.view, @"EUIError: layout:[%@] 的 view 找不到!", subLayout);
 #endif
-    [subLayout.view setFrame:context -> frame];
+    CGRect r = context -> frame;
+    [subLayout setCacheFrame:r];
+    [subLayout.view setFrame:r];
 }
 
 #pragma mark - Calculate Size
@@ -173,11 +174,19 @@
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
-                .step = (EUIParsedStepX | EUIParsedStepY)
+                .step = (EUIParsedStepX | EUIParsedStepY),
+                .recalculate = YES
             };
             [self.parser parse:one _:lastOne _:&ctx];
             ///< ----- Cache size ----- >
-            one.size = ctx.frame.size;
+            CGRect r = (CGRect){NSNotFound,NSNotFound,NSNotFound,NSNotFound};
+            if (ctx.frame.size.height > 0) {
+                r.size.height = ctx.frame.size.height;
+            }
+            if (ctx.frame.size.width > 0) {
+                r.size.width = ctx.frame.size.width;
+            }
+            [one setCacheFrame:r];
             ///< ----------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width = MAX(size.width, one.size.width);
@@ -230,7 +239,6 @@
         return;
     }
     index = EUI_CLAMP(index, 0, self.nodes.count - 1);
-    
     NSMutableArray *one = _nodes.mutableCopy;
     [one insertObject:node atIndex:index];
     [self setNodes:one.copy];

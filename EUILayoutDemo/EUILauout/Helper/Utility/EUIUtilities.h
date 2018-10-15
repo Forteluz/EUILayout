@@ -28,4 +28,9 @@ static inline CGPoint CGPointPixelCeil(CGPoint point) {
                        ceil(point.y * scale) / scale);
 }
 
+UIKIT_STATIC_INLINE CGFloat CGFloatPixelRound(CGFloat value) {
+    CGFloat scale = EUIScreenScale();
+    return round(value * scale) / scale;
+}
+
 NS_ASSUME_NONNULL_END

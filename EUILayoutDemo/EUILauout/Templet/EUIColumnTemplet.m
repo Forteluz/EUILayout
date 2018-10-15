@@ -39,10 +39,11 @@
                 .recalculate = YES
             };
             [self.parser parse:node _:nil _:&ctx];
-            ///< -------------------------- >
-            node.width = ctx.frame.size.width;
-            ///< -------------------------- >
-            __tw += ctx.frame.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
+            ///< ----- Cache size ----- >
+            CGRect r = {NSNotFound,NSNotFound,ctx.frame.size.width,NSNotFound};
+            [node setCacheFrame:r];
+            ///< ----------------------->
+            __tw += r.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
         } else {
             [fills addObject:node];
         }
@@ -50,7 +51,8 @@
     if (fills.count > 0) {
         CGFloat value = (NODE_VALID_WIDTH(self) - __tw) / fills.count;
         for (EUINode *node in fills) {
-            node.width = value;
+            CGRect r = {NSNotFound,NSNotFound,value,NSNotFound};
+            [node setCacheFrame:r];
         }
     }
     [self layoutNodes:nodes];
@@ -66,17 +68,19 @@
     return NO;
 }
 
-- (void)parseX:(EUINode *)layout _:(EUINode *)preSubLayout _:(EUIParseContext *)context {
+- (void)parseX:(EUINode *)node _:(EUINode *)preNode _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
-    CGRect preFrame = preSubLayout ? preSubLayout.view.frame : CGRectZero;
-    if (preSubLayout && CGRectEqualToRect(CGRectZero, preFrame)) {
 #ifdef DEBUG
-        NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preSubLayout);
+    BOOL iserr = preNode && (preNode.cacheFrame.size.width == NSNotFound);
+    NSCAssert(!iserr, @"EUIError : Layout:[%@] 在 Column 模板下的 Frame 计算异常", preNode);
 #endif
+    frame -> origin.x = EUIValue(node.margin.left) + CGRectGetMaxX(preNode.cacheFrame);
+    if (preNode) {
+        frame -> origin.x += EUIValue(preNode.margin.right);
+    } else {
+        frame -> origin.x += EUIValid(self.padding.left);
     }
-    frame -> origin.x = EUIValue(layout.margin.left) + CGRectGetMaxX(preFrame) + EUIValue(preSubLayout.margin.right);
-
     *step |= EUIParsedStepX;
 }
 
@@ -90,20 +94,23 @@
         size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.bottom);
     }
     if (self.sizeType & EUISizeTypeToFit) {
-        EUINode *lastOne = nil;
+        EUINode *preone = nil;
         for (EUINode *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
+                .frame = {0},
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };
-            [self.parser parse:one _:lastOne _:&ctx];
+            [self.parser parse:one _:preone _:&ctx];
             ///< ----- Cache size ----- >
+            CGRect r = {NSNotFound,NSNotFound,NSNotFound,NSNotFound};
             if (ctx.frame.size.height > 0) {
-                one.height = ctx.frame.size.height;
+                r.size.height = ctx.frame.size.height;
             }
             if (ctx.frame.size.width > 0) {
-                one.width = ctx.frame.size.width;
+                r.size.width = ctx.frame.size.width;
             }
+            [one setCacheFrame:r];
             ///< ---------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
                 size.width += (one.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
@@ -111,6 +118,7 @@
             if (self.sizeType & EUISizeTypeToVertFit) {
                 size.height = MAX(size.height, one.size.height);
             }
+            preone = one;
         }
     }
     return size;

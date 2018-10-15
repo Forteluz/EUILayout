@@ -9,6 +9,7 @@
 #import "EUINode.h"
 
 @interface EUINode (Filter)
+@property (nonatomic, assign) CGRect cacheFrame;
 
 + (EUINode * __nullable)findNode:(EUIObject)object;
 
