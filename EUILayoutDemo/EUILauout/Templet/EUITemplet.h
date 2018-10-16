@@ -53,9 +53,11 @@
 ///< Reset 会将模板上所有的视图全部做 removeFromSuper 操作
 - (void)reset;
 
+///< 相对布局时，告诉子节点关于容器的尺寸
 - (CGSize)suggestConstraintSize;
 
-- (void)layoutNodes:(NSArray *)nodes;
+///< 布局子节点
+- (void)layoutNodes:(NSArray <EUIObject> *)nodes;
 
 @end
 

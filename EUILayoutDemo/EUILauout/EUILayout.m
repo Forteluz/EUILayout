@@ -51,6 +51,8 @@ NSInteger EUIRootViewTag() {
 }
 
 - (void)updateTemplet:(EUITemplet *)templet {
+    [self setRootTemplet:templet];
+    
     if ([templet isHolder]) {
         [templet setView:self.rootContainer];
     } else {
@@ -60,11 +62,9 @@ NSInteger EUIRootViewTag() {
         }
         one = nil;
     }
-//    EUIAfter(dispatch_get_main_queue(), 0, ^{
-        [self updateRootTempletFrame:templet];
-        [templet layoutTemplet];
-//    });
-    [self setRootTemplet:templet];
+    ///< TODO: 使用 Parser 优化解析
+    [self updateRootTempletFrame:templet];
+    [templet layoutTemplet];
 }
 
 - (void)updateRootTempletFrame:(EUITemplet *)templet {
@@ -91,6 +91,25 @@ NSInteger EUIRootViewTag() {
         frame.size.height = self.view.bounds.size.height - EUIValue(templet.margin.top) - EUIValue(templet.margin.bottom);
     }
     [templet.view setFrame:frame];
+}
+
+#pragma mark -
+
+- (void)clean {
+    EUITemplet *one = self.rootTemplet;
+    if ([one isKindOfClass:EUITemplet.class]) {
+        [one reset];
+    }
+    [one removeAllNodes];
+    if (one.isHolder) {
+        UIView *container = one.view;
+        if (container) {
+            [container removeFromSuperview];
+            (container = nil);
+        }
+        one.view = nil;
+    }
+    self.rootTemplet = nil;
 }
 
 #pragma mark - Root Container

@@ -125,6 +125,10 @@
 
 - (void)cleanTemplet {
     [self.view eui_clean];
+    EUIAfter(dispatch_get_main_queue(), 2, ^{
+        [self.view eui_setDelegate:self];
+        [self.view eui_reload];
+    });
 }
 
 @end

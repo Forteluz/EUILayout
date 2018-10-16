@@ -22,23 +22,15 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
 
 - (EUILayout *)eui_layout {
     EUILayout *one = objc_getAssociatedObject(self, kDCLayoutAssociatedKey);
-    return one;
-}
-
-- (void)eui_creatLayouter {
-    EUILayout *one = [self eui_layout];
     if (one == nil) {
         one = [EUILayout layouterByView:self];
         objc_setAssociatedObject(self, kDCLayoutAssociatedKey, one, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+    return one;
 }
 
 - (void)eui_setDelegate:(__weak id)delegate {
     EUILayout *one = [self eui_layout];
-    if (one == nil) {
-        one = [EUILayout layouterByView:self];
-        objc_setAssociatedObject(self, kDCLayoutAssociatedKey, one, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
     if (one.delegate != delegate) {
         one.delegate  = delegate;
     }
@@ -74,25 +66,20 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
 
 - (void)eui_clean {
     EUITemplet *one = self.eui_layout.rootTemplet;
-    if ([one isKindOfClass:EUITemplet.class]) {
-        [one reset];
-    }
-    [one removeAllNodes];
-    if (one.isHolder) {
-        UIView *container = one.view;
-        if (container) {
-            [container removeFromSuperview];
-            (container = nil);
-        }
-        one.view = nil;
-    }
+    [self.eui_layout clean];
 }
 
 - (void)eui_reload {
+    if (!self.eui_layout.delegate) {
+        NSLog(@"EUI_ERROR : 未设置代理！");
+    }
     [self.eui_layout update];
 }
 
 - (void)eui_update:(EUITemplet *)templet {
+    if (!templet) {
+        NSCAssert(0, @"EUI_ERROR:这是一个不确定的操作，如果是清空模板，调用 eui_clean 方法！");
+    }
     [self.eui_layout updateTemplet:templet];
 }
 
