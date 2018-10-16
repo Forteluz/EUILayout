@@ -49,7 +49,8 @@
         }
     }
     if (fills.count > 0) {
-        CGFloat value = (NODE_VALID_WIDTH(self) - __tw) / fills.count;
+        CGFloat tw = NODE_VALID_WIDTH(self) - EUIValue(self.padding.left) - EUIValue(self.padding.right);
+        CGFloat value = (tw - __tw) / fills.count;
         for (EUINode *node in fills) {
             CGRect r = {NSNotFound,NSNotFound,value,NSNotFound};
             [node setCacheFrame:r];
@@ -79,7 +80,7 @@
     if (preNode) {
         frame -> origin.x += EUIValue(preNode.margin.right);
     } else {
-        frame -> origin.x += EUIValid(self.padding.left);
+        frame -> origin.x += EUIValue(self.padding.left);
     }
     *step |= EUIParsedStepX;
 }

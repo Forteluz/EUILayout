@@ -16,10 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view eui_reload];
-    
-    EUITemplet *one = nil;
-    one.height = 44;
-    [self.view eui_reload];
 }
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {

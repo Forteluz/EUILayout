@@ -29,7 +29,6 @@ typedef void (^EUIConfigurationBlock)(EUINode *layout);
  */
 - (void)eui_setDelegate:(__weak id <EUILayoutDelegate>)delegate;
 
-
 /**
  Call layout update!
  */
