@@ -34,16 +34,15 @@
     for (EUINode *node in nodes) {
         if ([self isFilterNode:node]) {
             EUIParseContext ctx = (EUIParseContext) {
-                .frame = {0},
                 .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
                 .recalculate = YES
             };
-            [self.parser parse:node _:nil _:&ctx];
+            [self.parser.wParser parse:node _:nil _:&ctx];
             ///< ----- Cache size ----- >
             CGRect r = {NSNotFound,NSNotFound,ctx.frame.size.width,NSNotFound};
             [node setCacheFrame:r];
             ///< ----------------------->
-            __tw += r.size.width + EUIValue(node.margin.left) + EUIValid(node.margin.right);
+            __tw += r.size.width + EUIValue(node.margin.left) + EUIValue(node.margin.right);
         } else {
             [fills addObject:node];
         }
@@ -52,7 +51,8 @@
         CGFloat tw = NODE_VALID_WIDTH(self) - EUIValue(self.padding.left) - EUIValue(self.padding.right);
         CGFloat value = (tw - __tw) / fills.count;
         for (EUINode *node in fills) {
-            CGRect r = {NSNotFound,NSNotFound,value,NSNotFound};
+            CGFloat w = value - EUIValue(node.margin.left) - EUIValue(node.margin.right);
+            CGRect r = {NSNotFound,NSNotFound,w,NSNotFound};
             [node setCacheFrame:r];
         }
     }
@@ -98,7 +98,6 @@
         EUINode *preone = nil;
         for (EUINode *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
-                .frame = {0},
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
             };

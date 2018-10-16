@@ -395,7 +395,7 @@
     }
     
     if (EUISizeTypeToVertFill & node.sizeType) {
-        CGFloat margin  = EUIValue(node.margin.top) - EUIValue(node.margin.bottom);
+        CGFloat margin  = EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
         CGFloat padding = EUIValue(templet.padding.top) + EUIValue(templet.padding.bottom);
         CGFloat h = NODE_VALID_HEIGHT(templet) - margin - padding;
         if (EUIValid(node.maxHeight) && (frame->size.height > node.maxHeight)) {

@@ -37,12 +37,7 @@
                 .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
                 .recalculate = YES
             };
-            [self.parser parse:node _:nil _:&ctx];
-            if (ctx.frame.size.height == 0) {
-#ifdef DEBUG
-                NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", node);
-#endif
-            }
+            [self.parser.hParser parse:node _:nil _:&ctx];
             ///< ----- Cache size ----- >
             CGRect r = {NSNotFound,NSNotFound,NSNotFound,ctx.frame.size.height};
             [node setCacheFrame:r];
@@ -56,7 +51,8 @@
         CGFloat tw = NODE_VALID_HEIGHT(self) - EUIValue(self.padding.top) - EUIValue(self.padding.bottom);
         CGFloat ah = (tw - totalHeight) / fillNodes.count;
         for (EUINode *node in fillNodes) {
-            CGRect r = {NSNotFound,NSNotFound,NSNotFound,ah};
+            CGFloat h = ah - EUIValue(node.margin.top) - EUIValue(node.margin.bottom);
+            CGRect  r = {NSNotFound,NSNotFound,NSNotFound,h};
             [node setCacheFrame:r];
         }
     }

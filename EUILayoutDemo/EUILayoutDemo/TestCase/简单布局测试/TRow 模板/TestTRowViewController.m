@@ -65,7 +65,7 @@
 - (void)updateMarginWithNode:(EUINode *)node {
     EUIEdge *margin = EUIEdge.edgeZero;
     if (node.margin.left == 0) {
-        margin = EUIEdgeMake(10, 10, 10, 10);
+        margin = EUIEdgeMake(20, 20, 20, 20);
     }
     [node configure:^(EUINode *layout) {
         layout.margin = margin;
