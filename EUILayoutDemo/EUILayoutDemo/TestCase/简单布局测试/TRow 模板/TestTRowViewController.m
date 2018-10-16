@@ -20,15 +20,59 @@
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     EUITemplet *edgeT =
-//    TRow([self lable:@"边距测试"],
+    TRow([self lable:@"title:边距测试"],
          TColumn([self button:@"“根模板”内边距测试" tag:1],
-//                 [self button:@"“边距测试模板”内边距距测试" tag:2],
-//                 [self button:@"“边距测试模板”外边距距测试" tag:3]
-                 );
-//         );
+                 [self button:@"“边距测试模板”内边距距测试" tag:2],
+                 [self button:@"“边距测试模板”外边距距测试" tag:3]
+                 ),
+         [self lable:@"测试顺序"],
+         );
     
     return edgeT;
 }
+
+- (void)buttonAction:(UIButton *)button {
+    EUITemplet *root = self.view.eui_layout.rootTemplet;
+    switch (button.tag) {
+        case 1: {
+            [self updatePaddingWithNode:root];
+        }  break;
+        case 2: {
+            EUITemplet *one = [root nodeAtIndex:1];
+            [self updatePaddingWithNode:one];
+        } break;
+        case 3: {
+            EUITemplet *one = [root nodeAtIndex:1];
+            EUINode *node = [one nodeAtIndex:1];
+            [self updateMarginWithNode:node];
+        }
+    }
+    [self.view eui_update:root];
+}
+
+#pragma mark -
+
+- (void)updatePaddingWithNode:(EUINode *)node {
+    EUIEdge *padding = EUIEdge.edgeZero;
+    if (node.padding.left == 0) {
+        padding = EUIEdgeMake(10, 10, 10, 10);
+    }
+    [node configure:^(EUINode *layout) {
+        layout.padding = padding;
+    }];
+}
+
+- (void)updateMarginWithNode:(EUINode *)node {
+    EUIEdge *margin = EUIEdge.edgeZero;
+    if (node.margin.left == 0) {
+        margin = EUIEdgeMake(10, 10, 10, 10);
+    }
+    [node configure:^(EUINode *layout) {
+        layout.margin = margin;
+    }];
+}
+
+#pragma mark -
 
 - (UILabel *)lable:(NSString *)title {
     UILabel *one = [UILabel new];
@@ -47,32 +91,5 @@
     [one setBackgroundColor:EUIRandomColor];
     return one;
 }
-
-- (void)buttonAction:(UIButton *)button {
-    EUITemplet *root = self.view.eui_layout.rootTemplet;
-    switch (button.tag) {
-        case 1: {
-            [self testPaddingWithTemplet:root];
-        }  break;
-        case 2: {
-            EUITemplet *one = [root nodeAtIndex:0];
-            [self testPaddingWithTemplet:one];
-        } break;
-    }
-    [self.view eui_update:root];
-}
-
-#pragma mark -
-
-- (void)testPaddingWithTemplet:(EUITemplet *)templet {
-    EUIEdge *padding = EUIEdge.edgeZero;
-    if (templet.padding.left == 0) {
-        padding = EUIEdgeMake(10, 10, 10, 10);
-    }
-    [templet configure:^(EUINode *layout) {
-        layout.padding = padding;
-    }];
-}
-
 
 @end
