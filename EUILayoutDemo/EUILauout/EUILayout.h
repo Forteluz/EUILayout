@@ -22,6 +22,13 @@
 
 @end
 
+#pragma mark -
+
+/**
+ TODO:
+    × 支持监听视图尺寸变化时动态修改布局
+    × 
+ */
 @interface EUILayout : NSObject
 
 /**

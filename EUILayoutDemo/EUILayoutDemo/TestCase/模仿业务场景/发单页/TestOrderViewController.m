@@ -36,11 +36,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_setDelegate:self];
-    [self.view eui_reload];
+//    [self.view eui_setDelegate:self];
+//    [self.view eui_reload];
+    [self setupSubviews];
 }
 
 #pragma mark -
+
+- (void)setupSubviews {
+    ///< 顶部发单信息区
+    CGRect r = CGRectMake(10, 60, self.view.frame.size.width - 20, 200);
+    UIView *view = [[UIView alloc] initWithFrame:r];
+    EUITemplet *one =
+        TRow(
+//             self.fromPOIView,
+//             self.toPOIView,
+            [TColumn(self.timeView) configure:^(EUINode *node) {
+                node.sizeType = EUISizeTypeToVertFit;
+            }],
+//            [TColumn(self.pNumView, self.tipsView) configure:^(EUINode *node) {
+//                node.sizeType = EUISizeTypeToVertFit;
+//            }]
+             );
+    one.padding = EUIEdgeMake(10, 10, 10, 10);
+    [view eui_update:one];
+    [self.view addSubview:view];
+}
 
 ///< 顶部订单信息模板
 - (EUITemplet *)topOrderTemplet {
@@ -48,8 +69,7 @@
         TRow(self.fromPOIView,
              self.toPOIView,
              TColumn(self.timeView),
-             TColumn(self.pNumView, self.tipsView)
-             );
+             TColumn(self.pNumView, self.tipsView));
     return one;
     
     return [TRow(self.fromPOIView,

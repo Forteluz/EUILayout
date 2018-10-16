@@ -26,14 +26,19 @@
 
 @interface EUITemplet : EUINode
 
+#pragma mark - TODO
+/**
+ * TODO: 还需要支持模板级别的布局属性
+ */
+//@property (nonatomic) spacing; ///< 节点之间的间隔
+//@property (nonatomic) gravity; ///< 模板内容总体的布局锚点
+//@property (nonatomic) warp;    ///< 某些模板支持换行？
+
 ///< 布局解析器
 @property (nonatomic, strong, nullable) EUIParser *parser;
 
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUINode *> *nodes;
-
-///< 作为根式视图
-@property (nonatomic, weak) EUILayout *layout;
 
 #pragma mark - Init Templet
 
@@ -54,7 +59,7 @@
 - (void)removeAllNodes;
 
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
-- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID;
+- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
 
 #pragma mark - Calculate Nodes
 

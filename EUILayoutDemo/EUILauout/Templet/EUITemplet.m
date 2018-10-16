@@ -142,19 +142,13 @@
         }
         ///< -------------------------- >
         [self updateSubLayout:layout preSublayout:lastNode context:&(EUIParseContext){}];
+        if ( isTemplet ) {
+            [(EUITemplet *)layout layoutTemplet];
+        }
         ///< -------------------------- >
         index ++;
         lastNode = layout;
     } while (!(index >= nodes.count));
-    
-    if (templets.count) {
-            for (EUITemplet *templet in templets) {
-                [templet layoutTemplet];
-            }
-            ///< 可以增加一个生命周期回调
-    } else {
-        ///< 可以增加一个生命周期回调
-    }
 }
 
 - (void)updateSubLayout:(EUINode *)subLayout
@@ -173,10 +167,10 @@
     CGSize size = CGSizeZero;
     EUIEdge *margin = self.margin;
     if (self.sizeType & EUISizeTypeToHorzFill) {
-        size.width = constrainedSize.width - margin.left - margin.right;
+        size.width = constrainedSize.width - EUIValue(margin.left) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToVertFill) {
-        size.height = constrainedSize.height - margin.top - margin.right;
+        size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;

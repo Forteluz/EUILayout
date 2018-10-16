@@ -40,8 +40,8 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 - (void)eui_clean;
 
 /**
- 将自己作为容器，设置一个布局模板，并更新模板指定的视图
- @param templet 一个模板
+ 设置一个模板
+ @param templet ：盛满视图的容器
  */
 - (void)eui_update:(EUITemplet *)templet;
 
