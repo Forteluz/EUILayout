@@ -20,6 +20,10 @@ UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
     return one != NSNotFound;
 }
 
+static inline int EUIRandom(int from, int to) {
+    return (int)(from + (arc4random() % (to - from + 1)));
+}
+
 CGFloat EUIScreenScale(void);
 
 static inline CGPoint CGPointPixelCeil(CGPoint point) {

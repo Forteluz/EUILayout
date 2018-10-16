@@ -24,6 +24,10 @@
     return self;
 }
 
+- (void)dealloc {
+    NSLog(@"dealloc COLUMN templet:%@", self);
+}
+
 - (void)layoutTemplet {
     EUIAssertMainThread();
     [self reset];

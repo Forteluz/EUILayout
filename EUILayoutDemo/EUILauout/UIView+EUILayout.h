@@ -11,7 +11,7 @@
 
 #pragma mark -
 
-typedef void (^EUIConfigurationBlock)(EUINode *layout);
+typedef void (^EUIConfigurationBlock)(EUINode *node);
 
 #pragma mark -
 
@@ -21,7 +21,7 @@ typedef void (^EUIConfigurationBlock)(EUINode *layout);
 @property (nonatomic, strong, readonly) EUILayout *eui_layout;
 
 ///< 获得当前视图的布局 Node (懒加载创建)
-@property (nonatomic, strong, readonly) EUINode *eui_node;
+@property (nonatomic, strong, readonly) __kindof EUINode *eui_node;
 
 /**
  创建布局管理器并绑定一个 delegate
@@ -33,6 +33,11 @@ typedef void (^EUIConfigurationBlock)(EUINode *layout);
  Call layout update!
  */
 - (void)eui_reload;
+
+/**
+ 清空当前的模板,移除所有视图和对应的 Node
+ */
+- (void)eui_clean;
 
 /**
  将自己作为容器，设置一个布局模板，并更新模板指定的视图

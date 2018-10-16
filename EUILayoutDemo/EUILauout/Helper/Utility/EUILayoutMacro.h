@@ -52,7 +52,7 @@
         } \
     }
 
-#pragma mark - For What?
+#pragma mark -
 
 #ifndef EUI_CLAMP
 #define EUI_CLAMP(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (_high_) : (((_x_) < (_low_)) ? (_low_) : (_x_)))

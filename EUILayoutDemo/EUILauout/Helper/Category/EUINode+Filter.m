@@ -19,6 +19,7 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
     EUINode *one = nil;
     if ([object isKindOfClass:UIView.class]) {
         one = [(UIView *)object eui_node];
+        one.view = object;
     } else if ([object isKindOfClass:EUINode.class]) {
         one = object;
     } else {

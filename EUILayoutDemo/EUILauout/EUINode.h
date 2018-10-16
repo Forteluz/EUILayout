@@ -66,7 +66,7 @@ typedef id EUIObject;
 @property (nonatomic, weak) __kindof EUINode *templet;
 
 ///< layout 负责布局的视图对象
-@property (nonatomic, strong) UIView *view;
+@property (nonatomic, weak) UIView *view;
 
 ///< 显式设置在模板中的 x 坐标
 @property (nonatomic, assign) CGFloat x;

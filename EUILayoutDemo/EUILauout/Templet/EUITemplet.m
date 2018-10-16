@@ -135,12 +135,12 @@
     } while (!(index >= nodes.count));
     
     if (templets.count) {
-        EUIAfter(dispatch_get_main_queue(), 0.f, ^{
+//        EUIAfter(dispatch_get_main_queue(), 0.f, ^{
             for (EUITemplet *templet in templets) {
                 [templet layoutTemplet];
             }
             ///< 可以增加一个生命周期回调
-        });
+//        });
     } else {
         ///< 可以增加一个生命周期回调
     }
@@ -151,9 +151,6 @@
                 context:(EUIParseContext *)context
 {
     [self.parser parse:subLayout _:preSubLayout _:context];
-#ifdef DEBUG
-    NSCAssert(subLayout.view, @"EUIError: layout:[%@] 的 view 找不到!", subLayout);
-#endif
     CGRect r = context -> frame;
     [subLayout setCacheFrame:r];
     [subLayout.view setFrame:r];
@@ -253,6 +250,12 @@
     [one removeObjectAtIndex:index];
     [self setNodes:one.copy];
     [self layoutTemplet];
+}
+
+- (void)removeAllNodes {
+    if (_nodes.count) {
+        _nodes = @[];
+    }
 }
 
 #pragma mark - Getter

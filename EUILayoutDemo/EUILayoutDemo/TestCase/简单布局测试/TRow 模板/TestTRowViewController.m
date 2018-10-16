@@ -7,6 +7,7 @@
 //
 
 #import "TestTRowViewController.h"
+#import "TestLabel.h"
 
 @interface TestTRowViewController ()
 @end
@@ -18,16 +19,22 @@
     [self.view eui_reload];
 }
 
+- (void)dealloc {
+    NSLog(@"dealloc");
+}
+
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     EUITemplet *edgeT =
-    TRow([self lable:@"title:边距测试"],
+    TRow( self.backBtn,
+         [self lable:@"title:边距测试"],
          TColumn([self button:@"“根模板”内边距测试" tag:1],
                  [self button:@"“边距测试模板”内边距距测试" tag:2],
                  [self button:@"“边距测试模板”外边距距测试" tag:3]
                  ),
          [self lable:@"测试顺序"],
          );
-    
+
+    edgeT.margin.top = 20;
     return edgeT;
 }
 
@@ -43,7 +50,8 @@
         } break;
         case 3: {
             EUITemplet *one = [root nodeAtIndex:1];
-            EUINode *node = [one nodeAtIndex:1];
+            int i = EUIRandom(0, 2);
+            EUINode *node = [one nodeAtIndex:i];
             [self updateMarginWithNode:node];
         }
     }
@@ -57,9 +65,7 @@
     if (node.padding.left == 0) {
         padding = EUIEdgeMake(10, 10, 10, 10);
     }
-    [node configure:^(EUINode *layout) {
-        layout.padding = padding;
-    }];
+    node.padding = padding;
 }
 
 - (void)updateMarginWithNode:(EUINode *)node {
@@ -67,15 +73,13 @@
     if (node.margin.left == 0) {
         margin = EUIEdgeMake(20, 20, 20, 20);
     }
-    [node configure:^(EUINode *layout) {
-        layout.margin = margin;
-    }];
+    node.margin = margin;
 }
 
 #pragma mark -
 
 - (UILabel *)lable:(NSString *)title {
-    UILabel *one = [UILabel new];
+    TestLabel *one = [TestLabel new];
     one.text = title;
     one.textAlignment = NSTextAlignmentCenter;
     one.backgroundColor = EUIRandomColor;

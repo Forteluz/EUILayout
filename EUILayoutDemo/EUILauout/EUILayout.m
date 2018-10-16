@@ -60,10 +60,10 @@ NSInteger EUIRootViewTag() {
         }
         one = nil;
     }
-    EUIAfter(dispatch_get_main_queue(), 0, ^{
+//    EUIAfter(dispatch_get_main_queue(), 0, ^{
         [self updateRootTempletFrame:templet];
         [templet layoutTemplet];
-    });
+//    });
     [self setRootTemplet:templet];
 }
 

@@ -37,6 +37,7 @@
 
 #pragma mark - Layout Nodes
 
+///< 开始模板布局
 - (void)layoutTemplet; //__attribute__((objc_requires_super));
 
 #pragma mark - Control Nodes
@@ -44,12 +45,12 @@
 - (void)addNode:(EUIObject)node;
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
 - (void)removeNodeAtIndex:(NSInteger)index;
-
+- (void)removeAllNodes;
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
 
 #pragma mark - Calculate Nodes
 
-///< Reset
+///< Reset 会将模板上所有的视图全部做 removeFromSuper 操作
 - (void)reset;
 
 - (CGSize)suggestConstraintSize;

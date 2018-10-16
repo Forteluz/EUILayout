@@ -72,6 +72,22 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
     return self.eui_node;
 }
 
+- (void)eui_clean {
+    EUITemplet *one = self.eui_layout.rootTemplet;
+    if ([one isKindOfClass:EUITemplet.class]) {
+        [one reset];
+    }
+    [one removeAllNodes];
+    if (one.isHolder) {
+        UIView *container = one.view;
+        if (container) {
+            [container removeFromSuperview];
+            (container = nil);
+        }
+        one.view = nil;
+    }
+}
+
 - (void)eui_reload {
     [self.eui_layout update];
 }

@@ -36,12 +36,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self updateLayout];
+    [self.view eui_update:nil];
 }
 
 #pragma mark -
 
-- (EUITemplet *)orderInputTemplet {
+///< 顶部订单信息模板
+- (EUITemplet *)topOrderTemplet {
+    EUITemplet *one =
+        TRow(self.fromPOIView,
+             self.toPOIView,
+             TColumn(self.timeView),
+             TColumn(self.pNumView, self.tipsView)
+             );
+    return one;
+    
     return [TRow(self.fromPOIView,
                  self.toPOIView,
                  [TColumn(self.timeView) configure:^(EUINode *layout) {
@@ -55,12 +64,19 @@
     }];
 }
 
+///< 底部价格区模板
+- (EUITemplet *)bottomCardTemplet {
+    EUITemplet *one =
+    TRow(@"");
+    return one;
+}
+
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
-    EUITemplet *one = TRow(self.backBtn,
-                           [self orderInputTemplet]);
-    [one configure:^(EUINode *layout) {
-        layout.margin.top = 40;
-    }];
+    EUITemplet *one =
+        TRow([self backBtn],
+             [self topOrderTemplet]
+             );
+    one.margin.top = 20;
     return one;
 }
 
