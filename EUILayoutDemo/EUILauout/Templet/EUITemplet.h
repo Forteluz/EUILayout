@@ -20,26 +20,31 @@
 #define TBase(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
 #endif
 
+@class EUILayout;
+
 #pragma mark -
 
 @interface EUITemplet : EUINode
 
 ///< 布局解析器
-@property (nonatomic, strong) EUIParser *parser;
+@property (nonatomic, strong, nullable) EUIParser *parser;
 
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUINode *> *nodes;
 
+///< 作为根式视图
+@property (nonatomic, weak) EUILayout *layout;
+
 #pragma mark - Init Templet
 
-+ (instancetype)templetWithItems:(NSArray <EUIObject> *)items;
++ (instancetype)templetWithItems:(NSArray <EUIObject> *)items __attribute__((objc_requires_super));
 - (instancetype)init __attribute__((unavailable("Use '- (instancetype)initWithItems:' !")));
 - (instancetype)initWithItems:(NSArray <EUIObject> *)items;
 
 #pragma mark - Layout Nodes
 
 ///< 开始模板布局
-- (void)layoutTemplet; //__attribute__((objc_requires_super));
+- (void)layoutTemplet;
 
 #pragma mark - Control Nodes
 
@@ -47,6 +52,7 @@
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
 - (void)removeNodeAtIndex:(NSInteger)index;
 - (void)removeAllNodes;
+
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
 - (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID;
 

@@ -62,6 +62,8 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_SEC_ * NSEC_PER_SEC))
 
 #pragma mark - For Block
 
+#define EUI_LOG 1
+
 #ifndef onExit
 #define onExit\
 __strong void(^block)(void) __attribute__((cleanup(blockCleanUp), unused)) = ^

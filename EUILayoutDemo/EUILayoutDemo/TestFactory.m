@@ -29,8 +29,8 @@ UIButton * EButton(NSString *title, dispatch_block_t block) {
     [one setTitleColor:EUIRandomColor forState:UIControlStateNormal];
     [one setTitleColor:EUIRandomColor forState:UIControlStateSelected];
     [one setTitleColor:EUIRandomColor forState:UIControlStateHighlighted];
-    [one.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [one.titleLabel setNumberOfLines:10];
+    [one.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [one.titleLabel setNumberOfLines:0];
     [one setBackgroundColor:EUIRandomColor];
     return one;
 }

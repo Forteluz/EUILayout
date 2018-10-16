@@ -11,6 +11,11 @@
 
 @interface EUITemplet()
 @property (copy, readwrite) NSArray <EUINode *> *nodes;
+
+/**
+ *  暂时使用holder做强引用延长临时变量的生命周期
+ *  TODO : 补充详细说明
+ */
 @property (nonatomic, strong) NSArray *holder;
 @end
 
@@ -20,7 +25,8 @@
     if (!items || items.count == 0) {
         return nil;
     }
-    id one = [[self.class alloc] initWithItems:items];
+    EUITemplet *one = [[self.class alloc] initWithItems:items];
+    one.holder = items;
     return one;
 }
 
@@ -28,7 +34,6 @@
     self = [super init];
     if (self) {
         _nodes = [EUINode nodesFromItems:items];
-        _holder = items;
         self.isHolder = YES;
         self.sizeType = EUISizeTypeToFill;
     }
@@ -53,10 +58,10 @@
              EUITemplet *one = (EUITemplet *)obj.eui_node;
              [one cleanTempletSubViewsIfNeeded];
              [one.view removeFromSuperview];
-             (one.view = nil);
+             (one.view = nil);///< close reference
          } else {
              [obj removeFromSuperview];
-             (obj = nil);
+             (obj = nil); ///< close reference
          }
      }];
 }
@@ -241,7 +246,6 @@
     [one addObject:node];
     
     [self setNodes:one.copy];
-    [self layoutTemplet];
 }
 
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index {
@@ -252,7 +256,6 @@
     NSMutableArray *one = _nodes.mutableCopy;
     [one insertObject:node atIndex:index];
     [self setNodes:one.copy];
-    [self layoutTemplet];
 }
 
 - (void)removeNodeAtIndex:(NSInteger)index {
@@ -262,11 +265,11 @@
     NSMutableArray *one = _nodes.mutableCopy;
     [one removeObjectAtIndex:index];
     [self setNodes:one.copy];
-    [self layoutTemplet];
 }
 
 - (void)removeAllNodes {
     [self releaseHolder];
+    
     if (_nodes.count) {
         for (EUINode *node in _nodes) {
             if ([node isKindOfClass:EUITemplet.class]) {

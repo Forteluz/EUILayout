@@ -15,7 +15,7 @@ NSInteger EUIRootViewTag() {
     static NSInteger tag;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        tag = @"RootTag".hash;
+        tag = @"euitag".hash;
     });
     return tag;
 }
@@ -41,40 +41,14 @@ NSInteger EUIRootViewTag() {
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self addObserver:self
-               forKeyPath:@"view"
-                  options:NSKeyValueObservingOptionNew
-                  context:nil];
-        
-        [self addObserver:self
-               forKeyPath:@"rootTemplet"
-                  options:NSKeyValueObservingOptionNew
-                  context:nil];
+      
     }
     return self;
 }
 
 - (void)dealloc {
-     _view = nil;
     [_rootTemplet removeAllNodes];
-    [self removeObserver:self forKeyPath:@"view"];
-    [self removeObserver:self forKeyPath:@"rootTemplet"];
     NSLog(@"EUILayout dealloc");
-}
-
-#pragma mark -
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
-                       context:(void *)context
-{
-    NSLog(@"keyPath:%@, object:%@, change:%@, context:%@",keyPath,object,change,context);
-    if ([keyPath isEqualToString:@"rootTemplet"]) {
-        if ([change[@"new"] isEqual:[NSNull null]]) {
-            [self.view eui_removeLayout];
-        }
-    }
 }
 
 #pragma mark - Update
@@ -143,7 +117,7 @@ NSInteger EUIRootViewTag() {
     [one removeAllNodes];
     if (one.isHolder) {
         UIView *container = one.view;
-        if (container) {
+        if ( container ) {
             [container removeFromSuperview];
             (container = nil);
         }

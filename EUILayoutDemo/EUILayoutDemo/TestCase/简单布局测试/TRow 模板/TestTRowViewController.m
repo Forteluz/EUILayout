@@ -17,28 +17,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view eui_setDelegate:self];
-//    [self.view eui_reload];
-    [self.view eui_update:[self templetWithLayout:nil]];
-}
-
-- (void)dealloc {
-    NSLog(@"dealloc");
+    [self.view eui_reload];
 }
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
-    EUITemplet *edgeT =
-    TRow([self backBtn],
-         EText(@"边距测试"),
-//         TColumn(
-//         [self button:@"“根模板”内边距测试" todo:1],
-//         [self button:@"“边距测试模板”内边距距测试" todo:2],
-//         [self button:@"“边距测试模板”外边距距测试" todo:3]
-//                 ),
-//         EText(@"测试")
-         );
-
-//    edgeT.margin.top = 20;
-    return edgeT;
+    NSArray *cloumn = @[
+                        [self button:@"Root padding 测试" todo:1],
+                        [self button:@"Column padding 测试" todo:2],
+                        [self button:@"Node margin 测试" todo:3]
+                        ];
+    EUITemplet *one = TRow(self.backBtn,
+                           EText(@"Just title"),
+                           TColumn(cloumn) /*支持塞数组*/,
+                           EText(@"Just title")
+                           );
+    one.margin.top = 20;
+    return one;
 }
 
 #pragma mark -
@@ -76,11 +70,11 @@
             [self updatePaddingWithNode:root];
         }  break;
         case 2: {
-            EUITemplet *one = [root nodeAtIndex:1];
+            EUITemplet *one = [root nodeAtIndex:2];
             [self updatePaddingWithNode:one];
         } break;
         case 3: {
-            EUITemplet *one = [root nodeAtIndex:1];
+            EUITemplet *one = [root nodeAtIndex:2];
             int i = EUIRandom(0, 2);
             EUINode *node = [one nodeAtIndex:i];
             [self updateMarginWithNode:node];
@@ -90,10 +84,10 @@
 }
 
 - (UIButton *)button:(NSString *)title todo:(NSInteger)action {
-//    @weakify(self);
+    @weakify(self);
     UIButton *one = EButton(title, ^{
-//        @strongify(self);
-//        [self todo:action];
+        @strongify(self);
+        [self todo:action];
     });
     return one;
 }

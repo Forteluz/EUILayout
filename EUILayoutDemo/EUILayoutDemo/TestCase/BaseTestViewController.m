@@ -19,13 +19,12 @@
     [self.view setBackgroundColor:UIColor.whiteColor];
     [self.view addSubview:({
         @weakify(self);
-        UIButton *one = EButton(@"返回", ^{
+        self.backBtn = EButton(@"返回", ^{
             @strongify(self);
             [self dismissViewControllerAnimated:YES completion:NULL];
         });
-        [one setFrame:(CGRect){0, 0, 100, 40}];
-        self.backBtn = one;
-        self.backBtn;
+        [self.backBtn setFrame:(CGRect){0, 0, 100, 40}];
+        [self backBtn];
     })];
 }
 

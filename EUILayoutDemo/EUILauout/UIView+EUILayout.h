@@ -58,10 +58,5 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
  */
 - (EUINode *)eui_configure:(EUIConfigurationBlock)block;
 
-/**
- *  删除 layout 对象，通常不需要手动调用该方法
- */
-- (void)eui_removeLayout;
-
 
 @end
