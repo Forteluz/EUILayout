@@ -254,6 +254,13 @@
 
 - (void)removeAllNodes {
     if (_nodes.count) {
+        for (EUINode *node in _nodes) {
+            if ([node isKindOfClass:EUITemplet.class]) {
+                [(EUITemplet *)node removeAllNodes];
+            } else {
+                node.view = nil;
+            }
+        }
         _nodes = @[];
     }
 }

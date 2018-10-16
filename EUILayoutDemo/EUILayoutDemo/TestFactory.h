@@ -6,7 +6,6 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 #define _SETButton(_N_, _TITLE_)  \
@@ -18,6 +17,9 @@ if (!self.view##_N_) { \
 
 #define _DEFButton(_NAME_) \
     @property (nonatomic, strong) UIButton *_NAME_;
+
+UILabel  * EText(NSString *text);
+UIButton * EButton(NSString *title, dispatch_block_t block);
 
 @interface TestFactory : NSObject
 

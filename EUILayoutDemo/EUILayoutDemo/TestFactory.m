@@ -7,7 +7,32 @@
 //
 
 #import "TestFactory.h"
+#import "TestLabel.h"
+#import "TestButton.h"
 #import "EUILayoutKit.h"
+
+UILabel * EText(NSString *text) {
+    TestLabel *one = [TestLabel new];
+    one.text = text;
+    one.textColor = EUIRandomColor;
+    one.backgroundColor = EUIRandomColor;
+    return one;
+}
+
+UIButton * EButton(NSString *title, dispatch_block_t block) {
+    TestButton *one = [TestButton buttonWithType:UIButtonTypeCustom];
+    [one setAction:^(UIButton * _Nonnull one) {
+        !block ?: block();
+    }];
+    [one setTitle:title forState:UIControlStateNormal];
+    [one setTitleColor:EUIRandomColor forState:UIControlStateNormal];
+    [one setTitleColor:EUIRandomColor forState:UIControlStateSelected];
+    [one setTitleColor:EUIRandomColor forState:UIControlStateHighlighted];
+    [one.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [one.titleLabel setNumberOfLines:10];
+    [one setBackgroundColor:EUIRandomColor];
+    return one;
+}
 
 @implementation TestFactory
 

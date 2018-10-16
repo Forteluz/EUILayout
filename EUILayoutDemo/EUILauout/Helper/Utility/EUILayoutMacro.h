@@ -9,10 +9,6 @@
 #ifndef EUILayoutMarco_h
 #define EUILayoutMarco_h
 
-#pragma mark - For Assert
-
-#define EUIAssertMainThread() NSAssert([NSThread isMainThread], @"This method must be called on the main thread")
-
 #pragma mark - For Node
 
 #define NODE_VALID_SIZE(_NODE_) CGSizeMake(NODE_VALID_WIDTH(_NODE_),NODE_VALID_HEIGHT(_NODE_))
@@ -28,11 +24,6 @@
 
 #define NODE_TB_EDGE(_NODE_) (_NODE_SIDE_EDGE_METHOD(_NODE_, margin) + _NODE_SIDE_EDGE_METHOD(_NODE_, padding))
 #define NODE_TB_EDGE_METHOD(_NODE_, _METHOD_) (_NODE_._METHOD_.top + _NODE_._METHOD_.bottom)
-
-#pragma mark -
-
-#define EUIColor(r, g, b) [UIColor colorWithRed: (r) / 255.0f green: (g) / 255.0f blue: (b) / 255.0f alpha : 1]
-#define EUIRandomColor EUIColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 
 #pragma mark -
 
@@ -63,7 +54,18 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_SEC_ * NSEC_PER_SEC))
 
 #define EUIKeyPath(_OBJ_,_KEYPATH_) @(((void)_OBJ_._KEYPATH_,#_KEYPATH_))
 
+#pragma mark - For Test
+
+#define EUIAssertMainThread() NSAssert([NSThread isMainThread], @"This method must be called on the main thread")
+#define EUIColor(r, g, b) [UIColor colorWithRed: (r) / 255.0f green: (g) / 255.0f blue: (b) / 255.0f alpha : 1]
+#define EUIRandomColor EUIColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
 #pragma mark - For Block
+
+#ifndef onExit
+#define onExit\
+__strong void(^block)(void) __attribute__((cleanup(blockCleanUp), unused)) = ^
+#endif
 
 #ifndef weakify
     #if DEBUG

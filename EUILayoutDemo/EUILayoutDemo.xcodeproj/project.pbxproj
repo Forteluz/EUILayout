@@ -29,6 +29,7 @@
 		D57CFCE8215A08DB002D137F /* EUILayoutDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCE7215A08DB002D137F /* EUILayoutDemoUITests.m */; };
 		D59D8B5121745B8000651060 /* EUIParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B5021745B8000651060 /* EUIParser.m */; };
 		D59D8B632175C39400651060 /* TestLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B622175C39400651060 /* TestLabel.m */; };
+		D59D8B662175DED800651060 /* TestButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B652175DED800651060 /* TestButton.m */; };
 		D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUIEdge.m */; };
 		D5D852A4215A0A4F007D9CFF /* EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A3215A0A4F007D9CFF /* EUILayout.m */; };
 		D5D852A8215A0A92007D9CFF /* EUINode.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A7215A0A92007D9CFF /* EUINode.m */; };
@@ -110,6 +111,8 @@
 		D59D8B5F2174BA4B00651060 /* EUIParsing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIParsing.h; sourceTree = "<group>"; };
 		D59D8B612175C39400651060 /* TestLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLabel.h; sourceTree = "<group>"; };
 		D59D8B622175C39400651060 /* TestLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLabel.m; sourceTree = "<group>"; };
+		D59D8B642175DED800651060 /* TestButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestButton.h; sourceTree = "<group>"; };
+		D59D8B652175DED800651060 /* TestButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestButton.m; sourceTree = "<group>"; };
 		D5A8D62E215F28B200EE881E /* EUIEdge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIEdge.h; sourceTree = "<group>"; };
 		D5A8D62F215F28B200EE881E /* EUIEdge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIEdge.m; sourceTree = "<group>"; };
 		D5D852A2215A0A4F007D9CFF /* EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayout.h; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 			children = (
 				D59D8B612175C39400651060 /* TestLabel.h */,
 				D59D8B622175C39400651060 /* TestLabel.m */,
+				D59D8B642175DED800651060 /* TestButton.h */,
+				D59D8B652175DED800651060 /* TestButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -736,6 +741,7 @@
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
 				D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */,
+				D59D8B662175DED800651060 /* TestButton.m in Sources */,
 				D59D8B5121745B8000651060 /* EUIParser.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D59D8B632175C39400651060 /* TestLabel.m in Sources */,

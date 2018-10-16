@@ -79,11 +79,13 @@
         NSCAssert(NO, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preNode);
 #endif
     }
+    CGFloat y = 0;
     if (preNode) {
-        frame -> origin.y = EUIValue(node.margin.top) + EUIValue(CGRectGetMaxY(preFrame)) + EUIValue(preNode.margin.bottom);
+        y = EUIValue(node.margin.top) + EUIValue(CGRectGetMaxY(preFrame)) + EUIValue(preNode.margin.bottom);
     } else {
-        frame -> origin.y = EUIValue(node.margin.top) + EUIValue(self.padding.top);
+        y = EUIValue(node.margin.top) + EUIValue(self.padding.top);
     }
+    frame -> origin.y = CGFloatPixelRound(y);
     *step |= EUIParsedStepY;
 }
 

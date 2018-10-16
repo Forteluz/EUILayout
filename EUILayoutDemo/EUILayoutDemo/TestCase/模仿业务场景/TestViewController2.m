@@ -16,31 +16,30 @@
 
 @implementation TestViewController2
 
+- (void)dealloc {
+    [self.view.eui_layout clean];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSArray <NSString *> *list = @[@"发单页",
-                                   @"列表页"];
-    
-    NSMutableArray *one = @[].mutableCopy;
-    [one addObject:self.backBtn];
-    [list enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *btn = [TestFactory creatButton:obj tag:idx];
-        [btn addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
-        [one addObject:btn];
-    }];
-    
-    [self.view.eui_layout updateTemplet:TRow(one)];
+    @weakify(self);
+    UIButton *a = EButton(@"发单页", ^{
+        @strongify(self);
+        [self gotoVC:NSClassFromString(@"TestOrderViewController")];
+    });
+    UIButton *b = EButton(@"列表页", ^{
+        @strongify(self);
+        [self gotoVC:NSClassFromString(@"TestListViewController")];
+    });
+    NSArray *package = @[a, b];
+    EUITemplet *one =
+        TRow(self.backBtn,
+             a,
+             b
+             );
+    one.margin.top = 20;
+    [self.view.eui_layout updateTemplet:one];
 }
-
-- (void)action:(UIButton *)button {
-    switch (button.tag) {
-        case 0:[self gotoVC:NSClassFromString(@"TestOrderViewController")];
-            break;
-        case 1:[self gotoVC:NSClassFromString(@"TestListViewController")];
-            break;
-    }
-}
-
 
 @end

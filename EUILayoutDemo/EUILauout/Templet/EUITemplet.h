@@ -24,6 +24,7 @@
 
 @interface EUITemplet : EUINode
 
+///< 布局解析器
 @property (nonatomic, strong) EUIParser *parser;
 
 ///< 模板包含的所有子布局节点
@@ -32,7 +33,7 @@
 #pragma mark - Init Templet
 
 + (instancetype)templetWithItems:(NSArray <EUIObject> *)items;
-- (instancetype)init __attribute__((unavailable("use initWithItems: for templet")));
+- (instancetype)init __attribute__((unavailable("Use '- (instancetype)initWithItems:' !")));
 - (instancetype)initWithItems:(NSArray <EUIObject> *)items;
 
 #pragma mark - Layout Nodes
@@ -63,7 +64,6 @@
 
 #pragma mark -
 
-///< 作为布局模板的容器视图
 __attribute__((objc_subclassing_restricted)) @interface EUITempletView : UIView
 @property (nonatomic, copy) void (^layoutSubviewsBlock)(void);
 @end

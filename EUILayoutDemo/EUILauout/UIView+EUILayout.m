@@ -30,10 +30,7 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
 }
 
 - (void)eui_setDelegate:(__weak id)delegate {
-    EUILayout *one = [self eui_layout];
-    if (one.delegate != delegate) {
-        one.delegate  = delegate;
-    }
+    self.eui_layout.delegate = delegate;
 }
 
 #pragma mark - DCUILayoutNode
@@ -65,7 +62,6 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
 }
 
 - (void)eui_clean {
-    EUITemplet *one = self.eui_layout.rootTemplet;
     [self.eui_layout clean];
 }
 

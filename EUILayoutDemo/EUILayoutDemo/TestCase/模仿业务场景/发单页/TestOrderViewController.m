@@ -36,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_update:nil];
+    [self.view eui_reload];
 }
 
 #pragma mark -

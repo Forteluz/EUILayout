@@ -37,6 +37,32 @@ NSInteger EUIRootViewTag() {
     return one;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self addObserver:self
+               forKeyPath:@"delegate"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"delegate"];
+    NSLog(@"EUILayout dealloc");
+}
+
+#pragma mark -
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context
+{
+    NSLog(@"keyPath:%@, object:%@, change:%@, context:%@",keyPath,object,change,context);
+}
+
 #pragma mark - Update
 
 - (void)update {

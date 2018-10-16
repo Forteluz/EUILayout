@@ -77,12 +77,13 @@
     BOOL iserr = preNode && (preNode.cacheFrame.size.width == NSNotFound);
     NSCAssert(!iserr, @"EUIError : Layout:[%@] 在 Column 模板下的 Frame 计算异常", preNode);
 #endif
-    frame -> origin.x = EUIValue(node.margin.left) + CGRectGetMaxX(preNode.cacheFrame);
+    CGFloat x = EUIValue(node.margin.left) + CGRectGetMaxX(preNode.cacheFrame);
     if (preNode) {
-        frame -> origin.x += EUIValue(preNode.margin.right);
+        x += EUIValue(preNode.margin.right);
     } else {
-        frame -> origin.x += EUIValue(self.padding.left);
+        x += EUIValue(self.padding.left);
     }
+    frame -> origin.x = CGFloatPixelRound(x);
     *step |= EUIParsedStepX;
 }
 

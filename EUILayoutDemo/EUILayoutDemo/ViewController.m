@@ -16,20 +16,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _SETButton(1, @"布局模板介绍");
-    _SETButton(2, @"模仿业务场景布局");
-    _SETButton(3, @"点我试试");
-    _SETButton(4, @"清除模板");
-    _SETButton(5, @"测试5");
-    _SETButton(6, @"测试6");
+    [self setupSubviews];
+    [self.view eui_setDelegate:self];
+    [self.view eui_reload];
+}
 
-    //使用 A
-//    [self.view eui_setDelegate:self];
-//    [self.view eui_reload];
-
-    // 使用 B
-    EUITemplet *one = [self templetWithLayout:nil];
-    [self.view eui_update:one];
+- (void)setupSubviews {
+    @weakify(self);
+    if (!_view1) {
+        self.view1 = EButton(@"布局模板介绍", ^{
+            @strongify(self);
+            UIViewController *one = [NSClassFromString(@"TestViewController1") new];
+            [self presentViewController:one animated:YES completion:NULL];
+        });
+    }
+    if (!_view2) {
+        self.view2 = EButton(@"模仿业务场景布局", ^{
+            @strongify(self);
+            UIViewController *one = [NSClassFromString(@"TestViewController2") new];
+            [self presentViewController:one animated:YES completion:NULL];
+        });
+    }
+    if (!_view3) {
+        self.view3 = EButton(@"Tap Me!", ^{
+            @strongify(self);
+            [self testRandomPosition];
+        });
+    }
+    if (!_view4) {
+        self.view4 = EButton(@"清除所有模板（2秒后重加载）", ^{
+            @strongify(self);
+            [self cleanTemplet];
+        });
+    }
+    if (!_view5) {
+        self.view5 = EButton(@"测试5", ^{
+            @strongify(self);
+        });
+    }
+    if (!_view6) {
+        self.view6 = EButton(@"测试6", ^{
+            @strongify(self);
+        });
+    }
 }
 
 #pragma mark - EUILayouterDataSource
@@ -124,8 +153,13 @@
 }
 
 - (void)cleanTemplet {
+    ///< Test Release...
+    [self setView1:nil];
+    [self setView2:nil];
     [self.view eui_clean];
+
     EUIAfter(dispatch_get_main_queue(), 2, ^{
+        [self setupSubviews];
         [self.view eui_setDelegate:self];
         [self.view eui_reload];
     });

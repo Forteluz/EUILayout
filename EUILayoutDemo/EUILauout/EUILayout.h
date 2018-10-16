@@ -16,7 +16,7 @@
 @protocol EUILayoutDelegate <NSObject>
 
 /*!
- *  @brief 返回一个模板
+ *  @brief 返回一个模板给布局管理器进行布局
  */
 - (EUITemplet *)templetWithLayout:(EUILayout *)layout;
 
@@ -24,10 +24,19 @@
 
 @interface EUILayout : NSObject
 
+/**
+ *  布局管理器负责的视图
+ */
 @property (nonatomic, strong, readonly) UIView *view;
 
+/**
+ * EUILayoutDelegate 代理
+ */
 @property (nonatomic, weak) id <EUILayoutDelegate> delegate;
 
+/**
+ *  当前的根模板
+ */
 @property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 
 #pragma mark -
