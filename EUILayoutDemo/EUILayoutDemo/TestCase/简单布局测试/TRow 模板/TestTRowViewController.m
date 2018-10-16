@@ -16,7 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_reload];
+    [self.view eui_setDelegate:self];
+//    [self.view eui_reload];
+    [self.view eui_update:[self templetWithLayout:nil]];
 }
 
 - (void)dealloc {
@@ -25,37 +27,18 @@
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
     EUITemplet *edgeT =
-    TRow( self.backBtn,
-         [self lable:@"title:边距测试"],
-         TColumn([self button:@"“根模板”内边距测试" tag:1],
-                 [self button:@"“边距测试模板”内边距距测试" tag:2],
-                 [self button:@"“边距测试模板”外边距距测试" tag:3]
-                 ),
-         [self lable:@"测试顺序"],
+    TRow([self backBtn],
+         EText(@"边距测试"),
+//         TColumn(
+//         [self button:@"“根模板”内边距测试" todo:1],
+//         [self button:@"“边距测试模板”内边距距测试" todo:2],
+//         [self button:@"“边距测试模板”外边距距测试" todo:3]
+//                 ),
+//         EText(@"测试")
          );
 
-    edgeT.margin.top = 20;
+//    edgeT.margin.top = 20;
     return edgeT;
-}
-
-- (void)buttonAction:(UIButton *)button {
-    EUITemplet *root = self.view.eui_layout.rootTemplet;
-    switch (button.tag) {
-        case 1: {
-            [self updatePaddingWithNode:root];
-        }  break;
-        case 2: {
-            EUITemplet *one = [root nodeAtIndex:1];
-            [self updatePaddingWithNode:one];
-        } break;
-        case 3: {
-            EUITemplet *one = [root nodeAtIndex:1];
-            int i = EUIRandom(0, 2);
-            EUINode *node = [one nodeAtIndex:i];
-            [self updateMarginWithNode:node];
-        }
-    }
-    [self.view eui_update:root];
 }
 
 #pragma mark -
@@ -86,13 +69,32 @@
     return one;
 }
 
-- (UIButton *)button:(NSString *)title tag:(NSInteger)tag {
-    UIButton *one = [UIButton buttonWithType:UIButtonTypeCustom];
-    [one setTitle:title forState:UIControlStateNormal];
-    [one.titleLabel setNumberOfLines:10];
-    [one setTag:tag];
-    [one addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [one setBackgroundColor:EUIRandomColor];
+- (void)todo:(NSInteger)action {
+    EUITemplet *root = self.view.eui_layout.rootTemplet;
+    switch (action) {
+        case 1: {
+            [self updatePaddingWithNode:root];
+        }  break;
+        case 2: {
+            EUITemplet *one = [root nodeAtIndex:1];
+            [self updatePaddingWithNode:one];
+        } break;
+        case 3: {
+            EUITemplet *one = [root nodeAtIndex:1];
+            int i = EUIRandom(0, 2);
+            EUINode *node = [one nodeAtIndex:i];
+            [self updateMarginWithNode:node];
+        }
+    }
+    [self.view eui_update:root];
+}
+
+- (UIButton *)button:(NSString *)title todo:(NSInteger)action {
+//    @weakify(self);
+    UIButton *one = EButton(title, ^{
+//        @strongify(self);
+//        [self todo:action];
+    });
     return one;
 }
 

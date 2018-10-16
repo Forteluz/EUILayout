@@ -7,6 +7,7 @@
 //
 
 #import "EUILayout.h"
+#import "UIView+EUILayout.h"
 
 #pragma mark -
 
@@ -14,7 +15,7 @@ NSInteger EUIRootViewTag() {
     static NSInteger tag;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        tag = @"EUILayouterRootContainer".hash;
+        tag = @"RootTag".hash;
     });
     return tag;
 }
@@ -22,7 +23,7 @@ NSInteger EUIRootViewTag() {
 #pragma mark -
 
 @interface EUILayout()
-@property (nonatomic, strong, readwrite) UIView *view;
+@property (nonatomic, weak, readwrite) UIView *view;
 @property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
 @end
 
@@ -41,7 +42,12 @@ NSInteger EUIRootViewTag() {
     self = [super init];
     if (self) {
         [self addObserver:self
-               forKeyPath:@"delegate"
+               forKeyPath:@"view"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+        
+        [self addObserver:self
+               forKeyPath:@"rootTemplet"
                   options:NSKeyValueObservingOptionNew
                   context:nil];
     }
@@ -49,7 +55,10 @@ NSInteger EUIRootViewTag() {
 }
 
 - (void)dealloc {
-    [self removeObserver:self forKeyPath:@"delegate"];
+     _view = nil;
+    [_rootTemplet removeAllNodes];
+    [self removeObserver:self forKeyPath:@"view"];
+    [self removeObserver:self forKeyPath:@"rootTemplet"];
     NSLog(@"EUILayout dealloc");
 }
 
@@ -61,6 +70,11 @@ NSInteger EUIRootViewTag() {
                        context:(void *)context
 {
     NSLog(@"keyPath:%@, object:%@, change:%@, context:%@",keyPath,object,change,context);
+    if ([keyPath isEqualToString:@"rootTemplet"]) {
+        if ([change[@"new"] isEqual:[NSNull null]]) {
+            [self.view eui_removeLayout];
+        }
+    }
 }
 
 #pragma mark - Update

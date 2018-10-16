@@ -16,23 +16,16 @@
 
 @implementation TestViewController2
 
-- (void)dealloc {
-    [self.view.eui_layout clean];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     @weakify(self);
     UIButton *a = EButton(@"发单页", ^{
-        @strongify(self);
-        [self gotoVC:NSClassFromString(@"TestOrderViewController")];
+        @strongify(self); EUIGoto(self, @"TestOrderViewController");
     });
     UIButton *b = EButton(@"列表页", ^{
-        @strongify(self);
-        [self gotoVC:NSClassFromString(@"TestListViewController")];
+        @strongify(self); EUIGoto(self, @"TestListViewController");
     });
-    NSArray *package = @[a, b];
     EUITemplet *one =
         TRow(self.backBtn,
              a,

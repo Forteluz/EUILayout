@@ -25,16 +25,12 @@
     @weakify(self);
     if (!_view1) {
         self.view1 = EButton(@"布局模板介绍", ^{
-            @strongify(self);
-            UIViewController *one = [NSClassFromString(@"TestViewController1") new];
-            [self presentViewController:one animated:YES completion:NULL];
+            @strongify(self); EUIGoto(self, @"TestViewController1")
         });
     }
     if (!_view2) {
         self.view2 = EButton(@"模仿业务场景布局", ^{
-            @strongify(self);
-            UIViewController *one = [NSClassFromString(@"TestViewController2") new];
-            [self presentViewController:one animated:YES completion:NULL];
+            @strongify(self); EUIGoto(self, @"TestViewController2")
         });
     }
     if (!_view3) {

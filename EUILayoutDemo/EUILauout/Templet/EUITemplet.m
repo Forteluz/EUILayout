@@ -11,6 +11,7 @@
 
 @interface EUITemplet()
 @property (copy, readwrite) NSArray <EUINode *> *nodes;
+@property (nonatomic, strong) NSArray *holder;
 @end
 
 @implementation EUITemplet
@@ -27,6 +28,7 @@
     self = [super init];
     if (self) {
         _nodes = [EUINode nodesFromItems:items];
+        _holder = items;
         self.isHolder = YES;
         self.sizeType = EUISizeTypeToFill;
     }
@@ -57,6 +59,12 @@
              (obj = nil);
          }
      }];
+}
+
+- (void)releaseHolder {
+    if (_holder) {
+        _holder = nil;
+    }
 }
 
 #pragma mark -
@@ -135,12 +143,10 @@
     } while (!(index >= nodes.count));
     
     if (templets.count) {
-//        EUIAfter(dispatch_get_main_queue(), 0.f, ^{
             for (EUITemplet *templet in templets) {
                 [templet layoutTemplet];
             }
             ///< 可以增加一个生命周期回调
-//        });
     } else {
         ///< 可以增加一个生命周期回调
     }
@@ -170,6 +176,9 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
+            if (!one.templet) {
+                 one.templet = self;
+            }
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
@@ -207,6 +216,10 @@
 }
 
 #pragma mark - Node Filter
+
+- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID {
+    return nil;
+}
 
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
     NSArray *nodes = self.nodes;
@@ -253,6 +266,7 @@
 }
 
 - (void)removeAllNodes {
+    [self releaseHolder];
     if (_nodes.count) {
         for (EUINode *node in _nodes) {
             if ([node isKindOfClass:EUITemplet.class]) {
@@ -261,7 +275,7 @@
                 node.view = nil;
             }
         }
-        _nodes = @[];
+        _nodes = nil;
     }
 }
 
@@ -295,6 +309,10 @@
 #endif
     }
     return self;
+}
+
+- (void)dealloc {
+    NSLog(@"EUITempletView:%@ dealloc", self);
 }
 
 - (void)layoutSubviews {

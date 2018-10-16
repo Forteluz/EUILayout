@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view eui_setDelegate:self];
     [self.view eui_reload];
 }
 

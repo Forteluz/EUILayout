@@ -79,4 +79,8 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
     [self.eui_layout updateTemplet:templet];
 }
 
+- (void)eui_removeLayout {
+    objc_setAssociatedObject(self, kDCLayoutAssociatedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end

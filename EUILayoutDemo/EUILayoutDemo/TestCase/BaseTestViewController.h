@@ -21,9 +21,4 @@
 @property (nonatomic, strong) UIButton *view7;
 @property (nonatomic, strong) UIButton *view8;
 @property (nonatomic, strong) UIButton *view9;
-
-- (void)action:(UIButton *)button;
-- (void)updateLayout;
-- (void)gotoVC:(Class)clas;
-
 @end

@@ -27,7 +27,7 @@
 /**
  *  布局管理器负责的视图
  */
-@property (nonatomic, strong, readonly) UIView *view;
+@property (nonatomic, weak, readonly) UIView *view;
 
 /**
  * EUILayoutDelegate 代理

@@ -48,6 +48,7 @@
 - (void)removeNodeAtIndex:(NSInteger)index;
 - (void)removeAllNodes;
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
+- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID;
 
 #pragma mark - Calculate Nodes
 

@@ -16,15 +16,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _SETButton(1, @"视图1");
-    _SETButton(2, @"视图2");
-    _SETButton(3, @"视图3");
-    _SETButton(4, @"视图4");
-    _SETButton(5, @"视图5");
-    _SETButton(6, @"视图6");
-    
-    [self updateLayout];
+    [self setupSubviews];
+    [self.view eui_setDelegate:self];
+    [self.view eui_reload];
+}
+
+- (void)setupSubviews {
+    self.view1 = EButton(@"测试1", ^{
+    });
+    self.view2 = EButton(@"测试2", ^{
+    });
+    self.view3 = EButton(@"测试3", ^{
+    });
+    self.view4 = EButton(@"测试4", ^{
+    });
+    self.view5 = EButton(@"测试5", ^{
+    });
+    self.view6 = EButton(@"测试6", ^{
+    });
 }
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
@@ -48,7 +57,6 @@
         layout.margin.right = 20;
         layout.height = 50;
     }];
-    
     [self.view4 eui_configure:^(EUINode *layout) {
         layout.gravity = EUIGravityVertEnd | EUIGravityHorzEnd;
         layout.zPosition = EUILayoutZPostionNormal - 1;
@@ -57,13 +65,6 @@
     
     ///< 模板嵌套
     return TBase(self.view1,self.view2, self.view3, self.view4, self.backBtn);
-}
-
-- (void)action:(UIButton *)button {
-    switch (button.tag) {
-        
-    }
-    [self.view.eui_layout update];
 }
 
 - (EUITemplet *)testTempViews {

@@ -16,6 +16,7 @@ UILabel * EText(NSString *text) {
     one.text = text;
     one.textColor = EUIRandomColor;
     one.backgroundColor = EUIRandomColor;
+    one.textAlignment = NSTextAlignmentCenter;
     return one;
 }
 
@@ -33,23 +34,3 @@ UIButton * EButton(NSString *title, dispatch_block_t block) {
     [one setBackgroundColor:EUIRandomColor];
     return one;
 }
-
-@implementation TestFactory
-
-+ (UIButton *)creatButton:(NSString *)title
-                      tag:(NSInteger)tag
-{
-    UIButton *one = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [one setBackgroundColor:EUIRandomColor];
-    [one setTitle:title forState:UIControlStateNormal];
-    [one setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    [one setTag:tag];
-    [one.layer setShadowColor:[UIColor colorWithWhite:0.1 alpha:0.08].CGColor];
-    [one.layer setShadowOffset:CGSizeMake(4, 4)];
-    [one.layer setShadowRadius:8];
-    [one setClipsToBounds:YES];
-    [one.titleLabel setFont:[UIFont systemFontOfSize:16.]];
-    return one;
-}
-
-@end

@@ -12,4 +12,6 @@
 
 @interface EUIColumnTemplet : EUITemplet
 
+
+
 @end

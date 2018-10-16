@@ -99,6 +99,9 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *preone = nil;
         for (EUINode *one in self.nodes) {
+            if (!one.templet) {
+                 one.templet = self;
+            }
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES
