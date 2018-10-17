@@ -24,6 +24,7 @@ typedef struct {
     CGRect frame;
     EUIParsedStep step;
     BOOL recalculate;
+    CGSize constraintSize;
 } EUIParseContext;
 
 typedef void (^EUIParsingHandler) (EUINode *node,

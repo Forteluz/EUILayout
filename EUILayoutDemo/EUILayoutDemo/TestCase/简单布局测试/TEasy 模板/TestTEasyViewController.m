@@ -83,7 +83,6 @@
         one.eui_node.maxHeight = 60;
         one.eui_node.maxWidth = 100;
         one.eui_node.gravity = EUIGravityVertCenter;
-        [one addTarget:self action:@selector(updateLayout) forControlEvents:UIControlEventTouchUpInside];
         one;
     });
     

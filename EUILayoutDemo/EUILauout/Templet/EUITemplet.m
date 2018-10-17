@@ -194,10 +194,10 @@
             [one setCacheFrame:r];
             ///< ----------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
-                size.width = MAX(size.width, one.size.width);
+                size.width = MAX(size.width, r.size.width);
             }
             if (self.sizeType & EUISizeTypeToVertFit) {
-                size.height = MAX(size.height, one.size.height);
+                size.height = MAX(size.height, r.size.height);
             }
         }
     }

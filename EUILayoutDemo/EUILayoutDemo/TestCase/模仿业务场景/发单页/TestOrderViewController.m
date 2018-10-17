@@ -47,58 +47,20 @@
     ///< 顶部发单信息区
     CGRect r = CGRectMake(10, 60, self.view.frame.size.width - 20, 200);
     UIView *view = [[UIView alloc] initWithFrame:r];
-    EUITemplet *one =
-        TRow(
-//             self.fromPOIView,
-//             self.toPOIView,
-            [TColumn(self.timeView) configure:^(EUINode *node) {
-                node.sizeType = EUISizeTypeToVertFit;
-            }],
-//            [TColumn(self.pNumView, self.tipsView) configure:^(EUINode *node) {
-//                node.sizeType = EUISizeTypeToVertFit;
-//            }]
-             );
-    one.padding = EUIEdgeMake(10, 10, 10, 10);
-    [view eui_update:one];
-    [self.view addSubview:view];
-}
-
-///< 顶部订单信息模板
-- (EUITemplet *)topOrderTemplet {
-    EUITemplet *one =
-        TRow(self.fromPOIView,
-             self.toPOIView,
-             TColumn(self.timeView),
-             TColumn(self.pNumView, self.tipsView));
-    return one;
     
-    return [TRow(self.fromPOIView,
-                 self.toPOIView,
-                 [TColumn(self.timeView) configure:^(EUINode *layout) {
-        layout.sizeType = EUISizeTypeToVertFit;
-    }],
-                 [TColumn(self.pNumView, self.tipsView) configure:^(EUINode *layout) {
-        layout.sizeType = EUISizeTypeToVertFit;
-    }]
-                 ) configure:^(EUINode *layout) {
-        layout.padding = EUIEdgeMake(10, 10, 10, 10);
-    }];
-}
-
-///< 底部价格区模板
-- (EUITemplet *)bottomCardTemplet {
-    EUITemplet *one =
-    TRow(@"");
-    return one;
-}
-
-- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
-    EUITemplet *one =
-        TRow([self backBtn],
-             [self topOrderTemplet]
-             );
-    one.margin.top = 20;
-    return one;
+    UIView *line = EText(@"→");
+    line.eui_node.sizeType = EUISizeTypeToFit;
+    line.eui_node.gravity  = EUIGravityVertCenter | EUIGravityHorzCenter;
+    
+    [view eui_update:TRow(EButton(@"起点", NULL),
+                          EButton(@"终点", NULL),
+                          TColumn(EButton(@"开始时间", NULL), line, EButton(@"结束时间", NULL)),
+                          TColumn(EButton(@"乘车人数", NULL), EButton(@"出行要求", NULL))
+                          )];
+    [self.view addSubview:view];
+    
+    ///< 底部发单区
+    
 }
 
 @end

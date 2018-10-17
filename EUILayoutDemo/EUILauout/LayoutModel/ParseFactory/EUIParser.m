@@ -360,7 +360,6 @@
     }
     
     EUITemplet *templet = node.templet;
-    CGSize suggestSize = [templet suggestConstraintSize];
     
     if (EUIValid(node.size.height)) {
         frame -> size.height = node.size.height;
@@ -377,13 +376,36 @@
         }
     }
     
+    CGSize constraintSize =  [templet suggestConstraintSize];
+    
+    if (EUISizeTypeToVertFill & node.sizeType) {
+        CGFloat margin  = EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
+        CGFloat padding = EUIValue(templet.padding.top) + EUIValue(templet.padding.bottom);
+        CGFloat th = NODE_VALID_HEIGHT(templet) ?: cacheR.size.height;
+        if (th == 0) {
+            NSCAssert(NO, @"EUIError : 高获取异常");
+        }
+        CGFloat h = th - margin - padding;
+        if (EUIValid(node.maxHeight) && (frame->size.height > node.maxHeight)) {
+            h = node.maxHeight;
+        }
+        frame -> size.height = h;
+        *step |= EUIParsedStepH;
+        return;
+    }
+    
     if (EUISizeTypeToVertFit & node.sizeType) {
         if (frame -> size.width) {
-            suggestSize.width = frame -> size.width;
-        } else if (EUIValid(node.size.height)) {
-            suggestSize.width = node.size.width;
+            constraintSize.width = frame -> size.width;
+        } else if (EUIValid(node.size.width)) {
+            constraintSize.width = node.size.width;
+        } else {
+            constraintSize.width = context->constraintSize.width;
         }
-        CGSize size = [node sizeThatFits:suggestSize];
+        if (constraintSize.height == 0) {
+            constraintSize.height = context->constraintSize.height ?: MAXFLOAT;
+        }
+        CGSize size = [node sizeThatFits:constraintSize];
         if (size.height == 0) {
             if (EUIValid(node.maxHeight)) {
                 size.height = node.maxHeight;
@@ -393,17 +415,7 @@
         *step |= EUIParsedStepH;
         return;
     }
-    
-    if (EUISizeTypeToVertFill & node.sizeType) {
-        CGFloat margin  = EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
-        CGFloat padding = EUIValue(templet.padding.top) + EUIValue(templet.padding.bottom);
-        CGFloat h = NODE_VALID_HEIGHT(templet) - margin - padding;
-        if (EUIValid(node.maxHeight) && (frame->size.height > node.maxHeight)) {
-            h = node.maxHeight;
-        }
-        frame -> size.height = h;
-        *step |= EUIParsedStepH;
-    }
+ 
 }
 
 @end

@@ -32,10 +32,14 @@
     NSMutableArray <EUINode *> *fills = [NSMutableArray arrayWithCapacity:nodes.count];
     CGFloat __tw = 0;
     for (EUINode *node in nodes) {
+        if (!node.templet) {
+             node.templet = self;
+        }
         if ([self isFilterNode:node]) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
-                .recalculate = YES
+                .recalculate = YES,
+                .constraintSize = CGSizeMake(MAXFLOAT, MAXFLOAT)
             };
             [self.parser.wParser parse:node _:nil _:&ctx];
             ///< ----- Cache size ----- >
@@ -104,24 +108,25 @@
             }
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
-                .recalculate = YES
+                .recalculate = YES,
+                .constraintSize = constrainedSize
             };
             [self.parser parse:one _:preone _:&ctx];
             ///< ----- Cache size ----- >
             CGRect r = {NSNotFound,NSNotFound,NSNotFound,NSNotFound};
-            if (ctx.frame.size.height > 0) {
+            if (EUIValid(ctx.frame.size.height)) {
                 r.size.height = ctx.frame.size.height;
             }
-            if (ctx.frame.size.width > 0) {
+            if (EUIValid(ctx.frame.size.width > 0)) {
                 r.size.width = ctx.frame.size.width;
             }
             [one setCacheFrame:r];
             ///< ---------------------- >
             if (self.sizeType & EUISizeTypeToHorzFit) {
-                size.width += (one.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
+                size.width += (r.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
             }
             if (self.sizeType & EUISizeTypeToVertFit) {
-                size.height = MAX(size.height, one.size.height);
+                size.height = MAX(size.height, r.size.height);
             }
             preone = one;
         }
