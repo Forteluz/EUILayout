@@ -17,50 +17,11 @@
     [super viewDidLoad];
     
     [self setupSubviews];
+    
+//    [self.view eui_update:TGrid(self.view1,self.view2,self.view3,self.view4,self.view5)];
+    
     [self.view eui_setDelegate:self];
     [self.view eui_reload];
-
-    
-//    UIView *view = [UIView new];
-//    view.tag = 1;
-//    view.backgroundColor = [UIColor redColor];
-//    view.frame = CGRectMake(5, 60, 200, 400);
-//    [self.view addSubview:view];
-//
-//    UIView *view2 = [UIView new];
-//    view2.tag = 2;
-//    view2.frame = CGRectMake(210, 60, 200, 200);
-//    view2.backgroundColor = [UIColor blueColor];
-//    [self.view addSubview:view2];
-//
-//    self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-//
-//    EUITemplet *row_1_1 = TColumn(self.view2, self.view3);
-//    EUITemplet *row_1 = TColumn(self.view1,
-//                                row_1_1,
-//                                TRow(self.view4,self.view5)
-//                                );
-//    [view eui_update:row_1];
-}
-
-- (void)change {
-    self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-    
-    EUITemplet *row_1_1 = TColumn(self.view2, self.view3);
-    EUITemplet *row_1 = TColumn(self.view1,
-                                row_1_1,
-                                TRow(self.view4,self.view5)
-                                );
-    
-    static int i = 1;
-    if (i % 2 == 0) {
-        UIView *view = [self.view viewWithTag:1];
-        [view eui_update:row_1];
-    } else {
-        UIView *view = [self.view viewWithTag:2];
-        [view eui_update:row_1];
-    }
-    i ++;
 }
 
 - (void)setupSubviews {
@@ -88,14 +49,13 @@
         });
     }
     if (!_view5) {
-        self.view5 = EButton(@"v5:测试父视图", ^{
-            @strongify(self);
-            [self change];
+        self.view5 = EButton(@"v5:测试父视图交换", ^{
+//            @strongify(self);
         });
     }
     if (!_view6) {
         self.view6 = EButton(@"v6:测试6", ^{
-            @strongify(self);
+//            @strongify(self);
         });
     }
 }

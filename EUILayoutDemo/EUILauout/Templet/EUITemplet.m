@@ -18,9 +18,9 @@
 #pragma mark - Override
 
 + (instancetype)templetWithItems:(NSArray <EUIObject> *)items {
-    if (!items || items.count == 0) {
-        return nil;
-    }
+//    if (!items || items.count == 0) {
+//        return nil;
+//    }
     EUITemplet *one = [[self.class alloc] initWithItems:items];
     return one;
 }
@@ -189,10 +189,10 @@
              EUITemplet *one = (EUITemplet *)obj.eui_node;
              [one clearSubviewsIfNeeded];
              [one.view removeFromSuperview];
-             (one.view = nil);///< close reference
+             (one.view = nil);///< release reference
          } else {
              [obj removeFromSuperview];
-             (obj = nil); ///< close reference
+             (obj = nil); ///< release reference
          }
      }];
 }

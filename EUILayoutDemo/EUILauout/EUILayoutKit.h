@@ -16,5 +16,6 @@
 #import "EUITemplet.h"
 #import "EUIRowTemplet.h"
 #import "EUIColumnTemplet.h"
+#import "EUIGridTemplet.h"
 
 #endif /* EUILayoutKit_h */

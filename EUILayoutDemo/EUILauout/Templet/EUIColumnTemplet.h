@@ -11,7 +11,4 @@
 #define TColumn(...) [EUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
 
 @interface EUIColumnTemplet : EUITemplet
-
-
-
 @end

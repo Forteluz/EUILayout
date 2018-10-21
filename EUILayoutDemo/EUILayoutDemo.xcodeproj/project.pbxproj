@@ -12,6 +12,7 @@
 		914EA5141BBDB884A53B6D1B /* Pods_EUILayoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863E148CD689D85239C01AB5 /* Pods_EUILayoutDemo.framework */; };
 		D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D62174EED0006A7ECA /* EUINode+Filter.m */; };
 		D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D92174F062006A7ECA /* EUIUtilities.m */; };
+		D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */; };
 		D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B0217053BA00C2D920 /* TestViewController2.m */; };
 		D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B72170763C00C2D920 /* TSInfoBaseView.m */; };
 		D54756BA2170777400C2D920 /* icon_detail_g@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D54756B92170777400C2D920 /* icon_detail_g@3x.png */; };
@@ -76,6 +77,8 @@
 		D53426D52174EED0006A7ECA /* EUINode+Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUINode+Filter.h"; sourceTree = "<group>"; };
 		D53426D62174EED0006A7ECA /* EUINode+Filter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "EUINode+Filter.m"; sourceTree = "<group>"; };
 		D53426D92174F062006A7ECA /* EUIUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIUtilities.m; sourceTree = "<group>"; };
+		D53426DB217D0C60006A7ECA /* EUIGridTemplet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIGridTemplet.h; sourceTree = "<group>"; };
+		D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIGridTemplet.m; sourceTree = "<group>"; };
 		D5379416216F010D0071E624 /* EUIUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIUtilities.h; sourceTree = "<group>"; };
 		D54756AF217053BA00C2D920 /* TestViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController2.h; sourceTree = "<group>"; };
 		D54756B0217053BA00C2D920 /* TestViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController2.m; sourceTree = "<group>"; };
@@ -349,6 +352,8 @@
 				D5D852B0215A0ACF007D9CFF /* EUIRowTemplet.m */,
 				D5D852AC215A0ABE007D9CFF /* EUIColumnTemplet.h */,
 				D5D852AD215A0ABE007D9CFF /* EUIColumnTemplet.m */,
+				D53426DB217D0C60006A7ECA /* EUIGridTemplet.h */,
+				D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */,
 			);
 			path = Templet;
 			sourceTree = "<group>";
@@ -739,6 +744,7 @@
 				D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */,
 				D5D852A4215A0A4F007D9CFF /* EUILayout.m in Sources */,
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
+				D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
 				D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */,
 				D59D8B662175DED800651060 /* TestButton.m in Sources */,

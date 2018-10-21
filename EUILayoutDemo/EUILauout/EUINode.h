@@ -52,7 +52,7 @@ UIKIT_STATIC_INLINE EUIEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bott
 
 #pragma mark -
 
-///< 只支持 UIView 、EUINode 、EUITemplet 、NSArray
+///< 只支持 UIView 、EUINode 、EUITemplet 、NSArray、[NSNull null]
 typedef id EUIObject;
 
 #pragma mark -
@@ -67,7 +67,6 @@ typedef id EUIObject;
 
 ///< layout 所依赖的模板
 @property (nonatomic, weak) __kindof EUINode *templet;
-@property (nonatomic, readonly) EUINode *rootNode;
 
 ///< layout 负责布局的视图对象
 @property (nonatomic, weak) UIView *view;
