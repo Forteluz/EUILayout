@@ -17,54 +17,84 @@
     [super viewDidLoad];
     
     [self setupSubviews];
-//    [self.view eui_setDelegate:self];
-//    [self.view eui_reload];
+    [self.view eui_setDelegate:self];
+    [self.view eui_reload];
+
     
-    UIView *view = [UIView new];
-    view.frame = CGRectMake(10, 60, 200, 200);
-    
+//    UIView *view = [UIView new];
+//    view.tag = 1;
+//    view.backgroundColor = [UIColor redColor];
+//    view.frame = CGRectMake(5, 60, 200, 400);
+//    [self.view addSubview:view];
+//
+//    UIView *view2 = [UIView new];
+//    view2.tag = 2;
+//    view2.frame = CGRectMake(210, 60, 200, 200);
+//    view2.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:view2];
+//
+//    self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
+//
+//    EUITemplet *row_1_1 = TColumn(self.view2, self.view3);
+//    EUITemplet *row_1 = TColumn(self.view1,
+//                                row_1_1,
+//                                TRow(self.view4,self.view5)
+//                                );
+//    [view eui_update:row_1];
+}
+
+- (void)change {
     self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-    self.view1.eui_node.sizeType = EUISizeTypeToFit;
-    self.view2.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-    EUITemplet *row_1_1 = TRow(self.view2, self.view3);
-    row_1_1.padding = EUIEdgeMake(10, 10, 10, 10);
-    EUITemplet *row_1 = TRow(self.view1, row_1_1, self.view4);
-    [view eui_update:row_1];
     
-    [self.view addSubview:view];
+    EUITemplet *row_1_1 = TColumn(self.view2, self.view3);
+    EUITemplet *row_1 = TColumn(self.view1,
+                                row_1_1,
+                                TRow(self.view4,self.view5)
+                                );
+    
+    static int i = 1;
+    if (i % 2 == 0) {
+        UIView *view = [self.view viewWithTag:1];
+        [view eui_update:row_1];
+    } else {
+        UIView *view = [self.view viewWithTag:2];
+        [view eui_update:row_1];
+    }
+    i ++;
 }
 
 - (void)setupSubviews {
     @weakify(self);
     if (!_view1) {
-        self.view1 = EButton(@"布局模板介绍", ^{
+        self.view1 = EButton(@"v1:布局模板介绍", ^{
             @strongify(self); EUIGoto(self, @"TestViewController1")
         });
     }
     if (!_view2) {
-        self.view2 = EButton(@"模仿业务场景布局", ^{
+        self.view2 = EButton(@"v2:模仿业务场景布局", ^{
             @strongify(self); EUIGoto(self, @"TestViewController2")
         });
     }
     if (!_view3) {
-        self.view3 = EButton(@"Tap Me!", ^{
+        self.view3 = EButton(@"v3:Tap Me!", ^{
             @strongify(self);
             [self testRandomPosition];
         });
     }
     if (!_view4) {
-        self.view4 = EButton(@"清除所有模板（2秒后重加载）", ^{
+        self.view4 = EButton(@"v4:清除所有模板（2秒后重加载）", ^{
             @strongify(self);
             [self cleanTemplet];
         });
     }
     if (!_view5) {
-        self.view5 = EButton(@"测试5", ^{
+        self.view5 = EButton(@"v5:测试父视图", ^{
             @strongify(self);
+            [self change];
         });
     }
     if (!_view6) {
-        self.view6 = EButton(@"测试6", ^{
+        self.view6 = EButton(@"v6:测试6", ^{
             @strongify(self);
         });
     }
@@ -74,28 +104,28 @@
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layout {
     ///< ---- config ----
-//    [self.view1 eui_configure:^(EUINode *node) {
-//        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-//    }];
-//    ///< ----------------
-//    self.view3.eui_node.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
-//    self.view3.eui_node.gravity  = EUIGravityHorzEnd;
-//    ///< ----------------
-//    [self.view4 eui_configure:^(EUINode *node) {
-//        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-//        node.gravity = EUIGravityVertCenter;
-//    }];
-//    [self.view6 eui_configure:^(EUINode *node) {
-//        node.sizeType = EUISizeTypeToFit;
-//    }];
+    [self.view1 eui_configure:^(EUINode *node) {
+        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+    }];
+    ///< ----------------
+    self.view3.eui_node.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
+    self.view3.eui_node.gravity  = EUIGravityHorzEnd;
+    ///< ----------------
+    [self.view4 eui_configure:^(EUINode *node) {
+        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
+        node.gravity = EUIGravityVertCenter;
+    }];
+    [self.view6 eui_configure:^(EUINode *node) {
+        node.sizeType = EUISizeTypeToFit;
+    }];
     ///< ----------------
     self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
     self.view4.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
     EUITemplet *one =
         TRow(self.view1,
-//             self.view2,
-//             self.view3,
-             TColumn(self.view4, self.view5)
+             self.view2,
+             TColumn(self.view3, self.view4),
+             TColumn(self.view5, self.view6)
              );
     one.margin.top = 20;
     return one;

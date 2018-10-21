@@ -26,109 +26,108 @@
 
 - (void)layoutWillStart {
     [super layoutWillStart];
-    
-    NSArray <EUINode *> *nodes = self.nodes;
-    NSMutableArray <EUINode *> *fills = [NSMutableArray arrayWithCapacity:nodes.count];
-    CGFloat __tw = 0;
-    for (EUINode *node in nodes) {
-        if (!node.templet) {
-            node.templet = self;
-        }
-        if ([self isFilterNode:node]) {
-            EUIParseContext ctx = (EUIParseContext) {
-                .step  = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
-                .recalculate = YES,
-                .constraintSize = CGSizeMake(MAXFLOAT, MAXFLOAT)
-            };
-            [self.parser.wParser parse:node _:nil _:&ctx];
-            ///< ----- Cache size ----- >
-            CGRect r = {NSNotFound,NSNotFound,ctx.frame.size.width,NSNotFound};
-            [node setCacheFrame:r];
-            ///< ----------------------->
-            __tw += r.size.width + EUIValue(node.margin.left) + EUIValue(node.margin.right);
-        } else {
-            [fills addObject:node];
-        }
-    }
-    if (fills.count > 0) {
-        CGFloat tw = NODE_VALID_WIDTH(self) - EUIValue(self.padding.left) - EUIValue(self.padding.right);
-        CGFloat value = (tw - __tw) / fills.count;
-        for (EUINode *node in fills) {
-            CGFloat w = value - EUIValue(node.margin.left) - EUIValue(node.margin.right);
-            CGRect r = {NSNotFound,NSNotFound,w,NSNotFound};
-            [node setCacheFrame:r];
-        }
-    }
+    [self sizeThatFits:self.cacheFrame.size];
 }
 
-- (BOOL)isFilterNode:(EUINode *)layout {
-    if ((layout.sizeType & EUISizeTypeToHorzFit) ||
-        (EUIValueIsValid(layout.maxWidth)) ||
-        (EUIValueIsValid(layout.width)))
+- (CGSize)sizeThatFits:(CGSize)constrainedSize {
+    CGSize size = (CGSize){constrainedSize.width, 0};
+    if (!EUIValueIsValid(constrainedSize.width) ||
+        !EUIValueIsValid(constrainedSize.height))
     {
-        return YES;
+        return size;
     }
-    return NO;
+    
+    CGFloat innerVertSide = EUIValue(self.padding.top) + EUIValue(self.padding.bottom);
+    
+    NSArray <EUINode *> *nodes = self.nodes;
+    NSMutableArray <EUINode *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
+    CGFloat fitWidth = 0;
+    for (EUINode *node in nodes) {
+        BOOL needFit = (node.sizeType & EUISizeTypeToHorzFit) || EUIValueIsValid(node.maxWidth) || EUIValueIsValid(node.width);
+        if ( needFit ) {
+            EUIParseContext ctx = (EUIParseContext) {
+                .step = (EUIParsedStepX | EUIParsedStepY),
+                .recalculate = YES,
+                .constraintSize = (CGSize) {
+                    EUIMaxSize().width, self.validSize.height - innerVertSide
+                }
+            };
+            [self.parser.hParser parse:node _:nil _:&ctx];
+            [self.parser.wParser parse:node _:nil _:&ctx];
+            ///< -------------------------- >
+            CGRect r = EUIRectUndefine();{
+                r.size = ctx.frame.size;
+            }
+            [node setCacheFrame:r];
+            ///< -------------------------- >
+            fitWidth += r.size.width + EUIValue(node.margin.left) + EUIValue(node.margin.right);
+            size.height = EUI_CLAMP(r.size.height, size.height, constrainedSize.height);
+        } else {
+            [fillNodes addObject:node];
+        }
+    }
+    
+    if (fillNodes.count == 0 ||
+        fitWidth > constrainedSize.width)
+    {
+        ///< 如果约束过小，无法显示的fill单位就不计算了
+        return size;
+    }
+    
+    CGFloat innerHorzSide = EUIValue(self.padding.left) + EUIValue(self.padding.right);
+    CGFloat innerWidth = constrainedSize.width - innerHorzSide;
+    if (innerWidth <= 0) {
+        NSCAssert(0, @"constrainedSize太小了！");
+    }
+    
+    CGFloat min = 1.f;
+    CGFloat aw  = (innerWidth - fitWidth) / fillNodes.count;
+    for (EUINode *node in fillNodes) {
+        CGRect  node_r = EUIRectUndefine();
+        CGFloat w = aw - EUIValue(node.margin.left) - EUIValue(node.margin.right);
+        node_r.size.width = w;
+        CGFloat h = 0;
+        if (w <= min) {
+            w = MAX(w, min);
+            h = min;
+            node_r.size.height = h;
+            [node setCacheFrame:node_r];
+            continue;
+        }
+        EUIParseContext ctx = (EUIParseContext) {
+            .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
+            .recalculate = YES,
+            .constraintSize = (CGSize) {w, constrainedSize.height - innerVertSide}
+        };
+        [self.parser.hParser parse:node _:nil _:&ctx];
+        h = ctx.frame.size.height;{
+            node_r.size.height = h;
+        }
+        [node setCacheFrame:node_r];
+        size.height = EUI_CLAMP(h, size.height, constrainedSize.height);
+    }
+    
+    return size;
 }
 
 - (void)parseX:(EUINode *)node _:(EUINode *)preNode _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
-#ifdef DEBUG
-    BOOL iserr = preNode && (preNode.cacheFrame.size.width == NSNotFound);
-    NSCAssert(!iserr, @"EUIError : Layout:[%@] 在 Column 模板下的 Frame 计算异常", preNode);
-#endif
-    CGFloat x = EUIValue(node.margin.left) + CGRectGetMaxX(preNode.cacheFrame);
+    CGRect preFrame = preNode ? preNode.cacheFrame : CGRectZero;
+    if (preNode && CGRectEqualToRect(CGRectZero, preFrame)) {
+        NSCAssert(0, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preNode);
+    }
+    CGFloat x = 0;
     if (preNode) {
-        x += EUIValue(preNode.margin.right);
+        x = EUIValue(node.margin.left) + EUIValue(CGRectGetMaxX(preFrame)) + EUIValue(preNode.margin.right);
     } else {
-        x += EUIValue(self.padding.left);
+        x = EUIValue(node.margin.left) + EUIValue(self.padding.left);
+        if (!self.isHolder) {
+            x += CGRectGetMinX(self.cacheFrame);
+        }
     }
     frame -> origin.x = CGFloatPixelRound(x);
     *step |= EUIParsedStepX;
-}
-
-- (CGSize)sizeThatFits:(CGSize)constrainedSize {
-    CGSize size = CGSizeZero;
-    EUIEdge *margin = self.margin;
-    if (self.sizeType & EUISizeTypeToHorzFill) {
-        size.width = constrainedSize.width - EUIValue(margin.left) - EUIValue(margin.right);
-    }
-    if (self.sizeType & EUISizeTypeToVertFill) {
-        size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.bottom);
-    }
-    if (self.sizeType & EUISizeTypeToFit) {
-        EUINode *preone = nil;
-        for (EUINode *one in self.nodes) {
-            if (!one.templet) {
-                 one.templet = self;
-            }
-            EUIParseContext ctx = (EUIParseContext) {
-                .step = (EUIParsedStepX | EUIParsedStepY),
-                .recalculate = YES,
-                .constraintSize = constrainedSize
-            };
-            [self.parser parse:one _:preone _:&ctx];
-            ///< ----- Cache size ----- >
-            CGRect r = {NSNotFound,NSNotFound,NSNotFound,NSNotFound};
-            if (EUIValueIsValid(ctx.frame.size.height)) {
-                r.size.height = ctx.frame.size.height;
-            }
-            if (EUIValueIsValid(ctx.frame.size.width > 0)) {
-                r.size.width = ctx.frame.size.width;
-            }
-            [one setCacheFrame:r];
-            ///< ---------------------- >
-            if (self.sizeType & EUISizeTypeToHorzFit) {
-                size.width += (r.size.width + EUIValue(one.margin.left) + EUIValue(one.margin.right));
-            }
-            if (self.sizeType & EUISizeTypeToVertFit) {
-                size.height = MAX(size.height, r.size.height);
-            }
-            preone = one;
-        }
-    }
-    return size;
 }
 
 @end

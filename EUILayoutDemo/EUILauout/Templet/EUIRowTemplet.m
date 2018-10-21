@@ -43,12 +43,16 @@
     NSMutableArray <EUINode *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
     CGFloat fitHeight = 0;
     for (EUINode *node in nodes) {
-        BOOL needFit = (node.sizeType & EUISizeTypeToVertFit) || EUIValueIsValid(node.maxHeight) || EUIValueIsValid(node.height);
+        BOOL needFit = (node.sizeType & EUISizeTypeToVertFit) ||
+        EUIValueIsValid(node.maxHeight) ||
+        EUIValueIsValid(node.height);
         if ( needFit ) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES,
-                .constraintSize = EUIMaxSize()
+                .constraintSize = (CGSize) {
+                    self.validSize.width - [self innerHorzSide], EUIMaxSize().height
+                }
             };
             [self.parser.hParser parse:node _:nil _:&ctx];
             [self.parser.wParser parse:node _:nil _:&ctx];
@@ -83,6 +87,7 @@
         CGRect  node_r = EUIRectUndefine();
         CGFloat w = 0;
         CGFloat h = ah - EUIValue(node.margin.top) - EUIValue(node.margin.bottom);
+        node_r.size.height = h;
         ///< 给1个像素的容错值，如果尺寸过小，无有效的fill高度，就给一个1-point占位。
         ///< 毕竟已经显示异常了
         h = MAX(min, h);
@@ -91,7 +96,7 @@
             [node setCacheFrame:node_r];
             continue;
         }
-        node_r.size.height = h;
+        
         EUIParseContext ctx = (EUIParseContext) {
             .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepH),
             .recalculate = YES,
@@ -109,7 +114,7 @@
 }
 
 - (CGFloat)innerHorzSide {
-    return  EUIValue(self.padding.left) + EUIValue(self.padding.right);
+    return EUIValue(self.padding.left) + EUIValue(self.padding.right);
 }
 
 - (CGFloat)innerVertSide {
@@ -121,7 +126,6 @@
 - (void)parseY:(EUINode *)node _:(EUINode *)preNode _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
-    
     CGRect preFrame = preNode ? preNode.cacheFrame : CGRectZero;
     if (preNode && CGRectEqualToRect(CGRectZero, preFrame)) {
         NSCAssert(0, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preNode);
