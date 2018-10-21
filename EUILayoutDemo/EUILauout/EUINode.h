@@ -62,8 +62,12 @@ typedef id EUIObject;
 ///< 作为模板时是否创建容器视图，默认YES
 @property (nonatomic, assign) BOOL isHolder;
 
+///< 是否是可拉伸的，用于视图已有frame的情况，如果设置了，则会走Layout的布局规则，否则会按frame的设置走绝对布局
+@property (nonatomic, getter=isFlexable) BOOL flexable;
+
 ///< layout 所依赖的模板
 @property (nonatomic, weak) __kindof EUINode *templet;
+@property (nonatomic, readonly) EUINode *rootNode;
 
 ///< layout 负责布局的视图对象
 @property (nonatomic, weak) UIView *view;
@@ -79,12 +83,14 @@ typedef id EUIObject;
 
 ///< 设置一个最大的绝对宽，当需要计算宽度时会使用该值作为边界
 @property (nonatomic) CGFloat maxWidth;
+@property (nonatomic) CGFloat minWidth;
 
 ///< 显示设置其绝对高
 @property (nonatomic) CGFloat height;
 
 ///< 设置一个最大的绝对高，当需要计算高度时会使用该值作为边界
 @property (nonatomic) CGFloat maxHeight;
+@property (nonatomic) CGFloat minHeight;
 
 ///< 显示设置其在模板中的位置
 @property (nonatomic) CGPoint origin;
@@ -121,5 +127,8 @@ typedef id EUIObject;
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
 - (__kindof EUINode *)configure:(void(^)(__kindof EUINode *node))block;
+
+///< 获取Node当前一个有效的尺寸
+- (CGSize)validSize;
 
 @end

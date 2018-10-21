@@ -15,6 +15,4 @@
  */
 @interface EUIRowTemplet : EUITemplet
 
-@property (nonatomic, assign) BOOL flexable;
-
 @end

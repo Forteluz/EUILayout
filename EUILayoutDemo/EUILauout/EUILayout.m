@@ -66,53 +66,53 @@ NSInteger EUIRootViewTag() {
 
 - (void)updateTemplet:(EUITemplet *)templet {
     [self setRootTemplet:templet];
-    
+    ///< 暂时根模板还是支持holder
+    templet.isHolder = YES;
     if ([templet isHolder]) {
         [templet setView:self.rootContainer];
     } else {
         EUITempletView *one = [self.view viewWithTag:EUIRootViewTag()];
         if ( one && one.superview ) {
             [one removeFromSuperview];
+             one = nil;
         }
-        one = nil;
     }
     ///< TODO: 使用 Parser 优化解析
     [self updateRootTempletFrame:templet];
-    [templet layoutTemplet];
+    [templet layout];
 }
 
 - (void)updateRootTempletFrame:(EUITemplet *)templet {
     CGRect frame = (CGRect){.origin = {0}, .size = self.view.bounds.size};
     
-    if (EUIValid(templet.x)) {
+    if (EUIValueIsValid(templet.x)) {
         frame.origin.x = templet.x;
-    } else if (EUIValid(templet.margin.left)) {
+    } else if (EUIValueIsValid(templet.margin.left)) {
         frame.origin.x = templet.margin.left;
     }
-    if (EUIValid(templet.y)) {
+    if (EUIValueIsValid(templet.y)) {
         frame.origin.y = templet.y;
-    } else if (EUIValid(templet.margin.top)) {
+    } else if (EUIValueIsValid(templet.margin.top)) {
         frame.origin.y = templet.margin.top;
     }
-    if (EUIValid(templet.width)) {
+    if (EUIValueIsValid(templet.width)) {
         frame.size.width = templet.width;
-    } else if (EUIValid(templet.margin.right) || EUIValid(templet.margin.left)) {
+    } else if (EUIValueIsValid(templet.margin.right) || EUIValueIsValid(templet.margin.left)) {
         frame.size.width = self.view.bounds.size.width - EUIValue(templet.margin.left) - EUIValue(templet.margin.right);
     }
-    if (EUIValid(templet.height)) {
+    if (EUIValueIsValid(templet.height)) {
         frame.size.height = templet.height;
-    } else if (EUIValid(templet.margin.bottom) || EUIValid(templet.margin.top)) {
+    } else if (EUIValueIsValid(templet.margin.bottom) || EUIValueIsValid(templet.margin.top)) {
         frame.size.height = self.view.bounds.size.height - EUIValue(templet.margin.top) - EUIValue(templet.margin.bottom);
     }
+    [templet setCacheFrame:frame];
     [templet.view setFrame:frame];
 }
-
-#pragma mark -
 
 - (void)clean {
     EUITemplet *one = self.rootTemplet;
     if ([one isKindOfClass:EUITemplet.class]) {
-        [one reset];
+        [one clearSubviewsIfNeeded];
     }
     [one removeAllNodes];
     if (one.isHolder) {

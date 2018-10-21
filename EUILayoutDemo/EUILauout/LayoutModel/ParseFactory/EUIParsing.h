@@ -22,9 +22,9 @@ typedef enum : unsigned short {
 
 typedef struct {
     CGRect frame;
+    CGSize constraintSize;
     EUIParsedStep step;
     BOOL recalculate;
-    CGSize constraintSize;
 } EUIParseContext;
 
 typedef void (^EUIParsingHandler) (EUINode *node,

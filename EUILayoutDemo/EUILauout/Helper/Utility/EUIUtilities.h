@@ -10,23 +10,33 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//const CGSize EUIContainerMaxSize = (CGSize){0x100000, 0x100000};
+UIKIT_STATIC_INLINE CGRect EUIRectUndefine() {
+    return CGRectMake(NSNotFound, NSNotFound, NSNotFound, NSNotFound);
+}
+
+UIKIT_STATIC_INLINE CGSize EUIMaxSize() {
+    return CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+}
+
+UIKIT_STATIC_INLINE CGFloat EUIValueIsUndefine(CGFloat one) {
+    return one == NSNotFound;
+}
 
 UIKIT_STATIC_INLINE CGFloat EUIValue(CGFloat one) {
-    return (one == NSNotFound) ? 0 : one;
+    return EUIValueIsUndefine(one) ? 0 : one;
 }
 
-UIKIT_STATIC_INLINE CGFloat EUIValid(CGFloat one) {
-    return one != NSNotFound;
+UIKIT_STATIC_INLINE CGFloat EUIValueIsValid(CGFloat one) {
+    return !EUIValueIsUndefine(one) && one > 0;
 }
 
-static inline int EUIRandom(int from, int to) {
+UIKIT_STATIC_INLINE int EUIRandom(int from, int to) {
     return (int)(from + (arc4random() % (to - from + 1)));
 }
 
 CGFloat EUIScreenScale(void);
 
-static inline CGPoint CGPointPixelCeil(CGPoint point) {
+UIKIT_STATIC_INLINE CGPoint CGPointPixelCeil(CGPoint point) {
     CGFloat scale = EUIScreenScale();
     return CGPointMake(ceil(point.x * scale) / scale,
                        ceil(point.y * scale) / scale);

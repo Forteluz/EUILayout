@@ -12,6 +12,7 @@
 
 #pragma mark -
 
+@class EUILayout;
 @class EUITempletView;
 
 #pragma mark -
@@ -20,11 +21,12 @@
 #define TBase(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
 #endif
 
-@class EUILayout;
-
 #pragma mark -
 
 @interface EUITemplet : EUINode
+
+@property (nonatomic, readonly) EUITemplet *superTemplet;
+@property (nonatomic, readonly) EUITemplet *rootTemplet;
 
 #pragma mark - TODO
 /**
@@ -49,28 +51,39 @@
 #pragma mark - Layout Nodes
 
 ///< 开始模板布局
-- (void)layoutTemplet;
+- (void)layout;
+
+///< 布局之前
+- (void)layoutWillStart;
+
+///< 布局指定的节点
+- (void)layoutNodes:(NSArray <EUIObject> *)nodes;
+
+///< layout结束
+- (void)layoutDidEnd;
+
+///< 可显式修改已存在的布局Node
+- (void)layoutNode:(EUINode *)node preNode:(EUINode *)preNode context:(EUIParseContext *)context;
+
+///< 清空所有的子视图
+- (void)clearSubviewsIfNeeded;
 
 #pragma mark - Control Nodes
 
+///< 添加一个node
 - (void)addNode:(EUIObject)node;
+
+///< 插入一个Node
 - (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
+
+///< 移除一个Node
 - (void)removeNodeAtIndex:(NSInteger)index;
+
+///< 删除所有Node
 - (void)removeAllNodes;
 
 - (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
 - (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
-
-#pragma mark - Calculate Nodes
-
-///< Reset 会将模板上所有的视图全部做 removeFromSuper 操作
-- (void)reset;
-
-///< 相对布局时，告诉子节点关于容器的尺寸
-- (CGSize)suggestConstraintSize;
-
-///< 布局子节点
-- (void)layoutNodes:(NSArray <EUIObject> *)nodes;
 
 @end
 

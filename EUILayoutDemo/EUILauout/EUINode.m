@@ -23,6 +23,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _flexable  = YES;
         _gravity   = EUIGravityVertStart | EUIGravityHorzStart;
         _sizeType  = EUISizeTypeToFill;
         _margin    = EUIEdgeMake(0, 0, 0, 0);
@@ -36,6 +37,7 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+    ///< 这里增加自己的margin处理？
     CGSize one = CGSizeZero;
     if (self.sizeThatFits) {
         one = self.sizeThatFits(size);
@@ -52,6 +54,32 @@
     }
     return self;
 }
+
+- (CGSize)validSize {
+    CGSize size = {NSNotFound, NSNotFound};
+    if (!self.isFlexable && self.view) {
+        if (EUIValueIsValid(self.view.bounds.size.width)) {
+            size.width = self.view.bounds.size.width;
+        }
+        if (EUIValueIsValid(self.view.bounds.size.height)) {
+            size.height = self.view.bounds.size.height;
+        }
+        return size;
+    }
+    
+    if (EUIValueIsValid(self.size.width)) {
+        size.width = self.size.width;
+    } else if (EUIValueIsValid(self.cacheFrame.size.width)) {
+        size.width = self.cacheFrame.size.width;
+    }
+    if (EUIValueIsValid(self.size.height)) {
+        size.height = self.size.height;
+    } else if (EUIValueIsValid(self.cacheFrame.size.height)) {
+        size.height = self.cacheFrame.size.height;
+    }
+    return size;
+}
+
 
 #pragma mark -
 
@@ -88,6 +116,7 @@
         .origin = self.origin, .size = self.size
     };
 }
+
 
 #pragma mark - NSCopying
 

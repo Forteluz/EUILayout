@@ -24,16 +24,15 @@
     return self;
 }
 
-- (void)layoutTemplet {
-    EUIAssertMainThread();
-    [self reset];
+- (void)layoutWillStart {
+    [super layoutWillStart];
     
     NSArray <EUINode *> *nodes = self.nodes;
     NSMutableArray <EUINode *> *fills = [NSMutableArray arrayWithCapacity:nodes.count];
     CGFloat __tw = 0;
     for (EUINode *node in nodes) {
         if (!node.templet) {
-             node.templet = self;
+            node.templet = self;
         }
         if ([self isFilterNode:node]) {
             EUIParseContext ctx = (EUIParseContext) {
@@ -60,14 +59,12 @@
             [node setCacheFrame:r];
         }
     }
-    
-    [self layoutNodes:nodes];
 }
 
 - (BOOL)isFilterNode:(EUINode *)layout {
     if ((layout.sizeType & EUISizeTypeToHorzFit) ||
-        (EUIValid(layout.maxWidth)) ||
-        (EUIValid(layout.width)))
+        (EUIValueIsValid(layout.maxWidth)) ||
+        (EUIValueIsValid(layout.width)))
     {
         return YES;
     }
@@ -114,10 +111,10 @@
             [self.parser parse:one _:preone _:&ctx];
             ///< ----- Cache size ----- >
             CGRect r = {NSNotFound,NSNotFound,NSNotFound,NSNotFound};
-            if (EUIValid(ctx.frame.size.height)) {
+            if (EUIValueIsValid(ctx.frame.size.height)) {
                 r.size.height = ctx.frame.size.height;
             }
-            if (EUIValid(ctx.frame.size.width > 0)) {
+            if (EUIValueIsValid(ctx.frame.size.width > 0)) {
                 r.size.width = ctx.frame.size.width;
             }
             [one setCacheFrame:r];
