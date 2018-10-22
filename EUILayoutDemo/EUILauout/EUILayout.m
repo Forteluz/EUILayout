@@ -65,9 +65,11 @@ NSInteger EUIRootViewTag() {
 }
 
 - (void)updateTemplet:(EUITemplet *)templet {
+    [self.view setEui_templet:templet];
     [self setRootTemplet:templet];
-    ///< 暂时根模板还是支持holder
+    ///< -- 暂时根模板还是支持holder --
     templet.isHolder = YES;
+    ///< ---------------------------
     if ([templet isHolder]) {
         [templet setView:self.rootContainer];
     } else {

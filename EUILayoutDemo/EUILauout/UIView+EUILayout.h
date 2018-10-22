@@ -20,7 +20,7 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 #pragma mark - EUI Node Properties
 
 ///< layout 所依赖的模板
-@property (nonatomic, weak) __kindof EUINode *eui_templet;
+@property (nonatomic, weak) __kindof EUITemplet *eui_templet;
 
 ///< 显式设置在模板中的 x 坐标
 @property (nonatomic) CGFloat eui_x;

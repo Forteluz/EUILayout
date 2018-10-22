@@ -93,7 +93,7 @@ self.eui_node._PROPERTY_ = eui_##_PROPERTY_; \
 return self.eui_node._PROPERTY_; \
 }
 
-EUIProperty(EUINode *, templet)
+EUIProperty(EUITemplet *, templet)
 EUIProperty(CGFloat, x)
 EUIProperty(CGFloat, y)
 EUIProperty(CGFloat, width)

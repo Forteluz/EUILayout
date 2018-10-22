@@ -276,7 +276,7 @@
     self = [super initWithFrame:frame];
     if ( self ) {
 #ifdef DEBUG
-        [self setBackgroundColor:EUIRandomColor];
+//        [self setBackgroundColor:EUIRandomColor];
 #endif
     }
     return self;

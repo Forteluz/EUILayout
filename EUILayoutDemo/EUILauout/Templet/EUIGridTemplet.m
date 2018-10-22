@@ -27,10 +27,17 @@
     if (self.columns == 0 && self.rows == 0) {
         self.columns  = 3;
     }
+    NSInteger count = self.nodes.count;
     if (self.columns == 0) {
-        self.columns = ceil(self.nodes.count / (double)self.rows);
+        self.columns = ceil(count / self.rows);
     } else if (self.rows == 0) {
-        self.rows = ceil(self.nodes.count / (double)self.columns);
+        NSInteger n = ceil(count / self.columns);
+        if (n == 0) {
+            n =  1;
+        } else if ((self.nodes.count % self.columns) > 0) {
+            n += 1;
+        }
+        self.rows = n;
     }
     
     NSArray <EUINode *> *nodes = self.nodes;

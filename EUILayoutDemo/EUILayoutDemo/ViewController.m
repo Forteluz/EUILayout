@@ -15,155 +15,57 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupSubviews];
-    
-    [self.view eui_update:TGrid(self.view1,self.view2,self.view3,self.view4,self.view5,self.view6)];
-    
-//    [self.view eui_setDelegate:self];
-//    [self.view eui_reload];
-}
-
-- (void)setupSubviews {
-    @weakify(self);
-    if (!_view1) {
-        self.view1 = EButton(@"v1:布局模板介绍", ^{
-            @strongify(self); EUIGoto(self, @"TestViewController1")
-        });
-    }
-    if (!_view2) {
-        self.view2 = EButton(@"v2:模仿业务场景布局", ^{
-            @strongify(self); EUIGoto(self, @"TestViewController2")
-        });
-    }
-    if (!_view3) {
-        self.view3 = EButton(@"v3:Tap Me!", ^{
-            @strongify(self);
-            [self testRandomPosition];
-        });
-    }
-    if (!_view4) {
-        self.view4 = EButton(@"v4:清除所有模板（2秒后重加载）", ^{
-            @strongify(self);
-            [self cleanTemplet];
-        });
-    }
-    if (!_view5) {
-        self.view5 = EButton(@"v5:测试父视图交换", ^{
-//            @strongify(self);
-        });
-    }
-    if (!_view6) {
-        self.view6 = EButton(@"v6:测试6", ^{
-//            @strongify(self);
-        });
-    }
+    [self.view eui_setDelegate:self];
+    [self.view eui_reload];
 }
 
 #pragma mark - EUILayouterDataSource
 
 - (EUITemplet *)templetWithLayout:(EUILayout *)layout {
-    ///< ---- config ----
-    [self.view1 eui_configure:^(EUINode *node) {
-        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-    }];
-    ///< ----------------
-    self.view3.eui_sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
-    self.view3.eui_gravity  = EUIGravityHorzEnd;
-    ///< ----------------
-    [self.view4 eui_configure:^(EUINode *node) {
-        node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
-        node.gravity = EUIGravityVertCenter;
-    }];
-    [self.view6 eui_configure:^(EUINode *node) {
-        node.sizeType = EUISizeTypeToFit;
-    }];
-    ///< ----------------
-    self.view1.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-    self.view4.eui_node.margin = EUIEdgeMake(10, 10, 10, 10);
-    EUITemplet *one =
-        TRow(self.view1,
-             self.view2,
-             TColumn(self.view3, self.view4),
-             TColumn(self.view5, self.view6)
-             );
-    one.margin.top = 20;
-    return one;
+    @weakify(self);
+    EUITemplet *templet =
+    TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction]; }),
+         EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase]; }),
+         EButton(@"Test FPS", ^{ @strongify(self); [self testFPS]; }),
+         );
+    templet.padding = EUIEdgeMake(10, 10, 10, 10);
+    templet.margin.top = 20;
+    return templet;
 }
 
 #pragma mark - Action
 
-- (void)action:(UIButton *)button {
-    NSInteger tag = button.tag;
-    if (tag == 3) {
-        [self testRandomPosition];
-        return;
-    }
-    if (tag == 4) {
-        [self cleanTemplet];
-        return;
-    }
-    NSString *clsName = [@"TestViewController" stringByAppendingFormat:@"%ld",(long)tag];
-    if (!NSClassFromString(clsName)) {
-        return;
-    }
-    UIViewController *one = [NSClassFromString(clsName) new];
-    [self presentViewController:one animated:YES completion:NULL];
+- (void)templateIntroduction {
+    @weakify(self);
+    EUIGridTemplet *one =
+        TGrid(EButton(@"TBase",   ^{@strongify(self) [self introduceTBase];}),
+              EButton(@"TGrid",   ^{@strongify(self) [self introduceTGrid];}),
+              EButton(@"TRow" ,   ^{@strongify(self) [self introduceTRow];}),
+              EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
+              EButton(@"Back",    ^{@strongify(self) [self introduceColse];}));
+    one.columns = 4;
+    EUINode *node = [self.view.eui_templet nodeAtIndex:0];
+    [UIView animateWithDuration:0.25 animations:^{
+        [node.view eui_update:one];
+    }];
 }
 
-- (void)testRandomPosition {
-    EUITemplet *one = nil;
-    static int num = 0;
-    static int max = 3;
-    if (num > max) {
-        num = 0;
-    }
-    NSLog(@"testRandomPosition:%d",num);
-    switch (num) {
-        case 0: {
-            one = TRow(self.view3,
-                       self.view2,
-                       self.view1,
-                       TColumn(self.view4, self.view5, self.view6)
-                       );
-        } break;
-        case 1: {
-            one = TRow(TColumn(self.view3, self.view2, self.view1),
-                       TColumn(self.view4, self.view5, self.view6)
-                       );
-        } break;
-        case 2: {
-            one = TRow(self.view6,
-                       self.view3,
-                       self.view2,
-                       self.view5,
-                       self.view1,
-                       self.view4,
-                       );
-        } break;
-        default:{
-             [self.view eui_reload];
-        } break;
-    }
-    num++;
-    if ( one ) {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.view eui_update:one];
-        }];
-    }
+- (void)copySceneCase {
+    
 }
 
-- (void)cleanTemplet {
-    ///< Test Release...
-    [self setView1:nil];
-    [self setView2:nil];
-    [self.view eui_clean];
+- (void)testFPS {
+    
+}
 
-    EUIAfter(dispatch_get_main_queue(), 2, ^{
-        [self setupSubviews];
-        [self.view eui_setDelegate:self];
-        [self.view eui_reload];
-    });
+#pragma mark - Introduce Templet
+
+- (void)introduceTBase {}
+- (void)introduceTGrid {}
+- (void)introduceTRow {}
+- (void)introduceTColumn {}
+- (void)introduceColse {
+    
 }
 
 @end
