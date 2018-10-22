@@ -18,10 +18,10 @@
     
     [self setupSubviews];
     
-//    [self.view eui_update:TGrid(self.view1,self.view2,self.view3,self.view4,self.view5)];
+    [self.view eui_update:TGrid(self.view1,self.view2,self.view3,self.view4,self.view5,self.view6)];
     
-    [self.view eui_setDelegate:self];
-    [self.view eui_reload];
+//    [self.view eui_setDelegate:self];
+//    [self.view eui_reload];
 }
 
 - (void)setupSubviews {

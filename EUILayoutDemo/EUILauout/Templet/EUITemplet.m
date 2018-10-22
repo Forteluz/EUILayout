@@ -18,9 +18,6 @@
 #pragma mark - Override
 
 + (instancetype)templetWithItems:(NSArray <EUIObject> *)items {
-//    if (!items || items.count == 0) {
-//        return nil;
-//    }
     EUITemplet *one = [[self.class alloc] initWithItems:items];
     return one;
 }
@@ -36,7 +33,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"dealloc templet:%@", self);
+//    NSLog(@"dealloc templet:%@", self);
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
@@ -219,7 +216,7 @@
     if (!node) {
         return;
     }
-    NSMutableArray *one = _nodes.mutableCopy;
+    NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     [one addObject:node];
     
     [self setNodes:one.copy];
@@ -239,7 +236,7 @@
     if (!_nodes || index < 0 || index > _nodes.count) {
         return;
     }
-    NSMutableArray *one = _nodes.mutableCopy;
+    NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     [one removeObjectAtIndex:index];
     [self setNodes:one.copy];
 }

@@ -10,29 +10,30 @@
 #import "EUIRowTemplet.h"
 #import "EUIColumnTemplet.h"
 
+@interface EUIGridTemplet()
+@property (copy, readwrite) NSArray <EUINode *> *nodes;
+@end
 @implementation EUIGridTemplet
-
-- (instancetype)initWithItems:(NSArray<EUIObject> *)items {
-    self = [super initWithItems:items];
-    if (self) {
-        
-    }
-    return self;
-}
+@dynamic nodes;
 
 - (void)layoutWillStart {
     [super layoutWillStart];
+    
+    if (self.nodes.count == 0) {
+        return;
+    }
 
+    ///< 从别的库学个 Grid 用
     if (self.columns == 0 && self.rows == 0) {
         self.columns  = 3;
     }
     if (self.columns == 0) {
-        self.columns = ceil(self.nodes.count / self.rows);
+        self.columns = ceil(self.nodes.count / (double)self.rows);
     } else if (self.rows == 0) {
-        self.rows = ceil(self.nodes.count / self.columns) + 1;
+        self.rows = ceil(self.nodes.count / (double)self.columns);
     }
+    
     NSArray <EUINode *> *nodes = self.nodes;
-
     NSInteger n = 0;
 
     EUITemplet *row = TRow(@"");
@@ -48,9 +49,7 @@
         }
         [row addNode:column];
     }
-    
-    [self removeAllNodes];
-    [self addNode:row];
+    self.nodes = @[row];
 }
 
 @end

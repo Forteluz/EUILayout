@@ -13,5 +13,5 @@
 @interface EUIGridTemplet : EUITemplet
 @property (nonatomic) NSUInteger columns;
 @property (nonatomic) NSUInteger rows;
-@property (nonatomic) CGFloat spacing;
+//@property (nonatomic) CGFloat spacing;
 @end
