@@ -83,4 +83,32 @@ static const void *kDCLayoutAssociatedKey = &kDCLayoutAssociatedKey;
     objc_setAssociatedObject(self, kDCLayoutAssociatedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+#pragma mark - Properties
+
+#define EUIProperty(_TYPE_, _PROPERTY_) \
+- (void)setEui_##_PROPERTY_:(_TYPE_)eui_##_PROPERTY_ { \
+self.eui_node._PROPERTY_ = eui_##_PROPERTY_; \
+} \
+- (_TYPE_)eui_##_PROPERTY_ { \
+return self.eui_node._PROPERTY_; \
+}
+
+EUIProperty(EUINode *, templet)
+EUIProperty(CGFloat, x)
+EUIProperty(CGFloat, y)
+EUIProperty(CGFloat, width)
+EUIProperty(CGFloat, height)
+EUIProperty(CGFloat, maxWidth)
+EUIProperty(CGFloat, minWidth)
+EUIProperty(CGFloat, maxHeight)
+EUIProperty(CGFloat, minHeight)
+EUIProperty(CGSize,  size)
+EUIProperty(CGPoint, origin)
+EUIProperty(CGRect,  frame)
+EUIProperty(EUISizeType, sizeType)
+EUIProperty(EUIGravity,  gravity)
+EUIProperty(EUIEdge  *,  margin)
+EUIProperty(EUIEdge  *,  padding)
+EUIProperty(NSString *,  uniqueID)
+
 @end
