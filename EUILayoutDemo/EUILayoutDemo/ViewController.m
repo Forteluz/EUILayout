@@ -68,8 +68,8 @@
         node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;
     }];
     ///< ----------------
-    self.view3.eui_node.sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
-    self.view3.eui_node.gravity  = EUIGravityHorzEnd;
+    self.view3.eui_sizeType = EUISizeTypeToHorzFit | EUISizeTypeToVertFill;
+    self.view3.eui_gravity  = EUIGravityHorzEnd;
     ///< ----------------
     [self.view4 eui_configure:^(EUINode *node) {
         node.sizeType = EUISizeTypeToHorzFill | EUISizeTypeToVertFit;

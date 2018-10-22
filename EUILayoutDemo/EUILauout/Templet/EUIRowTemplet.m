@@ -93,6 +93,7 @@
         h = MAX(min, h);
         if (h == min) {
             w =  min;
+            node_r.size.width = w;
             [node setCacheFrame:node_r];
             continue;
         }

@@ -17,12 +17,6 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 
 @interface UIView (EUILayout)
 
-///< 获得当前视图的布局管理器，LazyLoad
-@property (nonatomic, strong, readonly) EUILayout *eui_layout;
-
-///< 获得当前视图的布局 Node，LazyLoad
-@property (nonatomic, strong, readonly) __kindof EUINode *eui_node;
-
 #pragma mark - EUI Node Properties
 
 ///< layout 所依赖的模板
@@ -109,5 +103,12 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
  */
 - (EUINode *)eui_configure:(EUIConfigurationBlock)block;
 
+#pragma mark -
+
+///< 获得当前视图的布局管理器，LazyLoad
+@property (nonatomic, strong, readonly) EUILayout *eui_layout;
+
+///< 获得当前视图的布局 Node，LazyLoad
+@property (nonatomic, strong, readonly) __kindof EUINode *eui_node;
 
 @end

@@ -48,16 +48,14 @@
     if (self.sizeType & EUISizeTypeToFit) {
         EUINode *lastOne = nil;
         for (EUINode *one in self.nodes) {
-            if (!one.templet) {
-                 one.templet = self;
-            }
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
-                .recalculate = YES
+                .recalculate = YES,
+                .constraintSize = constrainedSize
             };
             [self.parser parse:one _:lastOne _:&ctx];
             ///< ----- Cache size ----- >
-            CGRect r = (CGRect){NSNotFound,NSNotFound,NSNotFound,NSNotFound};
+            CGRect r = EUIRectUndefine();;
             if (ctx.frame.size.height > 0) {
                 r.size.height = ctx.frame.size.height;
             }
