@@ -40,7 +40,7 @@
             self.backButton.eui_margin.left = 10;
             self.backButton;
         }),
-        ///< 也可以使用 eui_configure： 做配置
+        ///< 也可以使用 eui_configure：做配置，使用 block 可以很好的做代码的结构化
         [button1 eui_configure:^(EUINode *node) {
             node.gravity  = EUIGravityHorzCenter | EUIGravityVertCenter;
             node.sizeType = EUISizeTypeToFit;

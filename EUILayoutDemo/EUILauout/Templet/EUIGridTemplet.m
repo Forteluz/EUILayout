@@ -23,7 +23,7 @@
         return;
     }
 
-    ///< 从其他布局库学个 Grid 用
+    ///< 从其他布局库学习 Grid 用
     if (self.columns == 0 && self.rows == 0) {
         self.columns  = 3;
     }

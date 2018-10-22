@@ -59,9 +59,6 @@ typedef id EUIObject;
 
 @interface EUINode : NSObject
 
-///< 作为模板时是否创建容器视图，默认YES
-@property (nonatomic, assign) BOOL isHolder;
-
 ///< 是否是可拉伸的，用于视图已有frame的情况，如果设置了，则会走Layout的布局规则，否则会按frame的设置走绝对布局
 @property (nonatomic, getter=isFlexable) BOOL flexable;
 

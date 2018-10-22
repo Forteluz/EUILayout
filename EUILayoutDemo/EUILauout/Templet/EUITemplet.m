@@ -268,6 +268,17 @@
     }
 }
 
+- (EUITemplet *)rootTemplet {
+    EUITemplet *one = self;
+    do {
+        if (!one.templet) {
+            return one;
+        }
+        one = one.templet;
+    } while (one);
+    return nil;
+}
+
 @end
 
 @implementation EUITempletView

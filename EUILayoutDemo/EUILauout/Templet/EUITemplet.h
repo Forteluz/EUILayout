@@ -23,18 +23,18 @@
 
 #pragma mark -
 
-@interface EUITemplet : EUINode
+@interface EUITemplet : EUINode {
+    @package
+    NSMapTable *_uniqueIDTable;
+}
 
-@property (nonatomic, readonly) EUITemplet *superTemplet;
+///< 作为模板时是否创建容器视图，默认YES
+@property (nonatomic, assign) BOOL isHolder;
+
+///< 根模板
 @property (nonatomic, readonly) EUITemplet *rootTemplet;
 
 #pragma mark - TODO
-/**
- * TODO: 还需要支持模板级别的布局属性
- */
-//@property (nonatomic) spacing; ///< 节点之间的间隔
-//@property (nonatomic) gravity; ///< 模板内容总体的布局锚点
-//@property (nonatomic) warp;    ///< 某些模板支持换行？
 
 ///< 布局解析器
 @property (nonatomic, strong, nullable) EUIParser *parser;

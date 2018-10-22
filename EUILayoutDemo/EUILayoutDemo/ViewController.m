@@ -49,11 +49,11 @@
         grid.columns = 4;
     }]];
     
+    // or like this, whatever...
     /*
-    ///< or like this, whatever...
-    one.columns = 4;
-    [node.view eui_update:one];
-    */
+     [one setColumns:4];
+     [node.view eui_update:one];
+     */
 }
 
 - (void)copySceneCase {
@@ -83,7 +83,7 @@
 }
 
 - (void)introduceColse {
-    
+    ///< 目前正常的 index 查询不适用于 grid
 }
 
 @end

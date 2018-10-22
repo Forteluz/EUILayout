@@ -11,4 +11,5 @@
 #define TColumn(...) [EUIColumnTemplet templetWithItems:@[__VA_ARGS__]]
 
 @interface EUIColumnTemplet : EUITemplet
+//@property (nonatomic) spacing; ///< 节点之间的间隔
 @end

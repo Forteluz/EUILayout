@@ -14,5 +14,5 @@
  Row 模板，从上往下顺序布局
  */
 @interface EUIRowTemplet : EUITemplet
-
+//@property (nonatomic) spacing; ///< 节点之间的间隔
 @end
