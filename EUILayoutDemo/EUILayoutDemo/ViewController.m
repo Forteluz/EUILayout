@@ -24,9 +24,9 @@
 - (EUITemplet *)templetWithLayout:(EUILayout *)layout {
     @weakify(self);
     EUITemplet *templet =
-    TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction]; }),
-         EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase]; }),
-         EButton(@"Test FPS", ^{ @strongify(self); [self testFPS]; }),
+    TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
+         EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
+         EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
          );
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 20;
@@ -42,12 +42,18 @@
               EButton(@"TGrid",   ^{@strongify(self) [self introduceTGrid];}),
               EButton(@"TRow" ,   ^{@strongify(self) [self introduceTRow];}),
               EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
-              EButton(@"Back",    ^{@strongify(self) [self introduceColse];}));
-    one.columns = 4;
+              EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
+
     EUINode *node = [self.view.eui_templet nodeAtIndex:0];
-    [UIView animateWithDuration:0.25 animations:^{
-        [node.view eui_update:one];
-    }];
+    [node.view eui_update:[one configure:^(EUIGridTemplet *grid) {
+        grid.columns = 4;
+    }]];
+    
+    /*
+    ///< or like this, whatever...
+    one.columns = 4;
+    [node.view eui_update:one];
+    */
 }
 
 - (void)copySceneCase {
@@ -60,10 +66,22 @@
 
 #pragma mark - Introduce Templet
 
-- (void)introduceTBase {}
-- (void)introduceTGrid {}
-- (void)introduceTRow {}
-- (void)introduceTColumn {}
+- (void)introduceTBase {
+    EUIGoto(self, @"EUITBaseIntroViewController");
+}
+
+- (void)introduceTGrid {
+    EUIGoto(self, @"EUITGridIntroViewController");
+}
+
+- (void)introduceTRow {
+    EUIGoto(self, @"EUITRowIntroViewController");
+}
+
+- (void)introduceTColumn {
+    EUIGoto(self, @"EUITColumnIntroViewController");
+}
+
 - (void)introduceColse {
     
 }

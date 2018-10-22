@@ -121,10 +121,13 @@ typedef id EUIObject;
 ///< 可重写 sizeThatFits： 方法返回的大小
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
 
+///< 生成一个 Node 实例
 + (instancetype)node:(UIView *)view;
 
+///< Node 需要知道自己如何计算大小
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
+///< 用于嵌套时做代码结构化
 - (__kindof EUINode *)configure:(void(^)(__kindof EUINode *node))block;
 
 ///< 获取Node当前一个有效的尺寸

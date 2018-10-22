@@ -81,7 +81,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Properties
 
 - (void)setSize:(CGSize)size {
     self.width = size.width;
@@ -117,6 +117,15 @@
     };
 }
 
+- (void)setGravity:(EUIGravity)gravity {
+    if (_gravity != gravity) {
+        _gravity  = gravity;
+        CGRect r = self.cacheFrame; {
+            r.origin = (CGPoint) {NSNotFound, NSNotFound};
+        }
+        [self setCacheFrame:r];
+    }
+}
 
 #pragma mark - NSCopying
 

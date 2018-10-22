@@ -26,11 +26,12 @@ UIButton * EButton(NSString *title, dispatch_block_t block) {
         !block ?: block();
     }];
     [one setTitle:title forState:UIControlStateNormal];
-    [one setTitleColor:EUIRandomColor forState:UIControlStateNormal];
-    [one setTitleColor:EUIRandomColor forState:UIControlStateSelected];
-    [one setTitleColor:EUIRandomColor forState:UIControlStateHighlighted];
-    [one.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [one setTitleColor:[UIColor colorWithWhite:0.8 alpha:0.8] forState:UIControlStateSelected];
+    [one setTitleColor:[UIColor colorWithWhite:0.8 alpha:0.8] forState:UIControlStateHighlighted];
+    [one.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [one.titleLabel setNumberOfLines:0];
+    [one.layer setBorderWidth:1.f];
+    [one.layer setBorderColor:UIColor.blackColor.CGColor];
     [one setBackgroundColor:EUIRandomColor];
     return one;
 }
