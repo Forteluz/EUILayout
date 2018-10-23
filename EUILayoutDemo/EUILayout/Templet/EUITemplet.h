@@ -69,18 +69,20 @@
 #pragma mark - Control Nodes
 
 ///< 添加一个node
-- (void)addLayout:(EUIObject)node;
+- (void)addLayout:(EUIObject)object;
 
 ///< 插入一个Node
-- (void)insertLayout:(EUIObject)node atIndex:(NSInteger)index;
+- (void)insertLayout:(EUIObject)object atIndex:(NSInteger)index;
 
 ///< 移除一个Node
+- (void)removeLayout:(EUIObject)object;
+
 - (void)removeLayoutAtIndex:(NSInteger)index;
 
 ///< 删除所有Node
 - (void)removeAllSubLayouts;
 
-- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index;
+- (__kindof EUILayout *)layoutAtIndex:(NSInteger)index;
 //- (__kindof EUILayout *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
 
 @end

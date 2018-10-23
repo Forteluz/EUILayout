@@ -46,6 +46,14 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
     [self.eui_engine layoutTemplet:templet];
 }
 
+- (UIView *)eui_viewWithTag:(NSInteger)tag {
+    UIView *root = self.eui_engine.rootTemplet.view;
+    if (root) {
+        return [root viewWithTag:tag];
+    }
+    return nil;
+}
+
 #pragma mark - Properties
 
 #define EUIProperty(_TYPE_, _PROPERTY_) \
@@ -70,7 +78,24 @@ EUIProperty(CGPoint, origin)
 EUIProperty(CGRect,  frame)
 EUIProperty(NSString *,  uniqueID)
 EUIProperty(EUIEdge  *,  margin)
-EUIProperty(EUIEdge  *,  padding)
+
+//EUIProperty(EUIEdge  *,  padding)
+- (EUIEdge *)eui_padding {
+    if (![self isKindOfClass:EUITempletView.class]) {
+        return self.eui_templet.padding;
+    } else {
+        return self.eui_layout.padding;
+    }
+}
+
+- (void)setEui_padding:(EUIEdge *)eui_padding {
+    if (![self isKindOfClass:EUITempletView.class]) {
+        self.eui_templet.padding = eui_padding;
+    } else {
+        self.eui_layout.padding = eui_padding;
+    }
+}
+
 EUIProperty(EUIGravity,  gravity)
 EUIProperty(EUISizeType, sizeType)
 

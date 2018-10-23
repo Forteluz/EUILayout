@@ -69,13 +69,13 @@
             [self updatePaddingWithNode:root];
         }  break;
         case 2: {
-            EUITemplet *one = [root nodeAtIndex:2];
+            EUITemplet *one = [root layoutAtIndex:2];
             [self updatePaddingWithNode:one];
         } break;
         case 3: {
-            EUITemplet *one = [root nodeAtIndex:2];
+            EUITemplet *one = [root layoutAtIndex:2];
             int i = EUIRandom(0, 2);
-            EUILayout *node = [one nodeAtIndex:i];
+            EUILayout *node = [one layoutAtIndex:i];
             [self updateMarginWithNode:node];
         }
     }

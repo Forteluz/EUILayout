@@ -98,6 +98,11 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
  */
 - (EUILayout *)eui_configure:(EUIConfigurationBlock)block;
 
+/**
+ 返回根模板上的视图
+ */
+- (UIView *)eui_viewWithTag:(NSInteger)tag;
+
 #pragma mark -
 
 ///< 自己的 EUI 布局引擎（LazyLoad）

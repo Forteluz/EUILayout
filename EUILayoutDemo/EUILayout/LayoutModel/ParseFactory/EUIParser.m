@@ -309,6 +309,9 @@
     
     if (EUISizeTypeToHorzFill & node.sizeType) {
         w = constraintSize.width - inner;
+        if (w < 0) {
+            w = 0;
+        }
     }
     else if (EUISizeTypeToHorzFit & node.sizeType) {
         if (frame -> size.height) {
@@ -383,6 +386,9 @@
 
     if (EUISizeTypeToVertFill & node.sizeType) {
         h = constraintSize.height - inner;
+        if (h < 0) {
+            h = 0;
+        }
     }
     else if (EUISizeTypeToVertFit & node.sizeType)
     {
@@ -405,8 +411,11 @@
     CGFloat min = EUIValueIsValid(node.minHeight) ? node.minHeight : h;
     h = EUI_CLAMP(h, min, max);
     
-    if (h <= 0) {
-        NSCAssert(0, @"EUIError : 高获取异常");
+    if (h < 0) {
+#ifdef DEBUG
+        h = 1.f / EUIScreenScale();
+        NSCAssert(0, @"EUIError : 高获取异常 h : %f", h);
+#endif
     }
     frame -> size.height = h;
     *step |= EUIParsedStepH;

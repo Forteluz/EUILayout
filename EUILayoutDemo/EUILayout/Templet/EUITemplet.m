@@ -197,7 +197,7 @@
     return nil;
 }
 
-- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index {
+- (__kindof EUILayout *)layoutAtIndex:(NSInteger)index {
     NSArray *nodes = self.nodes;
     if (!nodes || index < 0 || index > nodes.count) {
         return nil;
@@ -219,13 +219,27 @@
     [self setNodes:one.copy];
 }
 
-- (void)insertLayout:(EUIObject)node atIndex:(NSInteger)index {
+- (void)insertLayout:(EUIObject)object atIndex:(NSInteger)index {
+    if (!object) {
+        return;
+    }
+    EUILayout *node = [EUILayout findNode:object];
     if (!node) {
         return;
     }
     index = EUI_CLAMP(index, 0, self.nodes.count - 1);
     NSMutableArray *one = _nodes.mutableCopy;
     [one insertObject:node atIndex:index];
+    [self setNodes:one.copy];
+}
+
+- (void)removeLayout:(EUIObject)object {
+    if (!object) return;
+    NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
+    EUILayout *layout = [EUILayout findNode:object];
+    if ([one containsObject:layout]) {
+        [one removeObject:layout];
+    }
     [self setNodes:one.copy];
 }
 

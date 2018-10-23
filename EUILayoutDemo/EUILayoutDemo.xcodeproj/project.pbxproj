@@ -10,6 +10,7 @@
 		0DB8DFBF3CAE2F6AC24B83A8 /* Pods_EUILayoutDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0E1BA40A0FB6019010A613 /* Pods_EUILayoutDemoTests.framework */; };
 		16380FF197815A9D3F3B959E /* Pods_EUILayoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E32BCD7DA2E9C6B05CE483A /* Pods_EUILayoutDemoUITests.framework */; };
 		914EA5141BBDB884A53B6D1B /* Pods_EUILayoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863E148CD689D85239C01AB5 /* Pods_EUILayoutDemo.framework */; };
+		D52C7F98217F27E400E74EDB /* EUITempletDebugginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7F97217F27E400E74EDB /* EUITempletDebugginView.m */; };
 		D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D62174EED0006A7ECA /* EUINode+Filter.m */; };
 		D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D92174F062006A7ECA /* EUIUtilities.m */; };
 		D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */; };
@@ -79,6 +80,8 @@
 		AD92E2E40A0AEABBC8C7212D /* Pods-EUILayoutDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoUITests/Pods-EUILayoutDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AEEDAD7ECA1C639AE61742CF /* Pods-EUILayoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemo/Pods-EUILayoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D51E7B1AAA716A5C15048894 /* Pods-EUILayoutDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoTests/Pods-EUILayoutDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D52C7F96217F27E400E74EDB /* EUITempletDebugginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITempletDebugginView.h; sourceTree = "<group>"; };
+		D52C7F97217F27E400E74EDB /* EUITempletDebugginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITempletDebugginView.m; sourceTree = "<group>"; };
 		D53426D52174EED0006A7ECA /* EUINode+Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUINode+Filter.h"; sourceTree = "<group>"; };
 		D53426D62174EED0006A7ECA /* EUINode+Filter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "EUINode+Filter.m"; sourceTree = "<group>"; };
 		D53426D92174F062006A7ECA /* EUIUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIUtilities.m; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 				D59D8B70217DBF2100651060 /* EUITColumnIntroViewController.m */,
 				D59D8B72217DBFC300651060 /* EUITGridIntroViewController.h */,
 				D59D8B73217DBFC300651060 /* EUITGridIntroViewController.m */,
+				D52C7F96217F27E400E74EDB /* EUITempletDebugginView.h */,
+				D52C7F97217F27E400E74EDB /* EUITempletDebugginView.m */,
 			);
 			path = "Introduce Templet";
 			sourceTree = "<group>";
@@ -799,6 +804,7 @@
 				D59D8B77217DC04700651060 /* EUIIntoViewController.m in Sources */,
 				D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
+				D52C7F98217F27E400E74EDB /* EUITempletDebugginView.m in Sources */,
 				D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
 				D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */,

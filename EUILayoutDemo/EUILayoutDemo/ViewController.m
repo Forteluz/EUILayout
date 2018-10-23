@@ -40,7 +40,7 @@
               EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
     one.columns = 4;
     
-    EUILayout *node = [self.view.eui_templet nodeAtIndex:0];
+    EUILayout *node = [self.view.eui_templet layoutAtIndex:0];
     [node.view eui_layout:one];
 }
 
@@ -71,7 +71,7 @@
 }
 
 - (void)introduceColse {
-    EUILayout *node = [self.view.eui_templet nodeAtIndex:0];
+    EUILayout *node = [self.view.eui_templet layoutAtIndex:0];
     [node.view eui_cleanUp];
 }
 
