@@ -17,8 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupSubviews];
-    [self.view eui_setDelegate:self];
-    [self.view.eui_layout update];
+    [self.view eui_layout:TRow(self.backBtn,
+                               self.view1,
+                               self.view2,
+                               self.view3
+                               )];
 }
 
 - (void)setupSubviews {
@@ -43,12 +46,5 @@
 
 #pragma mark - EUILayouterDataSource
 
-- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
-    return TRow(self.backBtn,
-                self.view1,
-                self.view2,
-                self.view3
-                );
-}
 
 @end

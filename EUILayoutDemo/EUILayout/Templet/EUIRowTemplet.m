@@ -17,7 +17,7 @@
     if (self) {
         @weakify(self);
         self.parser.yParser.parsingBlock = ^
-        (EUINode *node, EUINode *preNode, EUIParseContext *context)
+        (EUILayout *node, EUILayout *preNode, EUIParseContext *context)
         {
             @strongify(self);
             [self parseY:node _:preNode _:context];
@@ -26,8 +26,8 @@
     return self;
 }
 
-- (void)layoutWillStart {
-    [super layoutWillStart];
+- (void)willLoadSubLayouts {
+    [super willLoadSubLayouts];
     [self sizeThatFits:self.cacheFrame.size];
 }
 
@@ -39,10 +39,10 @@
         return size;
     }
     
-    NSArray <EUINode *> *nodes = self.nodes;
-    NSMutableArray <EUINode *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
+    NSArray <EUILayout *> *nodes = self.nodes;
+    NSMutableArray <EUILayout *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
     CGFloat fitHeight = 0;
-    for (EUINode *node in nodes) {
+    for (EUILayout *node in nodes) {
         BOOL needFit = (node.sizeType & EUISizeTypeToVertFit) ||
         EUIValueIsValid(node.maxHeight) ||
         EUIValueIsValid(node.height);
@@ -83,7 +83,7 @@
     
     CGFloat min = 1.f;
     CGFloat ah  = (innerHeight - fitHeight) / fillNodes.count;
-    for (EUINode *node in fillNodes) {
+    for (EUILayout *node in fillNodes) {
         CGRect  node_r = EUIRectUndefine();
         CGFloat w = 0;
         CGFloat h = ah - EUIValue(node.margin.top) - EUIValue(node.margin.bottom);
@@ -124,7 +124,7 @@
 
 #pragma mark - Private
 
-- (void)parseY:(EUINode *)node _:(EUINode *)preNode _:(EUIParseContext *)context {
+- (void)parseY:(EUILayout *)node _:(EUILayout *)preNode _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
     CGRect preFrame = preNode ? preNode.cacheFrame : CGRectZero;

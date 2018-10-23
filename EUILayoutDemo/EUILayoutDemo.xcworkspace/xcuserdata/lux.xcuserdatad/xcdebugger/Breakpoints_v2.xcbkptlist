@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/UIView+EUILayout.m"
-            timestampString = "561899389.419004"
+            filePath = "EUILauout/LayoutModel/ParseFactory/EUIParser.m"
+            timestampString = "561972254.070893"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "-eui_update:"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-parse:_:_:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EUILauout/LayoutModel/ParseFactory/EUIParser.m"
-            timestampString = "561899389.419871"
+            filePath = "EUILayoutDemo/Introduce Templet/EUITBaseIntroViewController.m"
+            timestampString = "561980937.832803"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-parse:_:_:"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "-randomSizeType"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

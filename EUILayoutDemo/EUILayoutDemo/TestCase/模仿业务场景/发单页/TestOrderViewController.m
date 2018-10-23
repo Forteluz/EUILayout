@@ -49,10 +49,10 @@
     UIView *view = [[UIView alloc] initWithFrame:r];
     
     UIView *line = EText(@"→");
-    line.eui_node.sizeType = EUISizeTypeToFit;
-    line.eui_node.gravity  = EUIGravityVertCenter | EUIGravityHorzCenter;
+    line.eui_layout.sizeType = EUISizeTypeToFit;
+    line.eui_layout.gravity  = EUIGravityVertCenter | EUIGravityHorzCenter;
     
-    [view eui_update:TRow(EButton(@"起点", NULL),
+    [view eui_layout:TRow(EButton(@"起点", NULL),
                           EButton(@"终点", NULL),
                           TColumn(EButton(@"开始时间", NULL), line, EButton(@"结束时间", NULL)),
                           TColumn(EButton(@"乘车人数", NULL), EButton(@"出行要求", NULL))

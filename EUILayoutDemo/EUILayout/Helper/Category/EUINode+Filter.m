@@ -12,15 +12,15 @@
 
 static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociatedKey;
 
-@implementation EUINode (Filter)
+@implementation EUILayout (Filter)
 
-+ (EUINode * __nullable)findNode:(EUIObject)object {
++ (EUILayout * __nullable)findNode:(EUIObject)object {
     if (!object) return nil;
-    EUINode *one = nil;
+    EUILayout *one = nil;
     if ([object isKindOfClass:UIView.class]) {
-        one = [(UIView *)object eui_node];
+        one = [(UIView *)object eui_layout];
         one.view = object;
-    } else if ([object isKindOfClass:EUINode.class]) {
+    } else if ([object isKindOfClass:EUILayout.class]) {
         one = object;
     } else {
         return nil;
@@ -28,7 +28,7 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
     return one;
 }
 
-+ (NSArray <EUINode *> *)nodesFromItems:(NSArray <id> *)items {
++ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <id> *)items {
     if (!items || items.count == 0) {
         return nil;
     }
@@ -37,7 +37,7 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
     }
     NSMutableArray *one = @[].mutableCopy;
     for (id item in items) {
-        EUINode *node = [EUINode findNode:item];
+        EUILayout *node = [EUILayout findNode:item];
         if (node) {
             [one addObject:node];
         }

@@ -1,5 +1,5 @@
 //
-//  UIView+EUILayout.h
+//  UIView+EUIEngine.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EUILayout.h"
+#import "EUIEngine.h"
+#import "EUITemplet.h"
 
 #pragma mark -
 
-typedef void (^EUIConfigurationBlock)(EUINode *node);
+typedef void (^EUIConfigurationBlock)(EUILayout *node);
 
 #pragma mark -
 
@@ -19,7 +20,7 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 
 #pragma mark - EUI Node Properties
 
-///< layout 所依赖的模板
+///< 自己的模板容器
 @property (nonatomic, weak) __kindof EUITemplet *eui_templet;
 
 ///< 显式设置在模板中的 x 坐标
@@ -31,15 +32,19 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 ///< 显式设置一个绝对宽度
 @property (nonatomic) CGFloat eui_width;
 
-///< 设置一个最大的绝对宽，当需要计算宽度时会使用该值作为边界
+///< 设置最大宽，当高度填充时会以该值为标准
 @property (nonatomic) CGFloat eui_maxWidth;
+
+///< 设置最小宽，当宽度收缩时会以该值为标准
 @property (nonatomic) CGFloat eui_minWidth;
 
 ///< 显示设置其绝对高
 @property (nonatomic) CGFloat eui_height;
 
-///< 设置一个最大的绝对高，当需要计算高度时会使用该值作为边界
+///< 设置最大高，当高度填充时会以该值为标准
 @property (nonatomic) CGFloat eui_maxHeight;
+
+///< 设置最小高，当高度收缩时会以该值为标准
 @property (nonatomic) CGFloat eui_minHeight;
 
 ///< 显示设置其在模板中的位置
@@ -69,46 +74,36 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
 #pragma mark - Access
 
 /**
- 创建布局管理器并绑定一个 delegate
- @param delegate 指定的代理
+ 布局一个模板
  */
-- (void)eui_setDelegate:(__weak id <EUILayoutDelegate>)delegate;
+- (void)eui_layout:(EUITemplet *)templet;
 
 /**
- Call layout update!
+ 自动刷新当前模板
  */
 - (void)eui_reload;
 
 /**
- 清空当前的模板,移除所有视图和对应的 Node
+ 移除所有的模板
  */
-- (void)eui_clean;
+- (void)eui_cleanUp;
 
 /**
- 设置一个模板
- @param templet ：盛满视图的容器
+ 重新设置自己的 layout 布局对象
  */
-- (void)eui_update:(EUITemplet *)templet;
+- (void)eui_setNode:(EUILayout *)node;
 
 /**
- 显示设置自己的布局对象
- @param node 一个布局对象
+ 提供一个配置接口，主要用于结构化配置代码 ( for perty code if needed )
  */
-- (void)eui_setNode:(EUINode *)node;
-
-/**
- 对自己的 EUILayout 布局对象进行配置
- @param block 并未 Copy，放心食用
- @return 将配置好的 layout 返回出来
- */
-- (EUINode *)eui_configure:(EUIConfigurationBlock)block;
+- (EUILayout *)eui_configure:(EUIConfigurationBlock)block;
 
 #pragma mark -
 
-///< 获得当前视图的布局管理器，LazyLoad
-@property (nonatomic, strong, readonly) EUILayout *eui_layout;
+///< 自己的 EUI 布局引擎（LazyLoad）
+@property (nonatomic, strong, readonly) EUIEngine *eui_engine;
 
-///< 获得当前视图的布局 Node，LazyLoad
-@property (nonatomic, strong, readonly) __kindof EUINode *eui_node;
+///< 自己的 EUI 布局描述对象（LazyLoad）
+@property (nonatomic, strong, readonly) __kindof EUILayout *eui_layout;
 
 @end

@@ -10,7 +10,7 @@
 #import "UIView+EUILayout.h"
 
 @interface EUITemplet()
-@property (copy, readwrite) NSArray <EUINode *> *nodes;
+@property (copy, readwrite) NSArray <EUILayout *> *nodes;
 @end
 
 @implementation EUITemplet
@@ -25,7 +25,7 @@
 - (instancetype)initWithItems:(NSArray <id> *)items {
     self = [super init];
     if (self) {
-        _nodes = [EUINode nodesFromItems:items];
+        _nodes = [EUILayout nodesFromItems:items];
         self.isHolder = NO;
         self.sizeType = EUISizeTypeToFill;
     }
@@ -46,8 +46,8 @@
         size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToFit) {
-        EUINode *lastOne = nil;
-        for (EUINode *one in self.nodes) {
+        EUILayout *lastOne = nil;
+        for (EUILayout *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES,
@@ -79,12 +79,12 @@
 
 - (void)layout {
     EUIAssertMainThread();
-    [self layoutWillStart];
-    [self layoutNodes:self.nodes];
-    [self layoutDidEnd];
+    [self willLoadSubLayouts];
+    [self loadSubLayouts:self.nodes];
+    [self didLoadSubLayouts];
 }
 
-- (void)layoutWillStart {
+- (void)willLoadSubLayouts {
     [self clearSubviewsIfNeeded];
 
     CGSize size = self.validSize;
@@ -96,19 +96,19 @@
     }
 }
 
-- (void)layoutDidEnd {
+- (void)didLoadSubLayouts {
     ///< TODO : 视图层级调整功能
 }
 
-- (void)layoutNodes:(NSArray *)nodes {
+- (void)loadSubLayouts:(NSArray *)nodes {
     if (!nodes || !nodes.count) {
         return;
     }
-    EUINode *preNode = nil;
-    for (EUINode *node in nodes) {
+    EUILayout *preNode = nil;
+    for (EUILayout *node in nodes) {
         [node setTemplet:self];
         [self loadViewIfNeededByNode:node];
-        [self layoutNode:node preNode:preNode context:NULL];
+        [self loadLayout:node preLayout:preNode context:NULL];
         if ([node isKindOfClass:EUITemplet.class]) {
             [(EUITemplet *)node layout];
         }
@@ -116,12 +116,12 @@
     }
 }
 
-- (void)layoutNode:(EUINode *)node preNode:(EUINode *)preNode context:(EUIParseContext *)context {
+- (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context {
     if (!context) {
          context = &(EUIParseContext){
              .constraintSize = (CGSize) {
-                 self.validSize.width - EUIValue(self.padding.left) - EUIValue(self.padding.right),
-                 self.validSize.height - EUIValue(self.padding.top) - EUIValue(self.padding.bottom)
+                 self.validSize.width  - EUIValue(self.padding.left) - EUIValue(self.padding.right),
+                 self.validSize.height - EUIValue(self.padding.top)  - EUIValue(self.padding.bottom)
              }
          };
     }
@@ -141,11 +141,10 @@
         }
         one = one.templet;
     } while (one);
-    
     return one;
 }
 
-- (void)loadViewIfNeededByNode:(EUINode *)node {
+- (void)loadViewIfNeededByNode:(EUILayout *)node {
     EUITemplet *cTemplet = [self vaildContainerTemplet];
     UIView *container = cTemplet.view;
     UIView *view = node.view;
@@ -180,8 +179,8 @@
     [self.view.subviews enumerateObjectsUsingBlock:^
      (__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
      {
-         if ([obj.eui_node isKindOfClass:EUITemplet.class]) {
-             EUITemplet *one = (EUITemplet *)obj.eui_node;
+         if ([obj.eui_layout isKindOfClass:EUITemplet.class]) {
+             EUITemplet *one = (EUITemplet *)obj.eui_layout;
              [one clearSubviewsIfNeeded];
              [one.view removeFromSuperview];
              (one.view = nil);///< release reference
@@ -194,11 +193,11 @@
 
 #pragma mark - Node Filter
 
-- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID {
+- (__kindof EUILayout *)nodeWithUniqueID:(NSString *)uniqueID {
     return nil;
 }
 
-- (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
+- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index {
     NSArray *nodes = self.nodes;
     if (!nodes || index < 0 || index > nodes.count) {
         return nil;
@@ -206,11 +205,11 @@
     return nodes[index];
 }
 
-- (void)addNode:(EUIObject)item {
+- (void)addLayout:(EUIObject)item {
     if (!item) {
         return;
     }
-    EUINode *node = [EUINode findNode:item];
+    EUILayout *node = [EUILayout findNode:item];
     if (!node) {
         return;
     }
@@ -220,7 +219,7 @@
     [self setNodes:one.copy];
 }
 
-- (void)insertNode:(EUIObject)node atIndex:(NSInteger)index {
+- (void)insertLayout:(EUIObject)node atIndex:(NSInteger)index {
     if (!node) {
         return;
     }
@@ -230,7 +229,7 @@
     [self setNodes:one.copy];
 }
 
-- (void)removeNodeAtIndex:(NSInteger)index {
+- (void)removeLayoutAtIndex:(NSInteger)index {
     if (!_nodes || index < 0 || index > _nodes.count) {
         return;
     }
@@ -239,11 +238,11 @@
     [self setNodes:one.copy];
 }
 
-- (void)removeAllNodes {
+- (void)removeAllSubLayouts {
     if (_nodes.count) {
-        for (EUINode *node in _nodes) {
+        for (EUILayout *node in _nodes) {
             if ([node isKindOfClass:EUITemplet.class]) {
-                [(EUITemplet *)node removeAllNodes];
+                [(EUITemplet *)node removeAllSubLayouts];
             } else {
                 node.view = nil;
             }

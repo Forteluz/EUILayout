@@ -31,8 +31,8 @@
         [obj parse:node _:preNode _:context]; \
     }]; \
 
-- (void)parse:(EUINode *)node
-            _:(EUINode *)preNode
+- (void)parse:(EUILayout *)node
+            _:(EUILayout *)preNode
             _:(EUIParseContext *)context
 {
     if (self.parsingBlock) {
@@ -63,8 +63,8 @@
 
 @implementation EUIXParser
 
-- (void)parse:(EUINode *)node
-            _:(EUINode *)preNode
+- (void)parse:(EUILayout *)node
+            _:(EUILayout *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -160,8 +160,8 @@
 
 @implementation EUIYParser
 
-- (void)parse:(EUINode *)node
-            _:(EUINode *)preNode
+- (void)parse:(EUILayout *)node
+            _:(EUILayout *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -256,8 +256,8 @@
 
 @implementation EUIWParser
 
-- (void)parse:(EUINode *)node
-            _:(EUINode *)preNode
+- (void)parse:(EUILayout *)node
+            _:(EUILayout *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -341,8 +341,8 @@
 
 @implementation EUIHParser
 
-- (void)parse:(EUINode *)node
-            _:(EUINode *)preNode
+- (void)parse:(EUILayout *)node
+            _:(EUILayout *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);

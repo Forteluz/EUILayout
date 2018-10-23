@@ -32,7 +32,7 @@
              b
              );
     one.margin.top = 20;
-    [self.view.eui_layout updateTemplet:one];
+    [self.view.eui_engine layoutTemplet:one];
 }
 
 @end

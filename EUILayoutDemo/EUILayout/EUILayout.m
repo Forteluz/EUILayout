@@ -1,24 +1,18 @@
 //
-//  EUINode.m
+//  EUILayout.m
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUINode.h"
+#import "EUILayout.h"
 #import "UIView+EUILayout.h"
 
-@interface EUINode()
+@interface EUILayout()
 @end
 
-@implementation EUINode
-
-+ (instancetype)node:(UIView *)view {
-    EUINode *one = [[self.class alloc] init];
-    one.view = view;
-    return one;
-}
+@implementation EUILayout
 
 - (instancetype)init {
     self = [super init];
@@ -48,7 +42,7 @@
     return one;
 }
 
-- (__kindof EUINode *)configure:(void(^)(__kindof EUINode *))block {
+- (__kindof EUILayout *)configure:(void(^)(__kindof EUILayout *))block {
     if (block) {
         block(self);
     }
@@ -117,13 +111,17 @@
     };
 }
 
+- (void)setSizeType:(EUISizeType)sizeType {
+    if (_sizeType != sizeType) {
+        _sizeType  = sizeType;
+        [self setCacheFrame:EUIRectUndefine()];
+    }
+}
+
 - (void)setGravity:(EUIGravity)gravity {
     if (_gravity != gravity) {
         _gravity  = gravity;
-        CGRect r = self.cacheFrame; {
-            r.origin = (CGPoint) {NSNotFound, NSNotFound};
-        }
-        [self setCacheFrame:r];
+        [self setCacheFrame:EUIRectUndefine()];
     }
 }
 

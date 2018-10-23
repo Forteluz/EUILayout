@@ -9,7 +9,7 @@
 #ifndef EUIParsing_h
 #define EUIParsing_h
 
-#import "EUINode.h"
+#import "EUILayout.h"
 
 typedef enum : unsigned short {
     EUIParsedNone  = 0,
@@ -27,14 +27,14 @@ typedef struct {
     BOOL recalculate;
 } EUIParseContext;
 
-typedef void (^EUIParsingHandler) (EUINode *node,
-                                   EUINode *_Nullable preNode,
+typedef void (^EUIParsingHandler) (EUILayout *node,
+                                   EUILayout *_Nullable preNode,
                                    EUIParseContext *context);
 
 @protocol EUIParsing <NSObject>
 
-- (void)parse:(EUINode *)layout
-            _:(EUINode *_Nullable)preLayout
+- (void)parse:(EUILayout *)layout
+            _:(EUILayout *_Nullable)preLayout
             _:(EUIParseContext *)context;
 
 @end

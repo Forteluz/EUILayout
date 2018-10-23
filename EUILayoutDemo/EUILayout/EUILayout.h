@@ -1,5 +1,5 @@
 //
-//  EUINode.h
+//  EUILayout.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/9/25.
@@ -20,6 +20,9 @@ typedef NS_OPTIONS(NSUInteger, EUIGravity) {
     EUIGravityVertStart  = 1 << 4,
     EUIGravityVertCenter = 1 << 5,
     EUIGravityVertEnd    = 1 << 6,
+    EUIGravityStart      = EUIGravityHorzStart  | EUIGravityVertStart,
+    EUIGravityCenter     = EUIGravityVertCenter | EUIGravityHorzCenter,
+    EUIGravityEnd        = EUIGravityVertEnd    | EUIGravityHorzEnd,
 };
 
 typedef NS_OPTIONS(NSUInteger, EUISizeType) {
@@ -52,18 +55,18 @@ UIKIT_STATIC_INLINE EUIEdge *EUIEdgeMake(CGFloat top, CGFloat left, CGFloat bott
 
 #pragma mark -
 
-///< 只支持 UIView 、EUINode 、EUITemplet 、NSArray、[NSNull null]
+///< 只支持 UIView 、EUILayout 、EUITemplet 、NSArray、[NSNull null]
 typedef id EUIObject;
 
 #pragma mark -
 
-@interface EUINode : NSObject
+@interface EUILayout : NSObject
 
 ///< 是否是可拉伸的，用于视图已有frame的情况，如果设置了，则会走Layout的布局规则，否则会按frame的设置走绝对布局
 @property (nonatomic, getter=isFlexable) BOOL flexable;
 
 ///< layout 所依赖的模板
-@property (nonatomic, weak) __kindof EUINode *templet;
+@property (nonatomic, weak) __kindof EUILayout *templet;
 
 ///< layout 负责布局的视图对象
 @property (nonatomic, weak) UIView *view;
@@ -118,14 +121,11 @@ typedef id EUIObject;
 ///< 可重写 sizeThatFits： 方法返回的大小
 @property (nonatomic, copy) CGSize (^sizeThatFits)(CGSize constrainedSize);
 
-///< 生成一个 Node 实例
-+ (instancetype)node:(UIView *)view;
-
 ///< Node 需要知道自己如何计算大小
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
 
 ///< 用于嵌套时做代码结构化
-- (__kindof EUINode *)configure:(void(^)(__kindof EUINode *node))block;
+- (__kindof EUILayout *)configure:(void(^)(__kindof EUILayout *layout))block;
 
 ///< 获取Node当前一个有效的尺寸
 - (CGSize)validSize;

@@ -6,7 +6,8 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUILayout.h"
+#import "EUIEngine.h"
+#import "EUITemplet.h"
 #import "UIView+EUILayout.h"
 
 #pragma mark -
@@ -22,49 +23,29 @@ NSInteger EUIRootViewTag() {
 
 #pragma mark -
 
-@interface EUILayout()
+@interface EUIEngine()
 @property (nonatomic, weak, readwrite) UIView *view;
 @property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
 @end
 
-@implementation EUILayout
+@implementation EUIEngine
 
-+ (instancetype)layouterByView:(UIView *)view {
-    if (!view) {
-        return nil;
-    }
-    EUILayout *one = [[EUILayout alloc] init];
-    one.view = view;
-    return one;
-}
-
-- (instancetype)init {
+- (instancetype)initWithView:(UIView *)view {
     self = [super init];
     if (self) {
-      
+        _view = view;
     }
     return self;
 }
 
 - (void)dealloc {
-    [_rootTemplet removeAllNodes];
-    NSLog(@"EUILayout dealloc");
+    [_rootTemplet removeAllSubLayouts];
+    NSLog(@"Engine dealloc");
 }
 
 #pragma mark - Update
 
-- (void)update {
-    if (!(self.view) ||
-        !(self.delegate) ||
-        ![self.delegate respondsToSelector:@selector(templetWithLayout:)])
-    {
-        return;
-    }
-    EUITemplet *templet = [self.delegate templetWithLayout:self];
-    [self updateTemplet:templet];
-}
-
-- (void)updateTemplet:(EUITemplet *)templet {
+- (void)layoutTemplet:(EUITemplet *)templet {
     [self.view setEui_templet:templet];
     [self setRootTemplet:templet];
     ///< -- 暂时根模板还是支持holder --
@@ -111,12 +92,14 @@ NSInteger EUIRootViewTag() {
     [templet.view setFrame:frame];
 }
 
-- (void)clean {
+- (void)cleanUp {
     EUITemplet *one = self.rootTemplet;
+    if (!one) return;
+    
     if ([one isKindOfClass:EUITemplet.class]) {
         [one clearSubviewsIfNeeded];
     }
-    [one removeAllNodes];
+    [one removeAllSubLayouts];
     if (one.isHolder) {
         UIView *container = one.view;
         if ( container ) {

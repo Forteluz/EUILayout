@@ -6,13 +6,13 @@
 //  Copyright © 2018年 Lux. All rights reserved.
 //
 
-#import "EUINode.h"
+#import "EUILayout.h"
 #import "EUIParser.h"
 #import "EUINode+Filter.h"
 
 #pragma mark -
 
-@class EUILayout;
+@class EUIEngine;
 @class EUITempletView;
 
 #pragma mark -
@@ -23,7 +23,7 @@
 
 #pragma mark -
 
-@interface EUITemplet : EUINode {
+@interface EUITemplet : EUILayout {
     @package
     NSMapTable *_uniqueIDTable;
 }
@@ -34,13 +34,11 @@
 ///< 根模板
 @property (nonatomic, readonly) EUITemplet *rootTemplet;
 
-#pragma mark - TODO
-
 ///< 布局解析器
 @property (nonatomic, strong, nullable) EUIParser *parser;
 
 ///< 模板包含的所有子布局节点
-@property (nonatomic, copy, readonly) NSArray <EUINode *> *nodes;
+@property (nonatomic, copy, readonly) NSArray <EUILayout *> *nodes;
 
 #pragma mark - Init Templet
 
@@ -54,16 +52,16 @@
 - (void)layout;
 
 ///< 布局之前
-- (void)layoutWillStart;
+- (void)willLoadSubLayouts;
 
 ///< 布局指定的节点
-- (void)layoutNodes:(NSArray <EUIObject> *)nodes;
+- (void)loadSubLayouts:(NSArray <EUIObject> *)nodes;
 
 ///< layout结束
-- (void)layoutDidEnd;
+- (void)didLoadSubLayouts;
 
 ///< 可显式修改已存在的布局Node
-- (void)layoutNode:(EUINode *)node preNode:(EUINode *)preNode context:(EUIParseContext *)context;
+- (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context;
 
 ///< 清空所有的子视图
 - (void)clearSubviewsIfNeeded;
@@ -71,19 +69,19 @@
 #pragma mark - Control Nodes
 
 ///< 添加一个node
-- (void)addNode:(EUIObject)node;
+- (void)addLayout:(EUIObject)node;
 
 ///< 插入一个Node
-- (void)insertNode:(EUIObject)node atIndex:(NSInteger)index;
+- (void)insertLayout:(EUIObject)node atIndex:(NSInteger)index;
 
 ///< 移除一个Node
-- (void)removeNodeAtIndex:(NSInteger)index;
+- (void)removeLayoutAtIndex:(NSInteger)index;
 
 ///< 删除所有Node
-- (void)removeAllNodes;
+- (void)removeAllSubLayouts;
 
-- (__kindof EUINode *)nodeAtIndex:(NSInteger)index;
-- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
+- (__kindof EUILayout *)nodeAtIndex:(NSInteger)index;
+//- (__kindof EUILayout *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
 
 @end
 

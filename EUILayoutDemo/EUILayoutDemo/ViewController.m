@@ -9,28 +9,23 @@
 #import "ViewController.h"
 #import "TestFactory.h"
 
-@interface ViewController() <EUILayoutDelegate>
+@interface ViewController()
 @end
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_setDelegate:self];
-    [self.view eui_reload];
-}
-
-#pragma mark - EUILayouterDataSource
-
-- (EUITemplet *)templetWithLayout:(EUILayout *)layout {
+    
     @weakify(self);
     EUITemplet *templet =
-    TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
-         EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
-         EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
-         );
+        TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
+             EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
+             EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
+             );
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 20;
-    return templet;
+    
+    [self.view eui_layout:templet];
 }
 
 #pragma mark - Action
@@ -43,17 +38,10 @@
               EButton(@"TRow" ,   ^{@strongify(self) [self introduceTRow];}),
               EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
               EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
-
-    EUINode *node = [self.view.eui_templet nodeAtIndex:0];
-    [node.view eui_update:[one configure:^(EUIGridTemplet *grid) {
-        grid.columns = 4;
-    }]];
+    one.columns = 4;
     
-    // or like this, whatever...
-    /*
-     [one setColumns:4];
-     [node.view eui_update:one];
-     */
+    EUILayout *node = [self.view.eui_templet nodeAtIndex:0];
+    [node.view eui_layout:one];
 }
 
 - (void)copySceneCase {
@@ -83,7 +71,8 @@
 }
 
 - (void)introduceColse {
-    ///< 目前正常的 index 查询不适用于 grid
+    EUILayout *node = [self.view.eui_templet nodeAtIndex:0];
+    [node.view eui_cleanUp];
 }
 
 @end

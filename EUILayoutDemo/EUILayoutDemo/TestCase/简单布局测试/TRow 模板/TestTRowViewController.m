@@ -16,11 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view eui_setDelegate:self];
-    [self.view eui_reload];
+    [self.view eui_layout:self.templet];
 }
 
-- (EUITemplet *)templetWithLayout:(EUILayout *)layouter {
+- (EUITemplet *)templet {
     NSArray *cloumn = @[
                         [self button:@"Root padding 测试" todo:1],
                         [self button:@"Column padding 测试" todo:2],
@@ -37,7 +36,7 @@
 
 #pragma mark -
 
-- (void)updatePaddingWithNode:(EUINode *)node {
+- (void)updatePaddingWithNode:(EUILayout *)node {
     EUIEdge *padding = EUIEdge.edgeZero;
     if (node.padding.left == 0) {
         padding = EUIEdgeMake(10, 10, 10, 10);
@@ -45,7 +44,7 @@
     node.padding = padding;
 }
 
-- (void)updateMarginWithNode:(EUINode *)node {
+- (void)updateMarginWithNode:(EUILayout *)node {
     EUIEdge *margin = EUIEdge.edgeZero;
     if (node.margin.left == 0) {
         margin = EUIEdgeMake(20, 20, 20, 20);
@@ -64,7 +63,7 @@
 }
 
 - (void)todo:(NSInteger)action {
-    EUITemplet *root = self.view.eui_layout.rootTemplet;
+    EUITemplet *root = self.view.eui_engine.rootTemplet;
     switch (action) {
         case 1: {
             [self updatePaddingWithNode:root];
@@ -76,11 +75,11 @@
         case 3: {
             EUITemplet *one = [root nodeAtIndex:2];
             int i = EUIRandom(0, 2);
-            EUINode *node = [one nodeAtIndex:i];
+            EUILayout *node = [one nodeAtIndex:i];
             [self updateMarginWithNode:node];
         }
     }
-    [self.view eui_update:root];
+    [self.view eui_layout:root];
 }
 
 - (UIButton *)button:(NSString *)title todo:(NSInteger)action {
