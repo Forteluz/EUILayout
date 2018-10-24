@@ -31,7 +31,6 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-    ///< 这里增加自己的margin处理？
     CGSize one = CGSizeZero;
     if (self.sizeThatFits) {
         one = self.sizeThatFits(size);

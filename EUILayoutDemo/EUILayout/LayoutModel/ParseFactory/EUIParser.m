@@ -88,7 +88,7 @@
     
     EUITemplet *templet = node.templet;
     if (!templet) {
-        NSCAssert(0, @"EUIError : x的计算依赖模板");
+        NSCAssert(0, @"EUIError : 计算 x 找不到容器模板");
     }
     
     CGRect tplt_r  = templet.cacheFrame;
@@ -185,7 +185,7 @@
     
     EUITemplet *templet = node.templet;
     if (!templet) {
-        NSCAssert(0, @"EUIError : y的计算依赖模板");
+        NSCAssert(0, @"EUIError : 计算 y 找不到容器模板");
     }
     
     CGRect tplt_r = templet.cacheFrame;
@@ -206,7 +206,7 @@
     if (node.gravity & EUIGravityVertStart) {
         CGFloat y = EUIValue(node.margin.top) + EUIValue(templet.padding.top);;
         if (!templet.isHolder) {
-            y += CGRectGetMinY(tplt_r);
+            y += EUIValue(CGRectGetMinY(tplt_r));
         }
         frame -> origin.y = CGFloatPixelRound(y);
         *step |= EUIParsedStepY;
@@ -228,7 +228,7 @@
         if (templet.isHolder) {
             frame -> origin.y = tplt_h - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
         } else {
-            frame -> origin.y = CGRectGetMaxY(tplt_r) - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
+            frame -> origin.y = EUIValue(CGRectGetMaxY(tplt_r)) - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
         }
         *step |= EUIParsedStepY;
         return;

@@ -36,6 +36,9 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
     EUITemplet *one = self.eui_engine.rootTemplet;
     if ( one ) {
         [self.eui_engine layoutTemplet:one];
+    } else {
+        EUITemplet *one = self.eui_layout.templet;
+        [one.rootTemplet.view eui_reload];
     }
 }
 
@@ -76,12 +79,14 @@ EUIProperty(CGFloat, minHeight)
 EUIProperty(CGSize,  size)
 EUIProperty(CGPoint, origin)
 EUIProperty(CGRect,  frame)
-EUIProperty(NSString *,  uniqueID)
-EUIProperty(EUIEdge  *,  margin)
+EUIProperty(NSString *, uniqueID)
+EUIProperty(EUIEdge  *, margin)
+EUIProperty(EUIGravity,  gravity)
+EUIProperty(EUISizeType, sizeType)
 
-//EUIProperty(EUIEdge  *,  padding)
 - (EUIEdge *)eui_padding {
-    if (![self isKindOfClass:EUITempletView.class]) {
+    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
+    if (!isTempletContainer) {
         return self.eui_templet.padding;
     } else {
         return self.eui_layout.padding;
@@ -89,15 +94,13 @@ EUIProperty(EUIEdge  *,  margin)
 }
 
 - (void)setEui_padding:(EUIEdge *)eui_padding {
-    if (![self isKindOfClass:EUITempletView.class]) {
+    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
+    if (!isTempletContainer) {
         self.eui_templet.padding = eui_padding;
     } else {
         self.eui_layout.padding = eui_padding;
     }
 }
-
-EUIProperty(EUIGravity,  gravity)
-EUIProperty(EUISizeType, sizeType)
 
 #pragma mark - EUIEngine
 

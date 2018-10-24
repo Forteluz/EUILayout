@@ -25,7 +25,6 @@
 }
 
 - (void)setupSubviews {
-    
     @weakify(self)
     UIButton *back = EButton(@"BACK", ^{
         @strongify(self);
@@ -35,7 +34,7 @@
     [JPFPSStatus sharedInstance].fpsLabel = label;
     
     EUITemplet *one = TRow([TColumn(back, label)
-                            configure:^(__kindof EUILayout *layout) {
+                            configure:^(EUILayout *layout) {
                                     layout.maxHeight = 44;
                            }],
                            self.tableView);

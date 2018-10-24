@@ -80,20 +80,22 @@
         NSCAssert(0, @"constrainedSize太小了！");
     }
     
-    CGFloat min = 1.f;
     CGFloat aw  = (innerWidth - fitWidth) / fillNodes.count;
     for (EUILayout *node in fillNodes) {
-        CGRect  node_r = EUIRectUndefine();
-        CGFloat w = aw - EUIValue(node.margin.left) - EUIValue(node.margin.right);
-        node_r.size.width = w;
+        CGFloat min = 1.f;
         CGFloat h = 0;
-        if (w <= min) {
-            w = MAX(w, min);
-            h = min;
-            node_r.size.height = h;
-            [node setCacheFrame:node_r];
+        CGRect  r = EUIRectUndefine();
+        CGFloat w = aw - EUIValue(node.margin.left) - EUIValue(node.margin.right);
+
+        if (w < min) {
+            w = h = min;
+            r.size = (CGSize) {w, h};
+            [node setCacheFrame:r];
             continue;
+        } else {
+            r.size.width = w;
         }
+        
         EUIParseContext ctx = (EUIParseContext) {
             .step = (EUIParsedStepX | EUIParsedStepY | EUIParsedStepW),
             .recalculate = YES,
@@ -101,9 +103,9 @@
         };
         [self.parser.hParser parse:node _:nil _:&ctx];
         h = ctx.frame.size.height;{
-            node_r.size.height = h;
+            r.size.height = h;
         }
-        [node setCacheFrame:node_r];
+        [node setCacheFrame:r];
         size.height = EUI_CLAMP(h, size.height, constrainedSize.height);
     }
     
@@ -123,7 +125,7 @@
     } else {
         x = EUIValue(node.margin.left) + EUIValue(self.padding.left);
         if (!self.isHolder) {
-            x += CGRectGetMinX(self.cacheFrame);
+            x += EUIValue(CGRectGetMinX(self.cacheFrame));
         }
     }
     frame -> origin.x = CGFloatPixelRound(x);

@@ -72,7 +72,9 @@
     if (fillNodes.count == 0 ||
         fitHeight > constrainedSize.height)
     {
-        ///< 如果约束过小，无法显示的fill单位就不计算了
+        ///===============================================
+        /// 如果约束过小，无法显示的fill单位就不计算了
+        ///===============================================
         return size;
     }
     
@@ -81,21 +83,20 @@
         NSCAssert(0, @"constrainedSize太小了！");
     }
     
-    CGFloat min = 1.f;
     CGFloat ah  = (innerHeight - fitHeight) / fillNodes.count;
     for (EUILayout *node in fillNodes) {
-        CGRect  node_r = EUIRectUndefine();
+        CGFloat min = 1.f;
         CGFloat w = 0;
+        CGRect  r = EUIRectUndefine();
         CGFloat h = ah - EUIValue(node.margin.top) - EUIValue(node.margin.bottom);
-        node_r.size.height = h;
-        ///< 给1个像素的容错值，如果尺寸过小，无有效的fill高度，就给一个1-point占位。
-        ///< 毕竟已经显示异常了
-        h = MAX(min, h);
-        if (h == min) {
-            w =  min;
-            node_r.size.width = w;
-            [node setCacheFrame:node_r];
+
+        if (h < min) {
+            h = w = min;
+            r.size = (CGSize) {w, h};
+            [node setCacheFrame:r];
             continue;
+        } else {
+            r.size.height = h;
         }
         
         EUIParseContext ctx = (EUIParseContext) {
@@ -105,9 +106,9 @@
         };
         [self.parser.wParser parse:node _:nil _:&ctx];
         w = ctx.frame.size.width;{
-            node_r.size.width = w;
+            r.size.width = w;
         }
-        [node setCacheFrame:node_r];
+        [node setCacheFrame:r];
         size.width = EUI_CLAMP(w, size.width, constrainedSize.width);
     }
     
@@ -137,7 +138,7 @@
     } else {
         y = EUIValue(node.margin.top) + EUIValue(self.padding.top);
         if (!self.isHolder) {
-            y += CGRectGetMinY(self.cacheFrame);
+            y += EUIValue(CGRectGetMinY(self.cacheFrame));
         }
     }
     frame -> origin.y = CGFloatPixelRound(y);

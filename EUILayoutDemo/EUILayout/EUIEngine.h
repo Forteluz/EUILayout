@@ -17,12 +17,12 @@
 @interface EUIEngine : NSObject
 
 /**
- *  布局管理器负责的视图
+ *  EUIEngine 负责的跟视图
  */
 @property (nonatomic, weak, readonly) UIView *view;
 
 /**
- *  当前的根模板
+ *  EUIEngine 负责的根模板
  */
 @property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 
@@ -44,7 +44,7 @@
 - (void)layoutTemplet:(EUITemplet *)templet;
 
 /*!
- *  清空所有的模板
+ *  清空根模板上的所有内容
  */
 - (void)cleanUp;
 

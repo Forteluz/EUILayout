@@ -16,7 +16,7 @@ NSInteger EUIRootViewTag() {
     static NSInteger tag;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        tag = @"euitag".hash;
+        tag = @"lxvii".hash;
     });
     return tag;
 }
@@ -46,11 +46,14 @@ NSInteger EUIRootViewTag() {
 #pragma mark - Update
 
 - (void)layoutTemplet:(EUITemplet *)templet {
-    [self.view setEui_templet:templet];
-    [self setRootTemplet:templet];
-    ///< -- 暂时根模板还是支持holder --
+    self.view.eui_templet = templet;
+    self.rootTemplet = templet;
+
+    ///===============================================
+    /// 暂时根模板需要支持holder，后续考虑优化方案
+    ///===============================================
     templet.isHolder = YES;
-    ///< ---------------------------
+    
     if ([templet isHolder]) {
         [templet setView:self.rootContainer];
     } else {
@@ -60,14 +63,33 @@ NSInteger EUIRootViewTag() {
              one = nil;
         }
     }
-    ///< TODO: 使用 Parser 优化解析
+    [self parseViewFrameIfNeeded];
     [self updateRootTempletFrame:templet];
     [templet layout];
 }
 
+- (void)parseViewFrameIfNeeded {
+    CGRect r = self.view.frame;
+    if (!EUIValueIsValid(r.size.width)) {
+        EUILayout *one = self.view.eui_layout;
+        if (EUIValueIsValid(one.width)) {
+            r.size.width = one.width;
+        }
+    }
+    if (!EUIValueIsValid(r.size.height)) {
+        EUILayout *one = self.view.eui_layout;
+        if (EUIValueIsValid(one.height)) {
+            r.size.height = one.height;
+        }
+    }
+    if (r.size.width == 0 || r.size.height == 0) {
+        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
+    }
+    self.view.frame = r;
+}
+
 - (void)updateRootTempletFrame:(EUITemplet *)templet {
     CGRect frame = (CGRect){.origin = {0}, .size = self.view.bounds.size};
-    
     if (EUIValueIsValid(templet.x)) {
         frame.origin.x = templet.x;
     } else if (EUIValueIsValid(templet.margin.left)) {
@@ -81,12 +103,24 @@ NSInteger EUIRootViewTag() {
     if (EUIValueIsValid(templet.width)) {
         frame.size.width = templet.width;
     } else if (EUIValueIsValid(templet.margin.right) || EUIValueIsValid(templet.margin.left)) {
-        frame.size.width = self.view.bounds.size.width - EUIValue(templet.margin.left) - EUIValue(templet.margin.right);
+        frame.size.width -= EUIValue(templet.margin.left) + EUIValue(templet.margin.right);
     }
     if (EUIValueIsValid(templet.height)) {
         frame.size.height = templet.height;
     } else if (EUIValueIsValid(templet.margin.bottom) || EUIValueIsValid(templet.margin.top)) {
-        frame.size.height = self.view.bounds.size.height - EUIValue(templet.margin.top) - EUIValue(templet.margin.bottom);
+        frame.size.height -= EUIValue(templet.margin.top) + EUIValue(templet.margin.bottom);
+    }
+    if (EUIValueIsValid(templet.maxWidth) || EUIValueIsValid(templet.minWidth)) {
+        CGFloat val = frame.size.width;
+        CGFloat max = EUIValueIsValid(templet.maxWidth) ? templet.maxWidth : val;
+        CGFloat min = EUIValueIsValid(templet.minWidth) ? templet.minWidth : val;
+        frame.size.width = EUI_CLAMP(val, min, max);
+    }
+    if (EUIValueIsValid(templet.maxHeight) || EUIValueIsValid(templet.minHeight)) {
+        CGFloat val = frame.size.height;
+        CGFloat max = EUIValueIsValid(templet.maxHeight) ? templet.maxHeight : val;
+        CGFloat min = EUIValueIsValid(templet.minHeight) ? templet.minHeight : val;
+        frame.size.height = EUI_CLAMP(val, min, max);
     }
     [templet setCacheFrame:frame];
     [templet.view setFrame:frame];

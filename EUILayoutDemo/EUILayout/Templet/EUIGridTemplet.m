@@ -23,7 +23,9 @@
         return;
     }
 
-    ///< 从其他布局库学习 Grid 用
+    ///===============================================
+    /// 从其他布局库学习 Grid 用
+    ///===============================================
     if (self.columns == 0 && self.rows == 0) {
         self.columns  = 3;
     }
@@ -33,7 +35,7 @@
     } else if (self.rows == 0) {
         NSInteger n = ceil(count / self.columns);
         if (n == 0) {
-            n =  1;
+            n = 1;
         } else if ((self.nodes.count % self.columns) > 0) {
             n += 1;
         }

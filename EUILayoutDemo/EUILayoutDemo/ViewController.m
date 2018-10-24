@@ -15,7 +15,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     @weakify(self);
     EUITemplet *templet =
         TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
