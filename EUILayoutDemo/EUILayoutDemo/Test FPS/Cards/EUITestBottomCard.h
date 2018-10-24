@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
 
 @interface EUITestBottomCard : UIView
+@property (nonatomic, strong) UIView *actionView;
+@property (nonatomic, strong) UIView *messageView;
+
 + (CGFloat)height:(id)object;
 @end
 
-NS_ASSUME_NONNULL_END

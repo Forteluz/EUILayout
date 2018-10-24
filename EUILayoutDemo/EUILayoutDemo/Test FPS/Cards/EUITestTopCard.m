@@ -9,14 +9,21 @@
 #import "EUITestTopCard.h"
 #import "TestFactory.h"
 #import "EUILayoutKit.h"
+///< Subviews
+#import "EUITestUserNameView.h"
+
 
 @implementation EUITestTopCard
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.avatar = EButton(@"AVATAR", NULL);
-        self.userName = EButton(@"NAME", NULL);
+        self.eui_height = [EUITestTopCard height:nil];
+        
+        self.avatar = EButton(@"😳", NULL);
+
+        self.userName = [EUITestUserNameView new];
+        
         self.userInfo = EButton(@"INFO", NULL);
         self.action = EButton(@"ACTION", NULL);
 
@@ -31,9 +38,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    EUITemplet *one = TColumn(self.avatar,
-                              TRow(self.userName,
-                                   self.userInfo));
+    EUITemplet *one = TColumn(self.avatar, TRow(self.userName,
+                                                self.userInfo)
+                              );
+    
     ///< 模仿 Case ==> 0 : 正常 , 1 : 无右侧的 action
     int testCase = EUIRandom(0, 1);
     if (testCase == 0) {

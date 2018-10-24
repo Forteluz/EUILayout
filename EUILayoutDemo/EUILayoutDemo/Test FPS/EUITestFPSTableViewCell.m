@@ -34,7 +34,6 @@
     CGFloat top    = [EUITestTopCard height:model];
     CGFloat mid    = [EUITestTopCard height:model];
     CGFloat bottom = [EUITestTopCard height:model];
-
     return 10 + top + mid + bottom + 10;
 }
 

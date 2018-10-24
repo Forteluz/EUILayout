@@ -16,6 +16,7 @@
 		D52C7FA521805EF700E74EDB /* EUITestTopCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FA421805EF700E74EDB /* EUITestTopCard.m */; };
 		D52C7FA821805F0500E74EDB /* EUITestBottomCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */; };
 		D52C7FAB21805F1900E74EDB /* EUITestMidCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */; };
+		D52C7FAF2180A22800E74EDB /* EUITestUserNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FAE2180A22800E74EDB /* EUITestUserNameView.m */; };
 		D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D62174EED0006A7ECA /* EUINode+Filter.m */; };
 		D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D92174F062006A7ECA /* EUIUtilities.m */; };
 		D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */; };
@@ -84,6 +85,8 @@
 		D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestBottomCard.m; sourceTree = "<group>"; };
 		D52C7FA921805F1900E74EDB /* EUITestMidCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestMidCard.h; sourceTree = "<group>"; };
 		D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestMidCard.m; sourceTree = "<group>"; };
+		D52C7FAD2180A22800E74EDB /* EUITestUserNameView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestUserNameView.h; sourceTree = "<group>"; };
+		D52C7FAE2180A22800E74EDB /* EUITestUserNameView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestUserNameView.m; sourceTree = "<group>"; };
 		D53426D52174EED0006A7ECA /* EUINode+Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUINode+Filter.h"; sourceTree = "<group>"; };
 		D53426D62174EED0006A7ECA /* EUINode+Filter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "EUINode+Filter.m"; sourceTree = "<group>"; };
 		D53426D92174F062006A7ECA /* EUIUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIUtilities.m; sourceTree = "<group>"; };
@@ -232,8 +235,18 @@
 				D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */,
 				D52C7FA621805F0500E74EDB /* EUITestBottomCard.h */,
 				D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */,
+				D52C7FAC2180A21000E74EDB /* Views */,
 			);
 			path = Cards;
+			sourceTree = "<group>";
+		};
+		D52C7FAC2180A21000E74EDB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D52C7FAD2180A22800E74EDB /* EUITestUserNameView.h */,
+				D52C7FAE2180A22800E74EDB /* EUITestUserNameView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D53426D82174EEE6006A7ECA /* Helper */ = {
@@ -705,6 +718,7 @@
 				D59D8B662175DED800651060 /* TestButton.m in Sources */,
 				D59D8B5121745B8000651060 /* EUIParser.m in Sources */,
 				D59D8B71217DBF2100651060 /* EUITColumnIntroViewController.m in Sources */,
+				D52C7FAF2180A22800E74EDB /* EUITestUserNameView.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D59D8B632175C39400651060 /* TestLabel.m in Sources */,
 				D57CFCD3215A08DB002D137F /* main.m in Sources */,

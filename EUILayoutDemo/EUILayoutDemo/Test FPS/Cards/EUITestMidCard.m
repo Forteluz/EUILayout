@@ -7,6 +7,8 @@
 //
 
 #import "EUITestMidCard.h"
+#import "TestFactory.h"
+#import "EUILayoutKit.h"
 
 @implementation EUITestMidCard
 
@@ -14,8 +16,29 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor darkGrayColor];
+        self.eui_height = [EUITestMidCard height:nil];
+        self.time = EButton(@"TIME", NULL);
+        self.from = EButton(@"FROM", NULL);
+        self.to = EButton(@"TO", NULL);
+        self.price = EButton(@"PRICE", NULL);
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    self.price.eui_gravity  = EUIGravityEnd;
+    self.price.eui_sizeType = EUISizeTypeToFit;
+    
+    EUITemplet *templet = TColumn
+    (
+        TRow(self.time,
+             self.from,
+             self.to),
+        self.price
+    );
+    [self eui_layout:templet];
 }
 
 + (CGFloat)height:(id)object {

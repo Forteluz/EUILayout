@@ -28,17 +28,23 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
 }
 
 - (void)eui_cleanUp {
-    [self.eui_engine cleanUp];
-    [self eui_releaseEngine];
+    EUITemplet *root = [self.eui_engine rootTemplet];
+    if (root) {
+        [self.eui_engine cleanUp];
+        [self eui_releaseEngine];
+    } else {
+        root = self.eui_templet.rootTemplet;
+        [root.view eui_cleanUp];
+    }
 }
 
 - (void)eui_reload {
-    EUITemplet *one = self.eui_engine.rootTemplet;
-    if ( one ) {
-        [self.eui_engine layoutTemplet:one];
+    EUITemplet *root = [self.eui_engine rootTemplet];
+    if (root) {
+        [self.eui_engine layoutTemplet:root];
     } else {
-        EUITemplet *one = self.eui_layout.templet;
-        [one.rootTemplet.view eui_reload];
+        root = self.eui_templet.rootTemplet;
+        [root.view eui_reload];
     }
 }
 
