@@ -19,13 +19,6 @@
 		D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D62174EED0006A7ECA /* EUINode+Filter.m */; };
 		D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D92174F062006A7ECA /* EUIUtilities.m */; };
 		D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */; };
-		D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B0217053BA00C2D920 /* TestViewController2.m */; };
-		D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756B72170763C00C2D920 /* TSInfoBaseView.m */; };
-		D54756BA2170777400C2D920 /* icon_detail_g@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D54756B92170777400C2D920 /* icon_detail_g@3x.png */; };
-		D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756BF21707DA500C2D920 /* TSPOIInfoView.m */; };
-		D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756C221707DBE00C2D920 /* TSTimeInfoView.m */; };
-		D54756C921707E0C00C2D920 /* TSPNumInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756C821707E0C00C2D920 /* TSPNumInfoView.m */; };
-		D54756CC21707E2000C2D920 /* TSTipsInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D54756CB21707E2000C2D920 /* TSTipsInfoView.m */; };
 		D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCC4215A08DA002D137F /* AppDelegate.m */; };
 		D57CFCC8215A08DA002D137F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57CFCC7215A08DA002D137F /* ViewController.m */; };
 		D57CFCCB215A08DA002D137F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57CFCC9215A08DA002D137F /* Main.storyboard */; };
@@ -49,13 +42,7 @@
 		D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852AD215A0ABE007D9CFF /* EUIColumnTemplet.m */; };
 		D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852B0215A0ACF007D9CFF /* EUIRowTemplet.m */; };
 		D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */; };
-		D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BA215A17B3007D9CFF /* TestViewController1.m */; };
-		D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852BD215A1843007D9CFF /* BaseTestViewController.m */; };
 		D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C21215A1D47002ACBAF /* TestFactory.m */; };
-		D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C27215A240E002ACBAF /* TestListViewController.m */; };
-		D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */; };
-		D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */; };
-		D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,19 +90,6 @@
 		D53426DB217D0C60006A7ECA /* EUIGridTemplet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIGridTemplet.h; sourceTree = "<group>"; };
 		D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIGridTemplet.m; sourceTree = "<group>"; };
 		D5379416216F010D0071E624 /* EUIUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIUtilities.h; sourceTree = "<group>"; };
-		D54756AF217053BA00C2D920 /* TestViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController2.h; sourceTree = "<group>"; };
-		D54756B0217053BA00C2D920 /* TestViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController2.m; sourceTree = "<group>"; };
-		D54756B62170763C00C2D920 /* TSInfoBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSInfoBaseView.h; sourceTree = "<group>"; };
-		D54756B72170763C00C2D920 /* TSInfoBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSInfoBaseView.m; sourceTree = "<group>"; };
-		D54756B92170777400C2D920 /* icon_detail_g@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_detail_g@3x.png"; sourceTree = "<group>"; };
-		D54756BE21707DA500C2D920 /* TSPOIInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPOIInfoView.h; sourceTree = "<group>"; };
-		D54756BF21707DA500C2D920 /* TSPOIInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPOIInfoView.m; sourceTree = "<group>"; };
-		D54756C121707DBE00C2D920 /* TSTimeInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTimeInfoView.h; sourceTree = "<group>"; };
-		D54756C221707DBE00C2D920 /* TSTimeInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSTimeInfoView.m; sourceTree = "<group>"; };
-		D54756C721707E0C00C2D920 /* TSPNumInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPNumInfoView.h; sourceTree = "<group>"; };
-		D54756C821707E0C00C2D920 /* TSPNumInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPNumInfoView.m; sourceTree = "<group>"; };
-		D54756CA21707E2000C2D920 /* TSTipsInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTipsInfoView.h; sourceTree = "<group>"; };
-		D54756CB21707E2000C2D920 /* TSTipsInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSTipsInfoView.m; sourceTree = "<group>"; };
 		D57CFCC0215A08DA002D137F /* EUILayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EUILayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D57CFCC3215A08DA002D137F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D57CFCC4215A08DA002D137F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -164,21 +138,9 @@
 		D5D852B3215A0AED007D9CFF /* EUILayoutMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutMacro.h; sourceTree = "<group>"; };
 		D5D852B5215A0B53007D9CFF /* UIView+EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+EUILayout.h"; sourceTree = "<group>"; };
 		D5D852B6215A0B53007D9CFF /* UIView+EUILayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+EUILayout.m"; sourceTree = "<group>"; };
-		D5D852B9215A17B3007D9CFF /* TestViewController1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController1.h; sourceTree = "<group>"; };
-		D5D852BA215A17B3007D9CFF /* TestViewController1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController1.m; sourceTree = "<group>"; };
-		D5D852BC215A1843007D9CFF /* BaseTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTestViewController.h; sourceTree = "<group>"; };
-		D5D852BD215A1843007D9CFF /* BaseTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTestViewController.m; sourceTree = "<group>"; };
 		D5DE6C20215A1D47002ACBAF /* TestFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestFactory.h; sourceTree = "<group>"; };
 		D5DE6C21215A1D47002ACBAF /* TestFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestFactory.m; sourceTree = "<group>"; };
-		D5DE6C26215A240E002ACBAF /* TestListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestListViewController.h; sourceTree = "<group>"; };
-		D5DE6C27215A240E002ACBAF /* TestListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestListViewController.m; sourceTree = "<group>"; };
-		D5DE6C2A215A243F002ACBAF /* TestOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestOrderViewController.h; sourceTree = "<group>"; };
-		D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestOrderViewController.m; sourceTree = "<group>"; };
 		D5DE6C30215A2A6B002ACBAF /* EUILayoutKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayoutKit.h; sourceTree = "<group>"; };
-		D5DE6C32215A2E0E002ACBAF /* TestTEasyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTEasyViewController.h; sourceTree = "<group>"; };
-		D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTEasyViewController.m; sourceTree = "<group>"; };
-		D5DE6C36215A385D002ACBAF /* TestTRowViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTRowViewController.h; sourceTree = "<group>"; };
-		D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTRowViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +216,6 @@
 		D52C7F9B2180256700E74EDB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				D5D852B8215A12B5007D9CFF /* Trash */,
 				D5DE6C20215A1D47002ACBAF /* TestFactory.h */,
 				D5DE6C21215A1D47002ACBAF /* TestFactory.m */,
 				D59D8B602175BEC500651060 /* Views */,
@@ -282,32 +243,6 @@
 				D5D852B4215A0B2B007D9CFF /* Category */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		D54756B22170754100C2D920 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D54756BB21707D4F00C2D920 /* Base */,
-				D54756BE21707DA500C2D920 /* TSPOIInfoView.h */,
-				D54756BF21707DA500C2D920 /* TSPOIInfoView.m */,
-				D54756C121707DBE00C2D920 /* TSTimeInfoView.h */,
-				D54756C221707DBE00C2D920 /* TSTimeInfoView.m */,
-				D54756C721707E0C00C2D920 /* TSPNumInfoView.h */,
-				D54756C821707E0C00C2D920 /* TSPNumInfoView.m */,
-				D54756CA21707E2000C2D920 /* TSTipsInfoView.h */,
-				D54756CB21707E2000C2D920 /* TSTipsInfoView.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		D54756BB21707D4F00C2D920 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				D54756B92170777400C2D920 /* icon_detail_g@3x.png */,
-				D54756B62170763C00C2D920 /* TSInfoBaseView.h */,
-				D54756B72170763C00C2D920 /* TSInfoBaseView.m */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		D57CFCB7215A08DA002D137F = {
@@ -472,76 +407,6 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
-		D5D852B8215A12B5007D9CFF /* Trash */ = {
-			isa = PBXGroup;
-			children = (
-				D5D852BC215A1843007D9CFF /* BaseTestViewController.h */,
-				D5D852BD215A1843007D9CFF /* BaseTestViewController.m */,
-				D5DE6C23215A2217002ACBAF /* 简单布局测试 */,
-				D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */,
-			);
-			path = Trash;
-			sourceTree = "<group>";
-		};
-		D5DE6C23215A2217002ACBAF /* 简单布局测试 */ = {
-			isa = PBXGroup;
-			children = (
-				D5D852B9215A17B3007D9CFF /* TestViewController1.h */,
-				D5D852BA215A17B3007D9CFF /* TestViewController1.m */,
-				D5DE6C31215A2DD6002ACBAF /* TEasy 模板 */,
-				D5DE6C35215A383C002ACBAF /* TRow 模板 */,
-			);
-			path = "简单布局测试";
-			sourceTree = "<group>";
-		};
-		D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */ = {
-			isa = PBXGroup;
-			children = (
-				D54756AF217053BA00C2D920 /* TestViewController2.h */,
-				D54756B0217053BA00C2D920 /* TestViewController2.m */,
-				D5DE6C29215A242D002ACBAF /* 发单页 */,
-				D5DE6C25215A23F0002ACBAF /* 列表页 */,
-			);
-			path = "模仿业务场景";
-			sourceTree = "<group>";
-		};
-		D5DE6C25215A23F0002ACBAF /* 列表页 */ = {
-			isa = PBXGroup;
-			children = (
-				D5DE6C26215A240E002ACBAF /* TestListViewController.h */,
-				D5DE6C27215A240E002ACBAF /* TestListViewController.m */,
-			);
-			path = "列表页";
-			sourceTree = "<group>";
-		};
-		D5DE6C29215A242D002ACBAF /* 发单页 */ = {
-			isa = PBXGroup;
-			children = (
-				D5DE6C2A215A243F002ACBAF /* TestOrderViewController.h */,
-				D5DE6C2B215A243F002ACBAF /* TestOrderViewController.m */,
-				D54756B22170754100C2D920 /* Views */,
-			);
-			path = "发单页";
-			sourceTree = "<group>";
-		};
-		D5DE6C31215A2DD6002ACBAF /* TEasy 模板 */ = {
-			isa = PBXGroup;
-			children = (
-				D5DE6C32215A2E0E002ACBAF /* TestTEasyViewController.h */,
-				D5DE6C33215A2E0E002ACBAF /* TestTEasyViewController.m */,
-			);
-			path = "TEasy 模板";
-			sourceTree = "<group>";
-		};
-		D5DE6C35215A383C002ACBAF /* TRow 模板 */ = {
-			isa = PBXGroup;
-			children = (
-				D5DE6C36215A385D002ACBAF /* TestTRowViewController.h */,
-				D5DE6C37215A385D002ACBAF /* TestTRowViewController.m */,
-			);
-			path = "TRow 模板";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -657,7 +522,6 @@
 				D57CFCD0215A08DB002D137F /* LaunchScreen.storyboard in Resources */,
 				D57CFCCD215A08DB002D137F /* Assets.xcassets in Resources */,
 				D57CFCCB215A08DA002D137F /* Main.storyboard in Resources */,
-				D54756BA2170777400C2D920 /* icon_detail_g@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,29 +696,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */,
 				D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */,
 				D52C7FAB21805F1900E74EDB /* EUITestMidCard.m in Sources */,
-				D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */,
 				D5D852A4215A0A4F007D9CFF /* EUIEngine.m in Sources */,
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
 				D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */,
 				D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */,
-				D54756C021707DA500C2D920 /* TSPOIInfoView.m in Sources */,
 				D59D8B662175DED800651060 /* TestButton.m in Sources */,
 				D59D8B5121745B8000651060 /* EUIParser.m in Sources */,
 				D59D8B71217DBF2100651060 /* EUITColumnIntroViewController.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D59D8B632175C39400651060 /* TestLabel.m in Sources */,
-				D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */,
 				D57CFCD3215A08DB002D137F /* main.m in Sources */,
-				D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */,
 				D52C7FA12180516B00E74EDB /* EUITestFPSTableViewCell.m in Sources */,
-				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D59D8B74217DBFC300651060 /* EUITGridIntroViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
-				D54756C921707E0C00C2D920 /* TSPNumInfoView.m in Sources */,
-				D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
 				D52C7FA821805F0500E74EDB /* EUITestBottomCard.m in Sources */,
 				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
@@ -862,14 +718,10 @@
 				D52C7F9E21804BCA00E74EDB /* EUITestFPSViewController.m in Sources */,
 				D59D8B77217DC04700651060 /* EUIIntoViewController.m in Sources */,
 				D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */,
-				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
 				D52C7FA521805EF700E74EDB /* EUITestTopCard.m in Sources */,
 				D52C7F98217F27E400E74EDB /* EUITempletDebugginView.m in Sources */,
-				D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,
 				D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */,
-				D5DE6C38215A385D002ACBAF /* TestTRowViewController.m in Sources */,
-				D54756CC21707E2000C2D920 /* TSTipsInfoView.m in Sources */,
 				D57CFCC5215A08DA002D137F /* AppDelegate.m in Sources */,
 				D59D8B6E217DBF1000651060 /* EUITRowIntroViewController.m in Sources */,
 			);
