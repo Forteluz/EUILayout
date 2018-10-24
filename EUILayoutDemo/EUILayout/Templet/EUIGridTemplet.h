@@ -8,7 +8,7 @@
 
 #import "EUITemplet.h"
 
-#define TGrid(...) [EUIGridTemplet templetWithItems:@[__VA_ARGS__]]
+#define TGrid(...) [[EUIGridTemplet alloc] initWithItems:@[__VA_ARGS__]]
 
 @interface EUIGridTemplet : EUITemplet
 @property (nonatomic) NSUInteger columns;

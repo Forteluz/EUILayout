@@ -31,11 +31,13 @@
     (
         [self.backButton eui_configure:^(EUILayout *node) {
             node.maxHeight = 80;
+            node.margin = EUIEdgeMake(10, 10, 10, 10);
         }],
         debug1,
         debug2,
         debug3,
      );
+    one.margin.top = 20;
     
     [self.view eui_layout:one];
 }

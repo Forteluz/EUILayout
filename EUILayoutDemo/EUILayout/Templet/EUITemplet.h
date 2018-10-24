@@ -18,7 +18,7 @@
 #pragma mark -
 
 #ifndef TBase
-#define TBase(...) [EUITemplet templetWithItems:@[__VA_ARGS__]]
+#define TBase(...) [[EUITemplet alloc] initWithItems:@[__VA_ARGS__]]
 #endif
 
 #pragma mark -
@@ -40,10 +40,14 @@
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUILayout *> *nodes;
 
+///<
+@property (nonatomic, copy) void (^didLoadSubLayoutsBlock)(EUITemplet *templet);
+
 #pragma mark - Init Templet
 
-+ (instancetype)templetWithItems:(NSArray <EUIObject> *)items __attribute__((objc_requires_super));
-- (instancetype)init __attribute__((unavailable("Use '- (instancetype)initWithItems:' !")));
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
++ (instancetype)new UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithItems:(NSArray <EUIObject> *)items;
 
 #pragma mark - Layout Nodes
@@ -74,12 +78,9 @@
 ///< 插入一个Node
 - (void)insertLayout:(EUIObject)object atIndex:(NSInteger)index;
 
-///< 移除一个Node
+///< 移除一个Layout
 - (void)removeLayout:(EUIObject)object;
-
 - (void)removeLayoutAtIndex:(NSInteger)index;
-
-///< 删除所有Node
 - (void)removeAllSubLayouts;
 
 - (__kindof EUILayout *)layoutAtIndex:(NSInteger)index;

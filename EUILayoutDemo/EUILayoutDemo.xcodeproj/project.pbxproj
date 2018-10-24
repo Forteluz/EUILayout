@@ -11,6 +11,11 @@
 		16380FF197815A9D3F3B959E /* Pods_EUILayoutDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E32BCD7DA2E9C6B05CE483A /* Pods_EUILayoutDemoUITests.framework */; };
 		914EA5141BBDB884A53B6D1B /* Pods_EUILayoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863E148CD689D85239C01AB5 /* Pods_EUILayoutDemo.framework */; };
 		D52C7F98217F27E400E74EDB /* EUITempletDebugginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7F97217F27E400E74EDB /* EUITempletDebugginView.m */; };
+		D52C7F9E21804BCA00E74EDB /* EUITestFPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7F9D21804BCA00E74EDB /* EUITestFPSViewController.m */; };
+		D52C7FA12180516B00E74EDB /* EUITestFPSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FA02180516B00E74EDB /* EUITestFPSTableViewCell.m */; };
+		D52C7FA521805EF700E74EDB /* EUITestTopCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FA421805EF700E74EDB /* EUITestTopCard.m */; };
+		D52C7FA821805F0500E74EDB /* EUITestBottomCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */; };
+		D52C7FAB21805F1900E74EDB /* EUITestMidCard.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */; };
 		D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D62174EED0006A7ECA /* EUINode+Filter.m */; };
 		D53426DA2174F062006A7ECA /* EUIUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426D92174F062006A7ECA /* EUIUtilities.m */; };
 		D53426DD217D0C61006A7ECA /* EUIGridTemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D53426DC217D0C60006A7ECA /* EUIGridTemplet.m */; };
@@ -82,6 +87,16 @@
 		D51E7B1AAA716A5C15048894 /* Pods-EUILayoutDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EUILayoutDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EUILayoutDemoTests/Pods-EUILayoutDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D52C7F96217F27E400E74EDB /* EUITempletDebugginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITempletDebugginView.h; sourceTree = "<group>"; };
 		D52C7F97217F27E400E74EDB /* EUITempletDebugginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITempletDebugginView.m; sourceTree = "<group>"; };
+		D52C7F9C21804BCA00E74EDB /* EUITestFPSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestFPSViewController.h; sourceTree = "<group>"; };
+		D52C7F9D21804BCA00E74EDB /* EUITestFPSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestFPSViewController.m; sourceTree = "<group>"; };
+		D52C7F9F2180516B00E74EDB /* EUITestFPSTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestFPSTableViewCell.h; sourceTree = "<group>"; };
+		D52C7FA02180516B00E74EDB /* EUITestFPSTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestFPSTableViewCell.m; sourceTree = "<group>"; };
+		D52C7FA321805EF700E74EDB /* EUITestTopCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestTopCard.h; sourceTree = "<group>"; };
+		D52C7FA421805EF700E74EDB /* EUITestTopCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestTopCard.m; sourceTree = "<group>"; };
+		D52C7FA621805F0500E74EDB /* EUITestBottomCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestBottomCard.h; sourceTree = "<group>"; };
+		D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestBottomCard.m; sourceTree = "<group>"; };
+		D52C7FA921805F1900E74EDB /* EUITestMidCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestMidCard.h; sourceTree = "<group>"; };
+		D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestMidCard.m; sourceTree = "<group>"; };
 		D53426D52174EED0006A7ECA /* EUINode+Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUINode+Filter.h"; sourceTree = "<group>"; };
 		D53426D62174EED0006A7ECA /* EUINode+Filter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "EUINode+Filter.m"; sourceTree = "<group>"; };
 		D53426D92174F062006A7ECA /* EUIUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIUtilities.m; sourceTree = "<group>"; };
@@ -217,6 +232,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D52C7F992180254D00E74EDB /* Copy Scene Case */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Copy Scene Case";
+			sourceTree = "<group>";
+		};
+		D52C7F9A2180255C00E74EDB /* Test FPS */ = {
+			isa = PBXGroup;
+			children = (
+				D52C7F9C21804BCA00E74EDB /* EUITestFPSViewController.h */,
+				D52C7F9D21804BCA00E74EDB /* EUITestFPSViewController.m */,
+				D52C7F9F2180516B00E74EDB /* EUITestFPSTableViewCell.h */,
+				D52C7FA02180516B00E74EDB /* EUITestFPSTableViewCell.m */,
+				D52C7FA221805EAA00E74EDB /* Cards */,
+			);
+			path = "Test FPS";
+			sourceTree = "<group>";
+		};
+		D52C7F9B2180256700E74EDB /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D5D852B8215A12B5007D9CFF /* Trash */,
+				D5DE6C20215A1D47002ACBAF /* TestFactory.h */,
+				D5DE6C21215A1D47002ACBAF /* TestFactory.m */,
+				D59D8B602175BEC500651060 /* Views */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		D52C7FA221805EAA00E74EDB /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				D52C7FA321805EF700E74EDB /* EUITestTopCard.h */,
+				D52C7FA421805EF700E74EDB /* EUITestTopCard.m */,
+				D52C7FA921805F1900E74EDB /* EUITestMidCard.h */,
+				D52C7FAA21805F1900E74EDB /* EUITestMidCard.m */,
+				D52C7FA621805F0500E74EDB /* EUITestBottomCard.h */,
+				D52C7FA721805F0500E74EDB /* EUITestBottomCard.m */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
 		D53426D82174EEE6006A7ECA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,15 +336,14 @@
 		D57CFCC2215A08DA002D137F /* EUILayoutDemo */ = {
 			isa = PBXGroup;
 			children = (
+				D52C7F9B2180256700E74EDB /* Helper */,
 				D57CFCC3215A08DA002D137F /* AppDelegate.h */,
 				D57CFCC4215A08DA002D137F /* AppDelegate.m */,
 				D57CFCC6215A08DA002D137F /* ViewController.h */,
 				D57CFCC7215A08DA002D137F /* ViewController.m */,
-				D5DE6C20215A1D47002ACBAF /* TestFactory.h */,
-				D5DE6C21215A1D47002ACBAF /* TestFactory.m */,
+				D52C7F9A2180255C00E74EDB /* Test FPS */,
+				D52C7F992180254D00E74EDB /* Copy Scene Case */,
 				D59D8B68217DBC1100651060 /* Introduce Templet */,
-				D59D8B602175BEC500651060 /* Views */,
-				D5D852B8215A12B5007D9CFF /* TestCase */,
 				D57CFCC9215A08DA002D137F /* Main.storyboard */,
 				D57CFCCC215A08DB002D137F /* Assets.xcassets */,
 				D57CFCCE215A08DB002D137F /* LaunchScreen.storyboard */,
@@ -415,7 +472,7 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
-		D5D852B8215A12B5007D9CFF /* TestCase */ = {
+		D5D852B8215A12B5007D9CFF /* Trash */ = {
 			isa = PBXGroup;
 			children = (
 				D5D852BC215A1843007D9CFF /* BaseTestViewController.h */,
@@ -423,7 +480,7 @@
 				D5DE6C23215A2217002ACBAF /* 简单布局测试 */,
 				D5DE6C24215A23DE002ACBAF /* 模仿业务场景 */,
 			);
-			path = TestCase;
+			path = Trash;
 			sourceTree = "<group>";
 		};
 		D5DE6C23215A2217002ACBAF /* 简单布局测试 */ = {
@@ -709,13 +766,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-EUILayoutDemo/Pods-EUILayoutDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
-				"${BUILT_PRODUCTS_DIR}/YogaKit/YogaKit.framework",
+				"${BUILT_PRODUCTS_DIR}/JPFPSStatus/JPFPSStatus.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YogaKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JPFPSStatus.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -779,6 +834,7 @@
 			files = (
 				D5D852BB215A17B3007D9CFF /* TestViewController1.m in Sources */,
 				D5D852B1215A0ACF007D9CFF /* EUIRowTemplet.m in Sources */,
+				D52C7FAB21805F1900E74EDB /* EUITestMidCard.m in Sources */,
 				D5D852BE215A1843007D9CFF /* BaseTestViewController.m in Sources */,
 				D5D852A4215A0A4F007D9CFF /* EUIEngine.m in Sources */,
 				D5DE6C22215A1D47002ACBAF /* TestFactory.m in Sources */,
@@ -793,17 +849,21 @@
 				D54756C321707DBE00C2D920 /* TSTimeInfoView.m in Sources */,
 				D57CFCD3215A08DB002D137F /* main.m in Sources */,
 				D5DE6C28215A240E002ACBAF /* TestListViewController.m in Sources */,
+				D52C7FA12180516B00E74EDB /* EUITestFPSTableViewCell.m in Sources */,
 				D5DE6C34215A2E0E002ACBAF /* TestTEasyViewController.m in Sources */,
 				D59D8B74217DBFC300651060 /* EUITGridIntroViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
 				D54756C921707E0C00C2D920 /* TSPNumInfoView.m in Sources */,
 				D54756B82170763C00C2D920 /* TSInfoBaseView.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
+				D52C7FA821805F0500E74EDB /* EUITestBottomCard.m in Sources */,
 				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
 				D59D8B6B217DBF0000651060 /* EUITBaseIntroViewController.m in Sources */,
+				D52C7F9E21804BCA00E74EDB /* EUITestFPSViewController.m in Sources */,
 				D59D8B77217DC04700651060 /* EUIIntoViewController.m in Sources */,
 				D53426D72174EED0006A7ECA /* EUINode+Filter.m in Sources */,
 				D5DE6C2C215A243F002ACBAF /* TestOrderViewController.m in Sources */,
+				D52C7FA521805EF700E74EDB /* EUITestTopCard.m in Sources */,
 				D52C7F98217F27E400E74EDB /* EUITempletDebugginView.m in Sources */,
 				D54756B1217053BA00C2D920 /* TestViewController2.m in Sources */,
 				D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */,

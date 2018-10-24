@@ -49,7 +49,7 @@
 }
 
 - (void)testFPS {
-    
+    EUIGoto(self, @"EUITestFPSViewController");
 }
 
 #pragma mark - Introduce Templet
@@ -71,8 +71,8 @@
 }
 
 - (void)introduceColse {
-    EUILayout *node = [self.view.eui_templet layoutAtIndex:0];
-    [node.view eui_cleanUp];
+    EUITemplet *templet = [self.view.eui_templet layoutAtIndex:0];
+    [templet.view eui_cleanUp];
 }
 
 @end

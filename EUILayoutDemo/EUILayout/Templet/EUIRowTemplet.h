@@ -8,7 +8,7 @@
 
 #import "EUITemplet.h"
 
-#define TRow(...) [EUIRowTemplet templetWithItems:@[__VA_ARGS__]]
+#define TRow(...) [[EUIRowTemplet alloc] initWithItems:@[__VA_ARGS__]]
 
 /**
  Row 模板，从上往下顺序布局

@@ -14,7 +14,11 @@
 UILabel * EText(NSString *text) {
     TestLabel *one = [TestLabel new];
     one.text = text;
-    one.textColor = EUIRandomColor;
+    [one setFont:[UIFont boldSystemFontOfSize:16]];
+    [one setNumberOfLines:0];
+    [one.layer setBorderWidth:1.f];
+    [one.layer setBorderColor:UIColor.blackColor.CGColor];
+    one.textColor = UIColor.whiteColor;
     one.backgroundColor = EUIRandomColor;
     one.textAlignment = NSTextAlignmentCenter;
     return one;

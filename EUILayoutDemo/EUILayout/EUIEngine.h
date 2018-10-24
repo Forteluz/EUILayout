@@ -29,8 +29,12 @@
 
 #pragma mark - Access
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
++ (instancetype)new UNAVAILABLE_ATTRIBUTE;
+
 /*!
- *  @brief 生成一个布局模板示例
+ *  @brief init
  */
 - (instancetype)initWithView:(UIView *)view;
 

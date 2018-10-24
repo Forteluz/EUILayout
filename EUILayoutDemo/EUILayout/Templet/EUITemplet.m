@@ -98,6 +98,9 @@
 
 - (void)didLoadSubLayouts {
     ///< TODO : 视图层级调整功能
+    if (self.didLoadSubLayoutsBlock) {
+        self.didLoadSubLayoutsBlock(self);
+    }
 }
 
 - (void)loadSubLayouts:(NSArray *)nodes {
