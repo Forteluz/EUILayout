@@ -7,26 +7,34 @@
 //
 
 #import "EUITRowIntroViewController.h"
-
-@interface EUITRowIntroViewController ()
-
-@end
+#import "EUITempletDebugginView.h"
+#import "EUILayoutKit.h"
 
 @implementation EUITRowIntroViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    EUITempletDebugginView *debug1 = [EUITempletDebugginView new];
+    EUITempletDebugginView *debug2 = [EUITempletDebugginView new];
+    EUITempletDebugginView *debug3 = [EUITempletDebugginView new];
+    
+    debug1.eui_margin = EUIEdgeMake(10, 10, 10, 10);
+    debug2.eui_margin = EUIEdgeMake(10, 10, 10, 10);
+    debug3.eui_margin = EUIEdgeMake(10, 10, 10, 10);
+    
+    EUITemplet *one = TRow
+    (
+        [self.backButton eui_configure:^(EUILayout *node) {
+            node.maxHeight = 80;
+        }],
+        debug1,
+        debug2,
+        debug3,
+    );
+    
+    [self.view eui_layout:one];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -378,7 +378,7 @@
     
     CGSize constraintSize = context->constraintSize;
     if (!EUIValueIsValid(constraintSize.height) || constraintSize.height == 0) {
-        NSCAssert(0, @"EUIError : 计算的约束高值异常!");
+        NSCAssert(0, @"EUIError : 计算的约束高值异常! %f", constraintSize.height);
     }
     
     CGFloat h = 0;

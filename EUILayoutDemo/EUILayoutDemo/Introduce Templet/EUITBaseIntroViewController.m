@@ -20,24 +20,24 @@
      *  在 TBase 模板中的，Node 只和模板产生约束，Node 之间互不影响；
      *  多用于处理比较动态的布局关系，如 Frame 或者 Masonry 指定布局
      */
-    @weakify(self)
-    UIButton *gravity = EButton(@"\n Gravity ：Tap Me ! \n", ^{
-        @strongify(self)
-        [self randomGravity];
-    });
-    gravity.eui_gravity  = EUIGravityHorzCenter | EUIGravityVertCenter;
-    gravity.eui_sizeType = EUISizeTypeToFit;
-    gravity.tag = 1;
+//    @weakify(self)
+//    UIButton *gravity = EButton(@"\n Gravity ：Tap Me ! \n", ^{
+//        @strongify(self)
+//        [self randomGravity];
+//    });
+//    gravity.eui_gravity  = EUIGravityHorzCenter | EUIGravityVertCenter;
+//    gravity.eui_sizeType = EUISizeTypeToFit;
+//    gravity.tag = 1;
 
     self.backButton.eui_size = CGSizeMake(100, 40);
     self.backButton.eui_margin.top  = 30;
     self.backButton.eui_margin.left = 10;
 
-    if (!_pannel) {
-         _pannel = [EUITempletDebugginView new];
-    }
-    
-    EUITemplet *templet = TBase(_pannel, gravity, self.backButton);
+//    if (!_pannel) {
+//         _pannel = [EUITempletDebugginView new];
+//    }
+    EUITempletDebugginView *pannel = [EUITempletDebugginView new];
+    EUITemplet *templet = TBase(pannel, self.backButton);
     [self.view eui_layout:templet];
     
     /* 也可以使用比较鬼畜的结构

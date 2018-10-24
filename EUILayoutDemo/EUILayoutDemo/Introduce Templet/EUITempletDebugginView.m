@@ -70,9 +70,8 @@
     if (lastGravityN > 3) {
         lastGravityN = 1;
     }
-    int i = EUIRandom(1, 3);
+    int i = EUIRandom(2, 3);
     UIView *one = nil;
-    i = 1;
     if (i == 1) {
         one = self;
     } else if (i == 2) {
@@ -92,7 +91,10 @@
         } break;
     }
     if (one == self) {
-        [self.superview.eui_templet.rootTemplet layout];
+        ///< 作为子模板修改自己的gravity 或者 sizetype 属性后，需要父 templet 刷新
+        ///< TODO : 如何快速找到父模板?
+        EUITemplet *one = self.superview.eui_engine.rootTemplet;
+        [one layout];
     } else {
         [self eui_reload];
     }
@@ -134,7 +136,7 @@
         r.size = CGSizeMake(200, 200);
     } else if (lastFrameN == 2) {
         r = CGRectMake(100, 40, self.superview.bounds.size.width - 100 - 10, 100);
-        self.eui_frame = r;
+        self.eui_frame = (CGRect) {.size = r.size};
     } else {
         r = self.superview.bounds;
     }
