@@ -15,11 +15,10 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blueColor];
         self.eui_height = [EUITestBottomCard height:nil];
         
-        self.messageView = EText(@"MESSAGE");
-        self.actionView  = EButton(@"ACTION", NULL);
+        self.messageView = EText(@"含感谢费3元");
+        self.actionView  = EButton(@"邀请同行", NULL);
     }
     return self;
 }
@@ -28,9 +27,13 @@
     [super layoutSubviews];
     
     self.actionView.eui_size = CGSizeMake(68, 30);
-    self.actionView.eui_gravity = EUIGravityEnd;
+    self.actionView.eui_gravity = EUIGravityVertCenter;
     
     [self eui_layout:TColumn(self.messageView, self.actionView)];
+}
+
+- (void)updateWithModel:(id)model {
+    
 }
 
 + (CGFloat)height:(id)object {

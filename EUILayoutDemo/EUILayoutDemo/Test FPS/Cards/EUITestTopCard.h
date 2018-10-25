@@ -10,11 +10,7 @@
 
 
 @interface EUITestTopCard : UIView
-@property (nonatomic, strong) UIView *avatar;
-@property (nonatomic, strong) UIView *userName;
-@property (nonatomic, strong) UIView *userInfo;
-@property (nonatomic, strong) UIView *action;
-
+- (void)updateWithModel:(id)model;;
 + (CGFloat)height:(id)object;
 
 @end

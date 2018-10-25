@@ -29,6 +29,16 @@
     return self;
 }
 
+- (void)update:(id)data {
+    static NSArray *userNames = nil;
+    if (userNames == nil) {
+        userNames = @[@"特别长的用户名，有多长呢，大概有几十个字那么长吧，总之一行肯定是显示不下的",
+                      @"溪大大", @"Lxvii", @"李晓雅", @"随便的用户名"];
+    }
+    int i = EUIRandom(0, (int)(userNames.count - 1));
+    self.nameLabel.text = userNames[i];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self eui_layout:TColumn(self.nameLabel, self.genderLabel)];

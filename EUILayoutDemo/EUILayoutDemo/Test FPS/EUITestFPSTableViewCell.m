@@ -30,11 +30,17 @@
     [self eui_layout:self.cardTemplet];
 }
 
+- (void)updateWithModel:(id)model {
+    [self.topCard updateWithModel:model];
+    [self.midCard updateWithModel:model];
+    [self.bottomCard updateWithModel:model];
+}
+
 + (CGFloat)cellHeight:(id)model {
     CGFloat top    = [EUITestTopCard height:model];
     CGFloat mid    = [EUITestTopCard height:model];
     CGFloat bottom = [EUITestTopCard height:model];
-    return 10 + top + mid + bottom + 10;
+    return 10 + top + mid + (20/*margin*/) + bottom + 10;
 }
 
 #pragma mark -
@@ -49,6 +55,8 @@
 - (UIView *)midCard {
     if (_midCard == nil) {
         _midCard = [EUITestMidCard new];
+        _midCard.eui_margin.top = 10;
+        _midCard.eui_margin.bottom = 10;
     }
     return _midCard;
 }

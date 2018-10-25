@@ -15,14 +15,17 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor darkGrayColor];
         self.eui_height = [EUITestMidCard height:nil];
         self.time = EButton(@"TIME", NULL);
         self.from = EButton(@"FROM", NULL);
         self.to = EButton(@"TO", NULL);
-        self.price = EButton(@"PRICE", NULL);
+        self.price = EButton(@"28元", NULL);
     }
     return self;
+}
+
+- (void)updateWithModel:(id)model {
+    
 }
 
 - (void)layoutSubviews {

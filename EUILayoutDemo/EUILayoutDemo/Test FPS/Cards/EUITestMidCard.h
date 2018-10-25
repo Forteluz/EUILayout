@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIView *to;
 @property (nonatomic, strong) UIView *price;
 
-
+- (void)updateWithModel:(id)model;
 + (CGFloat)height:(id)object;
 @end
 

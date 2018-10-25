@@ -12,7 +12,7 @@
 @interface EUITestBottomCard : UIView
 @property (nonatomic, strong) UIView *actionView;
 @property (nonatomic, strong) UIView *messageView;
-
+- (void)updateWithModel:(id)model;
 + (CGFloat)height:(id)object;
 @end
 

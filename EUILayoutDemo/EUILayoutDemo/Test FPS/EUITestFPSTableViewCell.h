@@ -16,7 +16,10 @@
 @property (nonatomic, strong) EUITestMidCard *midCard;
 @property (nonatomic, strong) EUITestBottomCard *bottomCard;
 
+- (void)updateWithModel:(id)model;
+
 + (CGFloat)cellHeight:(id)model;
+
 
 @end
 

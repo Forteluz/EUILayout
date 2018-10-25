@@ -59,6 +59,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EUITestFPSTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EUITestFPSTableViewCell"];
+    [cell updateWithModel:nil];
     return cell;
 }
 

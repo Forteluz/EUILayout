@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EUITestUserNameView : UIView
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *genderLabel;
-
+- (void)update:(id)data;
 @end
 
 NS_ASSUME_NONNULL_END

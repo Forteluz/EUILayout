@@ -12,7 +12,12 @@
 ///< Subviews
 #import "EUITestUserNameView.h"
 
-
+@interface EUITestTopCard()
+@property (nonatomic, strong) UIView *avatar;
+@property (nonatomic, strong) EUITestUserNameView *userName;
+@property (nonatomic, strong) UIView *userInfo;
+@property (nonatomic, strong) UIView *action;
+@end
 @implementation EUITestTopCard
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -33,6 +38,13 @@
         self.action.eui_gravity = EUIGravityCenter;
     }
     return self;
+}
+
+- (void)updateWithModel:(id)model {
+    static NSArray *avatars = nil;
+    static NSArray *infos = nil;
+    
+    [self.userName update:nil];
 }
 
 - (void)layoutSubviews {
