@@ -12,8 +12,7 @@
 
 @property (nonatomic, strong) UIView *infoView;
 @property (nonatomic, strong) UIView *bannerView;
-//RICO TODO: add guide view
-@property (nonatomic, copy) NSString *guideView;
+@property (nonatomic, strong) UIView *guideView;
 @property (nonatomic, strong) UIView *priceView;
 @property (nonatomic, strong) UIView *confirmView;
 
@@ -118,6 +117,22 @@
     return one;
 }
 
+- (void)configureGuideView {
+    self.guideView = [UIView new];
+    self.guideView.eui_x = -10;
+    self.guideView.eui_width = self.view.bounds.size.width;
+    self.guideView.eui_height = 100;
+    self.guideView.backgroundColor = [UIColor redColor];
+    self.guideView.eui_margin.bottom = 5;
+    
+    UIButton *btn = EButton(@"我是新手引导", ^{
+        
+    });
+    
+    EUITemplet *one = TRow(btn);
+    [self.guideView eui_layout:one];
+}
+
 - (void)configurePriceView {
     self.priceView = [[UIView alloc] init];
     self.priceView.backgroundColor = EUIRandomColor;
@@ -168,11 +183,12 @@
 - (EUITemplet *)belowTemplet {
     EUITemplet *below = TRow
     (
+     self.guideView,
      self.priceView,
      self.confirmView
      );
     
-    below.height = 300;
+    below.height = 300 + 100;
     below.gravity = EUIGravityEnd;
     return below;
 }
@@ -183,6 +199,8 @@
     [self configureBackBtn];
     [self configureInfoView];
     [self configureBannerView];
+    
+    [self configureGuideView];
     [self configurePriceView];
     [self configureConfirmView];
     
