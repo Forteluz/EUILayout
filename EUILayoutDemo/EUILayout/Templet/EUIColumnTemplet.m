@@ -73,6 +73,23 @@
         }
     }
     
+    BOOL updateSelfIfNeeded = self.sizeType & EUISizeTypeToHorzFit;
+    if ( updateSelfIfNeeded ) {
+        if (fillNodes.count != 0) {
+            NSCAssert(0, @"fit计算条件不够，以下 fillNodes:[%@] 的高度无法获知", fillNodes);
+        }
+        CGRect r = self.cacheFrame;
+        r.size.width = fitWidth;
+        self.cacheFrame = r;
+        if ((self.sizeType & EUISizeTypeToVertFit)) {
+            r.size.height = size.height;
+            self.cacheFrame = r;
+        } else {
+            r.size.height = constrainedSize.height;
+        }
+        return r.size;
+    }
+    
     if (fillNodes.count == 0 ||
         fitWidth > constrainedSize.width)
     {

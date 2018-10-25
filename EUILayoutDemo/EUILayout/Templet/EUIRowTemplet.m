@@ -28,14 +28,16 @@
 
 - (void)willLoadSubLayouts {
     [super willLoadSubLayouts];
-    [self sizeThatFits:self.cacheFrame.size];
+    CGSize cacheS = self.cacheFrame.size;
+    [self sizeThatFits:(CGSize) {
+        EUIValueIsValid(cacheS.width)  ? cacheS.width  : MAXFLOAT,
+        EUIValueIsValid(cacheS.height) ? cacheS.height : MAXFLOAT,
+    }];
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
     CGSize size = (CGSize){0, constrainedSize.height};
-    if (!EUIValueIsValid(constrainedSize.width) ||
-        !EUIValueIsValid(constrainedSize.height))
-    {
+    if (constrainedSize.width <= 0 || constrainedSize.height <= 0) {
         return size;
     }
     
@@ -44,8 +46,8 @@
     CGFloat fitHeight = 0;
     for (EUILayout *node in nodes) {
         BOOL needFit = (node.sizeType & EUISizeTypeToVertFit) ||
-        EUIValueIsValid(node.maxHeight) ||
-        EUIValueIsValid(node.height);
+            EUIValueIsValid(node.maxHeight) ||
+            EUIValueIsValid(node.height);
         if ( needFit ) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
@@ -73,6 +75,23 @@
         } else {
             [fillNodes addObject:node];
         }
+    }
+    
+    BOOL updateSelfIfNeeded = self.sizeType & EUISizeTypeToVertFit;
+    if ( updateSelfIfNeeded ) {
+        if (fillNodes.count != 0) {
+            NSCAssert(0, @"fit计算条件不够，以下 fillNodes:[%@] 的高度无法获知", fillNodes);
+        }
+        CGRect r = self.cacheFrame;
+        r.size.height = fitHeight;
+        self.cacheFrame = r;
+        if ((self.sizeType & EUISizeTypeToHorzFit)) {
+            r.size.width = size.width;
+            self.cacheFrame = r;
+        } else {
+            r.size.width = constrainedSize.width;
+        }
+        return r.size;
     }
     
     if (fillNodes.count == 0 ||

@@ -9,6 +9,10 @@
 #import "EUITemplet.h"
 #import "UIView+EUILayout.h"
 
+static void blockCleanUp(__strong void(^*block)(void)) {
+    (*block)();
+}
+
 @interface EUITemplet()
 @property (copy, readwrite) NSArray <EUILayout *> *nodes;
 @end
@@ -26,11 +30,11 @@
     self = [super init];
     if (self) {
         _nodes = [EUILayout nodesFromItems:items];
+        self.isHolder = NO;
+        self.sizeType = EUISizeTypeToFill;
         dispatch_async(dispatch_get_main_queue(), ^{
             [items count];
         });
-        self.isHolder = NO;
-        self.sizeType = EUISizeTypeToFill;
     }
     return self;
 }
@@ -90,13 +94,13 @@
 - (void)willLoadSubLayouts {
     [self clearSubviewsIfNeeded];
 
-    CGSize size = self.validSize;
-    if (!EUIValueIsValid(size.width) ||
-        !EUIValueIsValid(size.height) ||
-        (size.width  == 0) ||
-        (size.height == 0)) {
-        NSCAssert(0, @"EUIError : 模板宽高有点问题！");
-    }
+//    CGSize size = self.validSize;
+//    if (!EUIValueIsValid(size.width) ||
+//        !EUIValueIsValid(size.height) ||
+//        (size.width  == 0) ||
+//        (size.height == 0)) {
+//        NSCAssert(0, @"EUIError : 模板宽高有点问题！");
+//    }
 }
 
 - (void)didLoadSubLayouts {
@@ -110,16 +114,24 @@
     if (!nodes || !nodes.count) {
         return;
     }
+//    NSMutableArray *templets = [NSMutableArray arrayWithCapacity:nodes.count];
     EUILayout *preNode = nil;
     for (EUILayout *node in nodes) {
         [node setTemplet:self];
         [self loadViewIfNeededByNode:node];
         [self loadLayout:node preLayout:preNode context:NULL];
         if ([node isKindOfClass:EUITemplet.class]) {
-            [(EUITemplet *)node layout];
+//            if ((node.sizeType & EUISizeTypeToFit)) {
+//                [templets addObject:node];
+//            } else {
+                 [(EUITemplet *)node layout];
+//            }
         }
         preNode = node;
     }
+//    if ([templets count]) {
+//        [templets makeObjectsPerformSelector:@selector(layout)];
+//    }
 }
 
 - (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context {
