@@ -91,8 +91,8 @@
         NSCAssert(0, @"EUIError : 计算 x 找不到容器模板");
     }
     
-    CGRect tplt_r  = templet.cacheFrame;
-    if (EUIValueIsValid(node.x)) {
+    CGRect tplt_r = templet.cacheFrame;
+    if (!EUIValueIsUndefine(node.x)) {
         CGFloat x = node.x;
         if (!templet.isHolder) {
             x += EUIValue(tplt_r.origin.x);
@@ -189,7 +189,7 @@
     }
     
     CGRect tplt_r = templet.cacheFrame;
-    if (EUIValueIsValid(node.y)) {
+    if (!EUIValueIsUndefine(node.y)) {
         CGFloat y = node.y;
         if (!templet.isHolder) {
             y += EUIValue(tplt_r.origin.y);
