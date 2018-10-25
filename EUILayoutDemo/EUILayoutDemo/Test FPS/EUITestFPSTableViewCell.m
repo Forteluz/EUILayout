@@ -8,6 +8,7 @@
 
 #import "EUITestFPSTableViewCell.h"
 #import "EUILayoutKit.h"
+#import "TestFactory.h"
 
 @interface EUITestFPSTableViewCell()
 @property (nonatomic, strong) EUITemplet *cardTemplet;
@@ -18,7 +19,10 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cardTemplet = TRow(self.topCard, self.midCard, self.bottomCard);
+        self.cardTemplet = TRow(self.topCard,
+                                self.midCard,
+                                self.bottomCard
+                                );
         self.cardTemplet.margin.top = 10;
         self.cardTemplet.margin.bottom = 10;
     }
@@ -34,6 +38,7 @@
     [self.topCard updateWithModel:model];
     [self.midCard updateWithModel:model];
     [self.bottomCard updateWithModel:model];
+    [self setNeedsLayout];
 }
 
 + (CGFloat)cellHeight:(id)model {

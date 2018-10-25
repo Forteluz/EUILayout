@@ -65,7 +65,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_SEC_ * NSEC_PER_SEC))
 #define EUI_LOG 1
 
 #ifndef onExit
-#define onExit\
+#define onExit \
 __strong void(^block)(void) __attribute__((cleanup(blockCleanUp), unused)) = ^
 #endif
 

@@ -41,19 +41,15 @@
 }
 
 - (void)updateWithModel:(id)model {
-    static NSArray *avatars = nil;
-    static NSArray *infos = nil;
-    
     [self.userName update:nil];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    EUITemplet *one = TColumn(self.avatar, TRow(self.userName,
-                                                self.userInfo)
+    EUITemplet *one = TColumn(self.avatar,
+                              TRow(self.userName,
+                                   self.userInfo)
                               );
-    
     ///< 模仿 Case ==> 0 : 正常 , 1 : 无右侧的 action
     int testCase = EUIRandom(0, 1);
     if (testCase == 0) {

@@ -49,7 +49,13 @@
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES,
                 .constraintSize = (CGSize) {
-                    EUIMaxSize().width, self.validSize.height - innerVertSide
+                    ({
+                        CGFloat w = EUIMaxSize().width;
+                        if (EUIValueIsValid(node.maxWidth)) {
+                            w = node.maxWidth;
+                        } w;
+                    }),
+                    self.validSize.height - innerVertSide
                 }
             };
             [self.parser.hParser parse:node _:nil _:&ctx];

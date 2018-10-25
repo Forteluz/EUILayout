@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
 
 @interface EUITestUserNameView : UIView
 @property (nonatomic, strong) UILabel *nameLabel;
@@ -16,4 +15,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)update:(id)data;
 @end
 
-NS_ASSUME_NONNULL_END

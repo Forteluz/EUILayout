@@ -26,6 +26,9 @@
     self = [super init];
     if (self) {
         _nodes = [EUILayout nodesFromItems:items];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [items count];
+        });
         self.isHolder = NO;
         self.sizeType = EUISizeTypeToFill;
     }
@@ -208,17 +211,19 @@
     return nodes[index];
 }
 
-- (void)addLayout:(EUIObject)item {
-    if (!item) {
+- (void)addLayout:(EUIObject)object {
+    if (!object) {
         return;
     }
-    EUILayout *node = [EUILayout findNode:item];
+    EUILayout *node = [EUILayout findNode:object];
     if (!node) {
         return;
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [object class];
+    });
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     [one addObject:node];
-    
     [self setNodes:one.copy];
 }
 
@@ -230,6 +235,9 @@
     if (!node) {
         return;
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [object class];
+    });
     index = EUI_CLAMP(index, 0, self.nodes.count - 1);
     NSMutableArray *one = _nodes.mutableCopy;
     [one insertObject:node atIndex:index];

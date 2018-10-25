@@ -141,10 +141,10 @@
 - (void)configureConfirmView {
     self.confirmView = [[UIView alloc] init];
     self.confirmView.backgroundColor = EUIRandomColor;
-    self.confirmView.frame = CGRectMake(10, 0, self.view.bounds.size.width-20, 60);
     self.confirmView.eui_margin.bottom = 20;
-    self.confirmView.eui_height = 60;
     self.confirmView.eui_margin.top = 15;
+//    self.confirmView.eui_height = 60;
+    self.confirmView.eui_size = CGSizeMake(self.view.bounds.size.width - 20, 60);
     
     UIButton *btn1 = EButton(@"确认发布", ^{
         

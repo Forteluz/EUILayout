@@ -16,11 +16,13 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor blueColor];
         self.nameLabel = EText(@"用戶名");
-        self.nameLabel.eui_sizeType = EUISizeTypeToFit;
+        self.nameLabel.eui_sizeType = EUISizeTypeToHorzFit;
         self.nameLabel.eui_gravity = EUIGravityHorzStart | EUIGravityVertCenter;
         self.nameLabel.eui_margin.left = 10;
         self.nameLabel.eui_margin.right = 10;
+        self.nameLabel.eui_maxWidth = 200;
 
         self.genderLabel = EText(@"🧔🏼");
         self.genderLabel.eui_sizeType = EUISizeTypeToFit;
@@ -37,11 +39,21 @@
     }
     int i = EUIRandom(0, (int)(userNames.count - 1));
     self.nameLabel.text = userNames[i];
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self eui_layout:TColumn(self.nameLabel, self.genderLabel)];
+    
+    EUITemplet *templet = TColumn(self.nameLabel,
+                                  self.genderLabel,
+                                  );
+    int i = EUIRandom(1, 2);
+    if (i == 2) {
+        UILabel *one = EText(@"|🧔🏼-🧔🏼|");
+        [templet addLayout:one];
+    }
+    [self eui_layout:templet];
 }
 
 @end

@@ -51,7 +51,13 @@
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES,
                 .constraintSize = (CGSize) {
-                    self.validSize.width - [self innerHorzSide], EUIMaxSize().height
+                    self.validSize.width - [self innerHorzSide],
+                    ({
+                        CGFloat h = EUIMaxSize().height;
+                        if (EUIValueIsValid(node.maxWidth)) {
+                            h = node.maxHeight;
+                        } h;
+                    }),
                 }
             };
             [self.parser.hParser parse:node _:nil _:&ctx];
