@@ -29,11 +29,12 @@
 
 - (void)configureInfoView {
     self.infoView = [[UIView alloc] init];
-    self.infoView.frame = CGRectMake(10, 10, 10, 10);
+//    self.infoView.frame = CGRectMake(10, 10, 10, 10);
     self.infoView.backgroundColor = EUIRandomColor;
     self.infoView.eui_margin.top = 10;
     self.infoView.eui_margin.bottom = 10;
     self.infoView.eui_height = 50*4;
+    self.infoView.eui_width = self.view.bounds.size.width - 10*2;
     
     UIButton *fromPOIBtn = EButton(@"北京-数字传媒大厦", ^{
         
@@ -58,13 +59,18 @@
         
     });
     
-    EUITemplet *one = TGrid(
+    EUIGridTemplet *grid = TGrid(
+                                 peopleNumBtn,
+                                 timeInputBtn,
+                                 demandInputBtn,
+                                 thanksFeeBtn
+                                 );
+    grid.columns = 2;
+    
+    EUITemplet *one = TRow(
         fromPOIBtn,
         toPOIBtn,
-        peopleNumBtn,
-        timeInputBtn,
-        demandInputBtn,
-        thanksFeeBtn
+        grid
     );
     
     [self.infoView eui_layout:one];
@@ -72,9 +78,9 @@
 
 - (void)configureBannerView {
     self.bannerView = [[UIView alloc] init];
-    self.bannerView.frame = CGRectMake(10, 0, self.view.bounds.size.width-20, 40);
     self.bannerView.backgroundColor = EUIRandomColor;
-    self.bannerView.eui_height = 40;
+    self.bannerView.eui_height = 50;
+    self.bannerView.eui_width = self.view.bounds.size.width - 20;
     self.bannerView.eui_margin.bottom = 10;
     
     UIButton *btn1 = EButton(@"顺风出行保障", ^{
@@ -107,13 +113,16 @@
         checkbox
     );
     
+    one.height = 60;
+    
     return one;
 }
 
 - (void)configurePriceView {
     self.priceView = [[UIView alloc] init];
     self.priceView.backgroundColor = EUIRandomColor;
-    self.priceView.frame = CGRectMake(10, 10, 10, 10);
+    self.priceView.eui_height = 200;
+    self.priceView.eui_width = self.view.bounds.size.width - 20;
     
     EUITemplet *carpoolTemplet = [self carpoolTemplet];
     
@@ -125,6 +134,8 @@
         carpoolTemplet,
         price
     );
+    
+    [self.priceView eui_layout:priceTemplet];
 }
 
 - (void)configureConfirmView {

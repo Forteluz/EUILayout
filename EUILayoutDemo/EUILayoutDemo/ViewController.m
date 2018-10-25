@@ -45,7 +45,7 @@
 }
 
 - (void)copySceneCase {
-    
+    EUIGoto(self, @"EUIDemoORViewController");
 }
 
 - (void)testFPS {
