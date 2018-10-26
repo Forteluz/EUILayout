@@ -63,6 +63,7 @@ NSInteger EUIRootViewTag() {
              one = nil;
         }
     }
+    [self copyEUIToTemplet];
     [self parseViewFrameIfNeeded];
     [self updateRootTempletFrame:templet];
     [templet layout];
@@ -70,6 +71,7 @@ NSInteger EUIRootViewTag() {
 
 - (void)parseViewFrameIfNeeded {
     CGRect r = self.view.frame;
+    ///< Fill
     if (!EUIValueIsValid(r.size.width)) {
         EUILayout *one = self.view.eui_layout;
         if (EUIValueIsValid(one.width)) {
@@ -83,8 +85,20 @@ NSInteger EUIRootViewTag() {
         }
     }
     if (r.size.width == 0 || r.size.height == 0) {
-        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
+//        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
     }
+
+    if ((self.rootTemplet.sizeType & EUISizeTypeToFit)) {
+        [self.rootTemplet sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+        CGSize size = self.rootTemplet.cacheFrame.size;
+        if (EUIValueIsValid(size.width)) {
+            r.size.width = size.width;
+        }
+        if (EUIValueIsValid(size.height)) {
+            r.size.height = size.height;
+        }
+    }
+    
     self.view.frame = r;
 }
 
@@ -102,11 +116,15 @@ NSInteger EUIRootViewTag() {
     }
     if (EUIValueIsValid(templet.width)) {
         frame.size.width = templet.width;
+    } else if (EUIValueIsValid(templet.cacheFrame.size.width)) {
+        frame.size.width = templet.cacheFrame.size.width;
     } else if (EUIValueIsValid(templet.margin.right) || EUIValueIsValid(templet.margin.left)) {
         frame.size.width -= EUIValue(templet.margin.left) + EUIValue(templet.margin.right);
     }
     if (EUIValueIsValid(templet.height)) {
         frame.size.height = templet.height;
+    } else if (EUIValueIsValid(templet.cacheFrame.size.height)) {
+        frame.size.height = templet.cacheFrame.size.height;
     } else if (EUIValueIsValid(templet.margin.bottom) || EUIValueIsValid(templet.margin.top)) {
         frame.size.height -= EUIValue(templet.margin.top) + EUIValue(templet.margin.bottom);
     }
@@ -143,6 +161,34 @@ NSInteger EUIRootViewTag() {
         one.view = nil;
     }
     self.rootTemplet = nil;
+}
+
+#pragma mark -
+
+#define EUISetCopyValueIfNeeded(_VAL_) \
+if (self.view.eui_##_VAL_ != self.rootTemplet._VAL_) { \
+self.rootTemplet._VAL_ = self.view.eui_##_VAL_; \
+}
+
+- (void)copyEUIToTemplet {
+    EUISetCopyValueIfNeeded(x)
+    EUISetCopyValueIfNeeded(y)
+    EUISetCopyValueIfNeeded(width)
+    EUISetCopyValueIfNeeded(height)
+    EUISetCopyValueIfNeeded(maxWidth)
+    EUISetCopyValueIfNeeded(minWidth)
+    EUISetCopyValueIfNeeded(maxHeight)
+    EUISetCopyValueIfNeeded(minHeight)
+    EUISetCopyValueIfNeeded(sizeType)
+    EUISetCopyValueIfNeeded(gravity)
+    EUISetCopyValueIfNeeded(padding.left)
+    EUISetCopyValueIfNeeded(padding.top)
+    EUISetCopyValueIfNeeded(padding.right)
+    EUISetCopyValueIfNeeded(padding.bottom)
+    EUISetCopyValueIfNeeded(margin.left)
+    EUISetCopyValueIfNeeded(margin.top)
+    EUISetCopyValueIfNeeded(margin.right)
+    EUISetCopyValueIfNeeded(margin.bottom)
 }
 
 #pragma mark - Root Container

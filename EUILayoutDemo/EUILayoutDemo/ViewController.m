@@ -16,33 +16,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIView *bannerView = [[UIView alloc] init];
-    bannerView.backgroundColor = EUIRandomColor;
-    bannerView.eui_sizeType = EUISizeTypeToVertFit;
-//    bannerView.eui_height = 50;
-//    bannerView.eui_width = self.view.bounds.size.width - 20;
-    bannerView.eui_margin.bottom = 10;
-    
-    UIButton *btn1 = EButton(@"顺风出行保障", ^{
-        
-    });
-    btn1.eui_height = 20;
-    btn1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    UIButton *btn2 = EButton(@"免费获赠保障120万意外险 24小时全国免费120救援", ^{
-        
-    });
-    btn2.eui_height = 20;
-    btn2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    EUITemplet *bannerViewTemplet = TRow(btn1, btn2);
-//    [bannerView eui_layout:bannerViewTemplet];
-
     @weakify(self);
     EUITemplet *templet =
         TRow(
-//             bannerView,
              EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
              EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
              EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
+             EButton(@"Test Size Type", ^{ @strongify(self); [self testSizeType];}),
              );
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 40;
@@ -72,6 +52,10 @@
 
 - (void)testFPS {
     EUIGoto(self, @"EUITestFPSViewController");
+}
+
+- (void)testSizeType {
+    EUIGoto(self, @"EUITestSizeTypeViewController");
 }
 
 #pragma mark - Introduce Templet

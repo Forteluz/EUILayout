@@ -287,7 +287,7 @@
     
     CGSize constraintSize = context->constraintSize;
     if (!EUIValueIsValid(constraintSize.width) || constraintSize.width == 0) {
-        NSCAssert(0, @"EUIError : 计算的约束宽值异常!");
+//        NSCAssert(0, @"EUIError : 计算的约束宽值异常!");
     }
     
     if ((EUISizeTypeToVertFit & node.sizeType) && (EUISizeTypeToHorzFit & node.sizeType)) {
@@ -314,6 +314,7 @@
         }
     }
     else if (EUISizeTypeToHorzFit & node.sizeType) {
+        inner = EUIValue(node.padding.left) + EUIValue(node.padding.right);
         if (frame -> size.height) {
             constraintSize.height = frame -> size.height;
         } else if (EUIValueIsValid(node.size.height)) {
@@ -378,7 +379,7 @@
     
     CGSize constraintSize = context->constraintSize;
     if (!EUIValueIsValid(constraintSize.height) || constraintSize.height == 0) {
-        NSCAssert(0, @"EUIError : 计算的约束高值异常! %f", constraintSize.height);
+//        NSCAssert(0, @"EUIError : 计算的约束高值异常! %f", constraintSize.height);
     }
     
     CGFloat h = 0;
@@ -392,6 +393,7 @@
     }
     else if (EUISizeTypeToVertFit & node.sizeType)
     {
+        inner = EUIValue(node.padding.top) + EUIValue(node.padding.bottom);
         if (EUIValueIsValid(frame->size.width)) {
             constraintSize.width = frame->size.width;
         } else if (EUIValueIsValid(node.size.width)) {

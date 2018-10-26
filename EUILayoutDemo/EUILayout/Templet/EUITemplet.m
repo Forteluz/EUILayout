@@ -93,7 +93,6 @@ static void blockCleanUp(__strong void(^*block)(void)) {
 
 - (void)willLoadSubLayouts {
     [self clearSubviewsIfNeeded];
-
 }
 
 - (BOOL)isBoundsValid {
@@ -122,24 +121,16 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     {
         return;
     }
-//    NSMutableArray *templets = [NSMutableArray arrayWithCapacity:nodes.count];
     EUILayout *preNode = nil;
     for (EUILayout *node in nodes) {
         [node setTemplet:self];
         [self loadViewIfNeededByNode:node];
         [self loadLayout:node preLayout:preNode context:NULL];
         if ([node isKindOfClass:EUITemplet.class]) {
-//            if ((node.sizeType & EUISizeTypeToFit)) {
-//                [templets addObject:node];
-//            } else {
-                 [(EUITemplet *)node layout];
-//            }
+            [(EUITemplet *)node layout];
         }
         preNode = node;
     }
-//    if ([templets count]) {
-//        [templets makeObjectsPerformSelector:@selector(layout)];
-//    }
 }
 
 - (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context {

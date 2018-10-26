@@ -38,7 +38,7 @@
     if (self.view && [self.view respondsToSelector:@selector(sizeThatFits:)]) {
         one = [self.view sizeThatFits:size];
     } else {
-        NSCAssert(0, @"视图：[%@] 未实现");
+        NSCAssert(0, @"视图：[%@] 未实现", self.view);
     }
     return one;
 }
@@ -74,7 +74,6 @@
     }
     return size;
 }
-
 
 #pragma mark - Properties
 

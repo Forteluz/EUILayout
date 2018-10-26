@@ -63,7 +63,7 @@
                     self.validSize.width - [self innerHorzSide],
                     ({
                         CGFloat h = EUIMaxSize().height;
-                        if (EUIValueIsValid(node.maxWidth)) {
+                        if (EUIValueIsValid(node.maxHeight)) {
                             h = node.maxHeight;
                         } h;
                     }),
