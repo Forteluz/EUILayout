@@ -62,13 +62,19 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 ///< 可指定布局在横向和纵向的相对位置（相对于templet考虑），默认是 EUIGravityHorzStart | EUIGravityVertStart
 @property (nonatomic) EUIGravity eui_gravity;
 
-///< 外边距，总用于相邻布局对象的间距关系
+/**
+ 外边距，总用于相邻布局对象的间距关系
+ */
 @property (nonatomic, strong) EUIEdge *eui_margin;
 
-///< 内边距，当 layout 作为 templet 容器时，该值才有意义，作用于 SubLayouts
+/**
+ 内边距，当 layout 作为 templet 容器时，该值才有意义，EUIEdge.Zero
+ */
 @property (nonatomic, strong) EUIEdge *eui_padding;
 
-///< 可设置一个唯一ID，便于快速查找
+/**
+ layout 的唯一标示，默认是 nil（暂未实现）
+ */
 @property (nonatomic, copy) NSString *eui_uniqueID;
 
 #pragma mark - Access

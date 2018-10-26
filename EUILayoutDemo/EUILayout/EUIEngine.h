@@ -11,8 +11,9 @@
 @class EUITemplet;
 
 /**
- TODO:
-    × 支持监听视图尺寸变化时动态修改布局
+ 
+ 
+ 
  */
 @interface EUIEngine : NSObject
 
@@ -32,10 +33,6 @@
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
-
-/*!
- *  @brief init
- */
 - (instancetype)initWithView:(UIView *)view;
 
 /*!

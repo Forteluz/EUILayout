@@ -19,19 +19,49 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cardTemplet = TRow(self.topCard,
-                                self.midCard,
-                                self.bottomCard
-                                );
-        self.cardTemplet.margin.top = 10;
-        self.cardTemplet.margin.bottom = 10;
+        /*
+         self.cardTemplet = TRow(self.topCard,
+         self.midCard,
+         self.bottomCard
+         );
+         self.cardTemplet.margin.top = 10;
+         self.cardTemplet.margin.bottom = 10;
+         */
+        [self addSubview:self.topCard];
+        [self addSubview:self.midCard];
+        [self addSubview:self.bottomCard];
     }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self eui_layout:self.cardTemplet];
+    
+    EUITemplet *one = TRow(self.topCard,
+                           self.midCard,
+                           self.bottomCard
+                           );
+    one.margin.top = 10;
+    one.margin.bottom = 10;
+    [self eui_layout:one];
+    
+    ///< Frame
+//    self.topCard.frame = CGRectMake(0,
+//                                    10,
+//                                    self.bounds.size.width,
+//                                    [EUITestTopCard height:nil]
+//                                    );
+//    
+//    self.midCard.frame = CGRectMake(0,
+//                                    CGRectGetMaxY(self.topCard.frame) + 10,
+//                                    self.bounds.size.width,
+//                                    [EUITestMidCard height:nil]
+//                                    );
+//    self.bottomCard.frame = CGRectMake(0,
+//                                       CGRectGetMaxY(self.midCard.frame) + 10,
+//                                       self.bounds.size.width,
+//                                       [EUITestBottomCard height:nil]
+//                                       );
 }
 
 - (void)updateWithModel:(id)model {

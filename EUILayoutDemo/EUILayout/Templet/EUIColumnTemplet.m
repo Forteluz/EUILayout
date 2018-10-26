@@ -26,6 +26,11 @@
 
 - (void)willLoadSubLayouts {
     [super willLoadSubLayouts];
+    if (![self isBoundsValid]) {
+        if (!(self.sizeType & EUISizeTypeToHorzFit)) {
+            return;
+        }
+    }
     [self sizeThatFits:self.cacheFrame.size];
 }
 

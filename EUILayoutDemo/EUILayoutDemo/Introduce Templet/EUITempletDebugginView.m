@@ -152,21 +152,21 @@
     switch (edgeLastN) {
         case 1: {
             if (self.eui_padding.top == 20) {
-                self.eui_padding = EUIEdge.edgeZero;
+                self.eui_padding = EUIEdge.zero;
             } else {
                 self.eui_padding = EUIEdgeMake(20, 10, 10, 10);
             }
         }break;
         case 2: {
             if (_edgeBtn.eui_margin.top == 10) {
-                _edgeBtn.eui_margin = EUIEdge.edgeZero;
+                _edgeBtn.eui_margin = EUIEdge.zero;
             } else {
                 _edgeBtn.eui_margin = EUIEdgeMake(10, 10, 10, 10);
             }
         }break;
         case 3: {
             if (_edgeBtn.eui_templet.padding.top == 10) {
-                _edgeBtn.eui_templet.padding = EUIEdge.edgeZero;
+                _edgeBtn.eui_templet.padding = EUIEdge.zero;
             } else {
                 _edgeBtn.eui_templet.padding = EUIEdgeMake(10, 10, 10, 10);
             }
@@ -174,7 +174,7 @@
         case 4: {
             UIView *one = [self eui_viewWithTag:_controlIndex - 1];
             if (one.eui_margin.top == 10) {
-                one.eui_margin = EUIEdge.edgeZero;
+                one.eui_margin = EUIEdge.zero;
             } else {
                 one.eui_margin = EUIEdgeMake(10, 10, 10, 10);
             }

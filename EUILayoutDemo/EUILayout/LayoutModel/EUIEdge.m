@@ -19,7 +19,7 @@
     return one;
 }
 
-+ (instancetype)edgeZero {
++ (instancetype)zero {
     return [self edgeWithInsets:UIEdgeInsetsZero];
 }
 

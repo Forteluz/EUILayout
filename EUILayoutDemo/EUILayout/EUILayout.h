@@ -14,25 +14,37 @@
 #pragma mark -
 
 typedef NS_OPTIONS(NSUInteger, EUIGravity) {
-    EUIGravityHorzStart  = 1 << 1,
-    EUIGravityHorzCenter = 1 << 2,
-    EUIGravityHorzEnd    = 1 << 3,
-    EUIGravityVertStart  = 1 << 4,
-    EUIGravityVertCenter = 1 << 5,
-    EUIGravityVertEnd    = 1 << 6,
+    EUIGravityHorzStart  = 1 << 1,  ///< 水平居左
+    EUIGravityHorzCenter = 1 << 2,  ///< 水平居中
+    EUIGravityHorzEnd    = 1 << 3,  ///< 水平居右
+    EUIGravityVertStart  = 1 << 4,  ///< 垂直居左
+    EUIGravityVertCenter = 1 << 5,  ///< 垂直居中
+    EUIGravityVertEnd    = 1 << 6,  ///< 垂直居右
+    
+    ///===============================================
+    /// default EUIGravityStart
+    ///===============================================
     EUIGravityStart      = EUIGravityHorzStart  | EUIGravityVertStart,
     EUIGravityCenter     = EUIGravityVertCenter | EUIGravityHorzCenter,
     EUIGravityEnd        = EUIGravityVertEnd    | EUIGravityHorzEnd,
 };
 
 typedef NS_OPTIONS(NSUInteger, EUISizeType) {
-    ///< Fit 计算不利于性能优化，建议多使用 Fill 做填充式布局；
+    ///< 不设置，计算时会以 EUISizeTypeToFill 处理
     EUISizeTypeNone = 0,
+
+    ///===========================================================
+    /// 水平或者垂直方向做 Fit 逻辑；计算时通过 view 的 sizeThatFits:
+    /// 方法获取对应的 fit 大小进行布局；
+    ///===========================================================
     EUISizeTypeToHorzFit = 1 << 7,
     EUISizeTypeToVertFit = 1 << 8,
     EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),
     
-    ///< Fill 更利于性能的优化和结构的理解
+    ///===========================================================
+    /// 水平或者垂直方向做 Fill（填充） 逻辑；会自动填充到合适的大小；
+    /// 默认是 EUISizeTypeToFill
+    ///===========================================================
     EUISizeTypeToHorzFill = (EUIGravityHorzStart | EUIGravityHorzEnd),
     EUISizeTypeToVertFill = (EUIGravityVertStart | EUIGravityVertEnd),
     EUISizeTypeToFill = (EUISizeTypeToHorzFill | EUISizeTypeToVertFill),
@@ -61,9 +73,6 @@ typedef id EUIObject;
 #pragma mark -
 
 @interface EUILayout : NSObject
-
-///< 是否是可拉伸的，用于视图已有frame的情况，如果设置了，则会走Layout的布局规则，否则会按frame的设置走绝对布局
-@property (nonatomic, getter=isFlexable) BOOL flexable;
 
 ///< layout 所依赖的模板
 @property (nonatomic, weak) __kindof EUILayout *templet;
@@ -123,6 +132,9 @@ typedef id EUIObject;
 
 ///< Node 需要知道自己如何计算大小
 - (CGSize)sizeThatFits:(CGSize)constrainedSize;
+
+///< 是否是可拉伸的，用于视图已有frame的情况，如果设置了，则会走Layout的布局规则，否则会按frame的设置走绝对布局
+@property (nonatomic, getter=isFlexable) BOOL flexable;
 
 ///< 用于嵌套时做代码结构化
 - (__kindof EUILayout *)configure:(void(^)(__kindof EUILayout *layout))block;

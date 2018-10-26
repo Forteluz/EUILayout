@@ -28,9 +28,6 @@
     NSMapTable *_uniqueIDTable;
 }
 
-///< 作为模板时是否创建容器视图，默认YES
-@property (nonatomic, assign) BOOL isHolder;
-
 ///< 根模板
 @property (nonatomic, readonly) EUITemplet *rootTemplet;
 
@@ -40,8 +37,11 @@
 ///< 模板包含的所有子布局节点
 @property (nonatomic, copy, readonly) NSArray <EUILayout *> *nodes;
 
-///<
+///< 布局结束的回调
 @property (nonatomic, copy) void (^didLoadSubLayoutsBlock)(EUITemplet *templet);
+
+///< 作为模板时是否创建容器视图，默认YES
+@property (nonatomic, assign) BOOL isHolder;
 
 #pragma mark - Init Templet
 
@@ -83,8 +83,13 @@
 - (void)removeLayoutAtIndex:(NSInteger)index;
 - (void)removeAllSubLayouts;
 
+///< 查找
 - (__kindof EUILayout *)layoutAtIndex:(NSInteger)index;
-//- (__kindof EUILayout *)nodeWithUniqueID:(NSString *)uniqueID; //还未实现
+
+#pragma mark -
+
+///<
+- (BOOL)isBoundsValid;
 
 @end
 

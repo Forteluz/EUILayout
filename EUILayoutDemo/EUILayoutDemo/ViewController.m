@@ -34,7 +34,7 @@
     btn2.eui_height = 20;
     btn2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     EUITemplet *bannerViewTemplet = TRow(btn1, btn2);
-    [bannerView eui_layout:bannerViewTemplet];
+//    [bannerView eui_layout:bannerViewTemplet];
 
     @weakify(self);
     EUITemplet *templet =

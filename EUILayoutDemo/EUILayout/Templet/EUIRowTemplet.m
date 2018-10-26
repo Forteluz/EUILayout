@@ -28,6 +28,13 @@
 
 - (void)willLoadSubLayouts {
     [super willLoadSubLayouts];
+    
+    if (![self isBoundsValid]) {
+        if (!(self.sizeType & EUISizeTypeToVertFit)) {
+            return;
+        }
+    }
+
     CGSize cacheS = self.cacheFrame.size;
     [self sizeThatFits:(CGSize) {
         EUIValueIsValid(cacheS.width)  ? cacheS.width  : MAXFLOAT,

@@ -94,24 +94,32 @@ static void blockCleanUp(__strong void(^*block)(void)) {
 - (void)willLoadSubLayouts {
     [self clearSubviewsIfNeeded];
 
-//    CGSize size = self.validSize;
-//    if (!EUIValueIsValid(size.width) ||
-//        !EUIValueIsValid(size.height) ||
-//        (size.width  == 0) ||
-//        (size.height == 0)) {
-//        NSCAssert(0, @"EUIError : 模板宽高有点问题！");
-//    }
+}
+
+- (BOOL)isBoundsValid {
+    CGSize size = self.validSize;
+    if (!EUIValueIsValid(size.width) ||
+        !EUIValueIsValid(size.height) ||
+        (size.width  == 0) ||
+        (size.height == 0)) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)didLoadSubLayouts {
-    ///< TODO : 视图层级调整功能
     if (self.didLoadSubLayoutsBlock) {
         self.didLoadSubLayoutsBlock(self);
     }
+    ///< TODO : 视图层级调整功能
+    ///< TODO : release...
 }
 
 - (void)loadSubLayouts:(NSArray *)nodes {
-    if (!nodes || !nodes.count) {
+    if (!nodes ||
+        !nodes.count ||
+        ![self isBoundsValid])
+    {
         return;
     }
 //    NSMutableArray *templets = [NSMutableArray arrayWithCapacity:nodes.count];
@@ -184,6 +192,8 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     }
     if (!view.superview) {
         [container addSubview:view];
+    } else if (view.isHidden) {
+        view.hidden = NO;
     }
 }
 
@@ -201,10 +211,12 @@ static void blockCleanUp(__strong void(^*block)(void)) {
              EUITemplet *one = (EUITemplet *)obj.eui_layout;
              [one clearSubviewsIfNeeded];
              [one.view removeFromSuperview];
-             (one.view = nil);///< release reference
+//             [one.view setHidden:YES];
+             (one.view = nil);
          } else {
+//             [obj setHidden:YES];
              [obj removeFromSuperview];
-             (obj = nil); ///< release reference
+             (obj = nil);
          }
      }];
 }
