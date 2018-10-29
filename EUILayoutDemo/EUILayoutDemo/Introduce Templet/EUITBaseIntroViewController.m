@@ -38,7 +38,7 @@
 //    }
     EUITempletDebugginView *pannel = [EUITempletDebugginView new];
     EUITemplet *templet = TBase(pannel, self.backButton);
-    [self.view eui_layout:templet];
+    [self.view eui_lay:templet];
     
     /* 也可以使用比较鬼畜的结构
      ...

@@ -48,7 +48,7 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
     }
 }
 
-- (void)eui_layout:(EUITemplet *)templet {
+- (void)eui_lay:(EUITemplet *)templet {
     if (!templet) {
         return;
     }
@@ -89,6 +89,15 @@ EUIProperty(NSString *, uniqueID)
 EUIProperty(EUIEdge  *, margin)
 EUIProperty(EUIGravity,  gravity)
 EUIProperty(EUISizeType, sizeType)
+
+//- (EUITemplet *)eui_templet {
+//    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
+//    if (!isTempletContainer) {
+//        return self.eui_engine.rootTemplet;
+//    } else {
+//        return self.eui_layout.templet;
+//    }
+//}
 
 - (EUIEdge *)eui_padding {
     BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];

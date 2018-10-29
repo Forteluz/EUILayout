@@ -18,8 +18,7 @@
     
     @weakify(self);
     EUITemplet *templet =
-        TRow(
-             EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
+        TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
              EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
              EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
              EButton(@"Test Size Type", ^{ @strongify(self); [self testSizeType];}),
@@ -27,7 +26,7 @@
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 40;
     
-    [self.view eui_layout:templet];
+    [self.view eui_lay:templet];
 }
 
 #pragma mark - Action
@@ -41,9 +40,10 @@
               EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
               EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
     one.columns = 4;
+    one.margin = EUIEdgeMake(10, 10, 10, 10);
     
     EUILayout *node = [self.view.eui_templet layoutAtIndex:0];
-    [node.view eui_layout:one];
+    [node.view eui_lay:one];
 }
 
 - (void)copySceneCase {

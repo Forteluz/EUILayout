@@ -39,7 +39,7 @@
      );
     one.margin.top = 20;
     
-    [self.view eui_layout:one];
+    [self.view eui_lay:one];
 }
 
 @end

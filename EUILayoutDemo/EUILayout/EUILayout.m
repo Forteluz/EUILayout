@@ -127,5 +127,14 @@
 
 #pragma mark - NSCopying
 
+#pragma mark -
+
+- (__kindof EUILayout * (^)(void(^)(__kindof EUILayout *)))config {
+    return ^ __kindof EUILayout * (void(^block)(__kindof EUILayout *)) {
+        if (block) block(self);
+        return self;
+    };
+}
+
 @end
 

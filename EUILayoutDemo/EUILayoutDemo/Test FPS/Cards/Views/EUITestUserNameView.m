@@ -53,7 +53,7 @@
         UILabel *one = EText(@"|🧔🏼-🧔🏼|");
         [templet addLayout:one];
     }
-    [self eui_layout:templet];
+    [self eui_lay:templet];
 }
 
 @end

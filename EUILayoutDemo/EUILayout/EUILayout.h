@@ -42,7 +42,7 @@ typedef NS_OPTIONS(NSUInteger, EUISizeType) {
     EUISizeTypeToFit = (EUISizeTypeToHorzFit | EUISizeTypeToVertFit),
     
     ///===========================================================
-    /// 水平或者垂直方向做 Fill（填充） 逻辑；会自动填充到合适的大小；
+    /// 水平或者垂直方向做 Fill 填充处理；会自动填充到合适的大小；
     /// 默认是 EUISizeTypeToFill
     ///===========================================================
     EUISizeTypeToHorzFill = (EUIGravityHorzStart | EUIGravityHorzEnd),
@@ -78,7 +78,7 @@ typedef id EUIObject;
 @property (nonatomic, weak) __kindof EUILayout *templet;
 
 ///< layout 负责布局的视图对象
-@property (nonatomic, weak) UIView *view;
+@property (nonatomic, strong) UIView *view;
 
 ///< 显式设置在模板中的 x 坐标
 @property (nonatomic) CGFloat x;
@@ -138,6 +138,8 @@ typedef id EUIObject;
 
 ///< 用于嵌套时做代码结构化
 - (__kindof EUILayout *)configure:(void(^)(__kindof EUILayout *layout))block;
+
+- (__kindof EUILayout * (^)(void(^)(__kindof EUILayout *)))config;
 
 ///< 获取Node当前一个有效的尺寸
 - (CGSize)validSize;

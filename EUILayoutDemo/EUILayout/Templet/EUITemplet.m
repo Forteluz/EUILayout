@@ -135,7 +135,7 @@ static void blockCleanUp(__strong void(^*block)(void)) {
 
 - (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context {
     if (!context) {
-         context = &(EUIParseContext){
+         context = &(EUIParseContext) {
              .constraintSize = (CGSize) {
                  self.validSize.width  - EUIValue(self.padding.left) - EUIValue(self.padding.right),
                  self.validSize.height - EUIValue(self.padding.top)  - EUIValue(self.padding.bottom)

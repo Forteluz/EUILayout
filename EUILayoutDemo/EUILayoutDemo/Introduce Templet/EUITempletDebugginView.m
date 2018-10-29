@@ -62,7 +62,7 @@
                            _sizeTpBtn,
                            TColumn(_frameBtn, _edgeBtn),
                            TColumn(_addBtn, _delBtn, _insertBtn));
-    [self eui_layout:one];
+    [self eui_lay:one];
 }
 
 - (void)randomGravity {

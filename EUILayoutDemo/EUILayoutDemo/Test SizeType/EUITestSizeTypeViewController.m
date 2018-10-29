@@ -32,9 +32,9 @@
     btn2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 
     [bannerView.eui_margin setTop:20];
-    [bannerView eui_layout:TRow(btn1, btn2)];
+    [bannerView eui_lay:TRow(btn1, btn2)];
     
-    [self.view eui_layout:TRow(bannerView)];
+    [self.view eui_lay:TRow(bannerView)];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 

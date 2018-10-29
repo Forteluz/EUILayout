@@ -33,7 +33,7 @@
         debug3,
     );
     
-    [self.view eui_layout:one];
+    [self.view eui_lay:one];
 }
 
 

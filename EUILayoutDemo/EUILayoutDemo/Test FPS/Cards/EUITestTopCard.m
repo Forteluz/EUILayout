@@ -64,7 +64,7 @@
     if (testCase == 0) {
         [one addLayout:self.action];
     }
-    [self eui_layout:one];
+    [self eui_lay:one];
     
     ///===============================================
     /// Frame

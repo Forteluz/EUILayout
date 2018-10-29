@@ -61,4 +61,18 @@
     self.nodes = @[row];
 }
 
+- (EUIGridTemplet * (^)(NSUInteger))set_columns {
+    return ^EUIGridTemplet * (NSUInteger c) {
+        self.columns = c;
+        return self;
+    };
+}
+
+- (EUIGridTemplet * (^)(void(^)(__kindof EUILayout *)))config {
+    return ^ EUIGridTemplet * (void(^block)(__kindof EUILayout *)) {
+        if (block) block(self);
+        return self;
+    };
+}
+
 @end

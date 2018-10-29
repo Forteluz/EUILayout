@@ -39,7 +39,7 @@ NSInteger EUIRootViewTag() {
 }
 
 - (void)dealloc {
-    [_rootTemplet removeAllSubLayouts];
+    [self cleanUp];
     NSLog(@"Engine dealloc");
 }
 
@@ -63,7 +63,7 @@ NSInteger EUIRootViewTag() {
              one = nil;
         }
     }
-    [self copyEUIToTemplet];
+//    [self copyEUIToTemplet];
     [self parseViewFrameIfNeeded];
     [self updateRootTempletFrame:templet];
     [templet layout];
@@ -160,7 +160,7 @@ NSInteger EUIRootViewTag() {
         }
         one.view = nil;
     }
-    self.rootTemplet = nil;
+    _rootTemplet = nil;
 }
 
 #pragma mark -

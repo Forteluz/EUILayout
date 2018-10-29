@@ -82,7 +82,7 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 /**
  布局一个模板
  */
-- (void)eui_layout:(EUITemplet *)templet;
+- (void)eui_lay:(EUITemplet *)templet;
 
 /**
  自动刷新当前模板

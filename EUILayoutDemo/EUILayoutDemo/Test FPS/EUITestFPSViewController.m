@@ -39,7 +39,7 @@
                            }],
                            self.tableView);
     one.margin = EUIEdgeMake(20, 10, 10, 10);
-    [self.view eui_layout:one];
+    [self.view eui_lay:one];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 

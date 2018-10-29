@@ -29,7 +29,7 @@
     self.actionView.eui_size = CGSizeMake(68, 30);
     self.actionView.eui_gravity = EUIGravityVertCenter;
     
-    [self eui_layout:TColumn(self.messageView, self.actionView)];
+    [self eui_lay:TColumn(self.messageView, self.actionView)];
 }
 
 - (void)updateWithModel:(id)model {

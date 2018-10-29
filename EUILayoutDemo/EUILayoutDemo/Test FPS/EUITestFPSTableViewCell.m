@@ -43,7 +43,8 @@
                            );
     one.margin.top = 10;
     one.margin.bottom = 10;
-    [self eui_layout:one];
+    
+    [self eui_lay:one];
     
     ///< Frame
 //    self.topCard.frame = CGRectMake(0,
@@ -51,7 +52,6 @@
 //                                    self.bounds.size.width,
 //                                    [EUITestTopCard height:nil]
 //                                    );
-//    
 //    self.midCard.frame = CGRectMake(0,
 //                                    CGRectGetMaxY(self.topCard.frame) + 10,
 //                                    self.bounds.size.width,
@@ -73,8 +73,8 @@
 
 + (CGFloat)cellHeight:(id)model {
     CGFloat top    = [EUITestTopCard height:model];
-    CGFloat mid    = [EUITestTopCard height:model];
-    CGFloat bottom = [EUITestTopCard height:model];
+    CGFloat mid    = [EUITestMidCard height:model];
+    CGFloat bottom = [EUITestBottomCard height:model];
     return 10 + top + mid + (20/*margin*/) + bottom + 10;
 }
 

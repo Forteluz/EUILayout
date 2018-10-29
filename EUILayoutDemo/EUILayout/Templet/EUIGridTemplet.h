@@ -14,4 +14,8 @@
 @property (nonatomic) NSUInteger columns;
 @property (nonatomic) NSUInteger rows;
 //@property (nonatomic) CGFloat spacing;
+
+- (EUIGridTemplet * (^)(NSUInteger))set_columns;
+- (EUIGridTemplet * (^)(void(^)(__kindof EUILayout *layout)))config;
+
 @end
