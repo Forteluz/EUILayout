@@ -125,6 +125,71 @@
     }
 }
 
+
+- (void)setMarginTop:(CGFloat)marginTop {
+    self.margin.top = marginTop;
+}
+
+- (CGFloat)marginTop {
+    return self.margin.top;
+}
+
+- (void)setMarginBottom:(CGFloat)marginBottom {
+    self.margin.bottom = marginBottom;
+}
+
+- (CGFloat)marginBottom {
+    return self.margin.bottom;
+}
+
+- (void)setMarginLeft:(CGFloat)marginLeft {
+    self.margin.left = marginLeft;
+}
+
+- (CGFloat)marginLeft {
+    return self.margin.left;
+}
+
+- (void)setMarginRight:(CGFloat)marginRight {
+    self.margin.right = marginRight;
+}
+
+- (CGFloat)marginRight {
+    return self.margin.right;
+}
+
+- (void)setPaddingTop:(CGFloat)paddingTop {
+    self.padding.top = paddingTop;
+}
+
+- (CGFloat)paddingTop {
+    return self.padding.top;
+}
+
+- (void)setPaddingBottom:(CGFloat)paddingBottom {
+    self.padding.bottom = paddingBottom;
+}
+
+- (CGFloat)paddingBottom {
+    return self.padding.bottom;
+}
+
+- (void)setPaddingLeft:(CGFloat)paddingLeft {
+    self.padding.left = paddingLeft;
+}
+
+- (CGFloat)paddingLeft {
+    return self.padding.left;
+}
+
+- (void)setPaddingRight:(CGFloat)paddingRight {
+    self.padding.right = paddingRight;
+}
+
+- (CGFloat)paddingRight {
+    return self.padding.right;
+}
+
 #pragma mark - NSCopying
 
 #pragma mark -

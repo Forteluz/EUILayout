@@ -259,6 +259,23 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     [self setNodes:one.copy];
 }
 
+- (void)replaceLayout:(EUIObject)object atIndex:(NSInteger)index {
+    if (!object) {
+        return;
+    }
+    EUILayout *node = [EUILayout findNode:object];
+    if (!node) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [object class];
+    });
+    index = EUI_CLAMP(index, 0, self.nodes.count - 1);
+    NSMutableArray *one = _nodes.mutableCopy;
+    [one replaceObjectAtIndex:index withObject:node];
+    [self setNodes:one.copy];
+}
+
 - (void)removeLayout:(EUIObject)object {
     if (!object) return;
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;

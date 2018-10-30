@@ -117,9 +117,17 @@ typedef id EUIObject;
 
 ///< 外边距，总用于相邻布局对象的间距关系
 @property (nonatomic, strong) EUIEdge *margin;
+@property (nonatomic) CGFloat marginTop;
+@property (nonatomic) CGFloat marginBottom;
+@property (nonatomic) CGFloat marginLeft;
+@property (nonatomic) CGFloat marginRight;
 
 ///< 内边距，当 layout 作为 templet 容器时，该值才有意义，作用于 SubLayouts
 @property (nonatomic, strong) EUIEdge *padding;
+@property (nonatomic) CGFloat paddingTop;
+@property (nonatomic) CGFloat paddingBottom;
+@property (nonatomic) CGFloat paddingLeft;
+@property (nonatomic) CGFloat paddingRight;
 
 ///< 指定视图在 Z 轴的顺序
 @property (nonatomic) EUILayoutZPostion zPosition;
