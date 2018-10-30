@@ -1,5 +1,5 @@
 //
-//  EUITestSizeTypeViewController.h
+//  EUITestFunnyViewController.h
 //  EUILayoutDemo
 //
 //  Created by Lux on 2018/10/26.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EUITestSizeTypeViewController : UIViewController
+@interface EUITestFunnyViewController : UIViewController
 
 @end
 

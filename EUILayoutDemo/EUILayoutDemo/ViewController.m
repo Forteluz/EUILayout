@@ -21,7 +21,7 @@
         TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
              EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
              EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
-             EButton(@"Test Size Type", ^{ @strongify(self); [self testSizeType];}),
+             EButton(@"Test Funny", ^{ @strongify(self); [self testFunny];}),
              );
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 40;
@@ -54,8 +54,8 @@
     EUIGoto(self, @"EUITestFPSViewController");
 }
 
-- (void)testSizeType {
-    EUIGoto(self, @"EUITestSizeTypeViewController");
+- (void)testFunny {
+    EUIGoto(self, @"EUITestFunnyViewController");
 }
 
 #pragma mark - Introduce Templet

@@ -73,7 +73,6 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
         return self.eui_layout._PROPERTY_; \
     }
 
-EUIProperty(EUITemplet *, templet)
 EUIProperty(CGFloat, x)
 EUIProperty(CGFloat, y)
 EUIProperty(CGFloat, width)
@@ -90,14 +89,14 @@ EUIProperty(EUIEdge  *, margin)
 EUIProperty(EUIGravity,  gravity)
 EUIProperty(EUISizeType, sizeType)
 
-//- (EUITemplet *)eui_templet {
-//    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
-//    if (!isTempletContainer) {
-//        return self.eui_engine.rootTemplet;
-//    } else {
-//        return self.eui_layout.templet;
-//    }
-//}
+- (EUITemplet *)eui_templet {
+    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
+    if (!isTempletContainer) {
+        return self.eui_engine.rootTemplet;
+    } else {
+        return self.eui_layout.templet;
+    }
+}
 
 - (EUIEdge *)eui_padding {
     BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];

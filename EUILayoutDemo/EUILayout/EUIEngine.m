@@ -46,7 +46,6 @@ NSInteger EUIRootViewTag() {
 #pragma mark - Update
 
 - (void)layoutTemplet:(EUITemplet *)templet {
-    self.view.eui_templet = templet;
     self.rootTemplet = templet;
 
     ///===============================================
@@ -85,7 +84,10 @@ NSInteger EUIRootViewTag() {
         }
     }
     if (r.size.width == 0 || r.size.height == 0) {
-//        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
+        ///===============================================
+        /// 自动 Fit 子容器的功能待开发
+        ///===============================================
+        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
     }
 
     if ((self.rootTemplet.sizeType & EUISizeTypeToFit)) {
@@ -166,7 +168,8 @@ NSInteger EUIRootViewTag() {
 #pragma mark -
 
 #define EUISetCopyValueIfNeeded(_VAL_) \
-if (self.view.eui_##_VAL_ != self.rootTemplet._VAL_) { \
+if ((self.view.eui_##_VAL_ != self.rootTemplet._VAL_) && \
+    (!EUIValueIsUndefine(self.view.eui_##_VAL_))) { \
 self.rootTemplet._VAL_ = self.view.eui_##_VAL_; \
 }
 
