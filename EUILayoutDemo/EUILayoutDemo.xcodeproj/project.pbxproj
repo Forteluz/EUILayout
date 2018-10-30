@@ -38,7 +38,7 @@
 		D59D8B77217DC04700651060 /* EUIIntoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D59D8B76217DC04700651060 /* EUIIntoViewController.m */; };
 		D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A8D62F215F28B200EE881E /* EUIEdge.m */; };
 		D5C90CE8218196AC0071D345 /* EUIDemoORViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C90CE7218196AC0071D345 /* EUIDemoORViewController.m */; };
-		D5C90CEC218301220071D345 /* EUITestSizeTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C90CEB218301220071D345 /* EUITestSizeTypeViewController.m */; };
+		D5C90CEF2188075B0071D345 /* EUITestFunnyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C90CED2188075B0071D345 /* EUITestFunnyViewController.m */; };
 		D5D852A4215A0A4F007D9CFF /* EUIEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A3215A0A4F007D9CFF /* EUIEngine.m */; };
 		D5D852A8215A0A92007D9CFF /* EUILayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852A7215A0A92007D9CFF /* EUILayout.m */; };
 		D5D852AB215A0AAA007D9CFF /* EUITemplet.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D852AA215A0AAA007D9CFF /* EUITemplet.m */; };
@@ -132,8 +132,8 @@
 		D5A8D62F215F28B200EE881E /* EUIEdge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIEdge.m; sourceTree = "<group>"; };
 		D5C90CE6218196AC0071D345 /* EUIDemoORViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUIDemoORViewController.h; sourceTree = "<group>"; };
 		D5C90CE7218196AC0071D345 /* EUIDemoORViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EUIDemoORViewController.m; sourceTree = "<group>"; };
-		D5C90CEA218301220071D345 /* EUITestSizeTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUITestSizeTypeViewController.h; sourceTree = "<group>"; };
-		D5C90CEB218301220071D345 /* EUITestSizeTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUITestSizeTypeViewController.m; sourceTree = "<group>"; };
+		D5C90CED2188075B0071D345 /* EUITestFunnyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EUITestFunnyViewController.m; sourceTree = "<group>"; };
+		D5C90CEE2188075B0071D345 /* EUITestFunnyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUITestFunnyViewController.h; sourceTree = "<group>"; };
 		D5D852A2215A0A4F007D9CFF /* EUIEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUIEngine.h; sourceTree = "<group>"; };
 		D5D852A3215A0A4F007D9CFF /* EUIEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EUIEngine.m; sourceTree = "<group>"; };
 		D5D852A6215A0A92007D9CFF /* EUILayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUILayout.h; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				D57CFCC4215A08DA002D137F /* AppDelegate.m */,
 				D57CFCC6215A08DA002D137F /* ViewController.h */,
 				D57CFCC7215A08DA002D137F /* ViewController.m */,
-				D5C90CE9218300FB0071D345 /* Test SizeType */,
+				D5C90CE9218300FB0071D345 /* Funny Test */,
 				D52C7F9A2180255C00E74EDB /* Test FPS */,
 				D52C7F992180254D00E74EDB /* Copy Scene Case */,
 				D59D8B68217DBC1100651060 /* Introduce Templet */,
@@ -378,13 +378,13 @@
 			path = LayoutModel;
 			sourceTree = "<group>";
 		};
-		D5C90CE9218300FB0071D345 /* Test SizeType */ = {
+		D5C90CE9218300FB0071D345 /* Funny Test */ = {
 			isa = PBXGroup;
 			children = (
-				D5C90CEA218301220071D345 /* EUITestSizeTypeViewController.h */,
-				D5C90CEB218301220071D345 /* EUITestSizeTypeViewController.m */,
+				D5C90CEE2188075B0071D345 /* EUITestFunnyViewController.h */,
+				D5C90CED2188075B0071D345 /* EUITestFunnyViewController.m */,
 			);
-			path = "Test SizeType";
+			path = "Funny Test";
 			sourceTree = "<group>";
 		};
 		D5D852A1215A0A1B007D9CFF /* EUILayout */ = {
@@ -736,6 +736,7 @@
 				D59D8B662175DED800651060 /* TestButton.m in Sources */,
 				D59D8B5121745B8000651060 /* EUIParser.m in Sources */,
 				D59D8B71217DBF2100651060 /* EUITColumnIntroViewController.m in Sources */,
+				D5C90CEF2188075B0071D345 /* EUITestFunnyViewController.m in Sources */,
 				D52C7FAF2180A22800E74EDB /* EUITestUserNameView.m in Sources */,
 				D57CFCC8215A08DA002D137F /* ViewController.m in Sources */,
 				D59D8B632175C39400651060 /* TestLabel.m in Sources */,
@@ -744,7 +745,6 @@
 				D52C7FA12180516B00E74EDB /* EUITestFPSTableViewCell.m in Sources */,
 				D59D8B74217DBFC300651060 /* EUITGridIntroViewController.m in Sources */,
 				D5D852B7215A0B53007D9CFF /* UIView+EUILayout.m in Sources */,
-				D5C90CEC218301220071D345 /* EUITestSizeTypeViewController.m in Sources */,
 				D5D852AE215A0ABE007D9CFF /* EUIColumnTemplet.m in Sources */,
 				D52C7FA821805F0500E74EDB /* EUITestBottomCard.m in Sources */,
 				D5A8D630215F28B200EE881E /* EUIEdge.m in Sources */,
