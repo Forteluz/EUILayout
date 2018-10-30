@@ -20,7 +20,9 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 
 #pragma mark - EUI Node Properties
 
-///< 自己的模板容器
+/**
+ 如果自己是容器，则返回容器的根模板，如果自己是子布局，则返回其父容器模板
+ */
 @property (nonatomic, readonly) __kindof EUITemplet *eui_templet;
 
 ///< 显式设置在模板中的 x 坐标
@@ -35,7 +37,7 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 ///< 设置最大宽，当高度填充时会以该值为标准
 @property (nonatomic) CGFloat eui_maxWidth;
 
-///< 设置最小宽，当宽度收缩时会以该值为标准
+///< 设置最小宽，当宽度压缩时会以该值为标准
 @property (nonatomic) CGFloat eui_minWidth;
 
 ///< 显示设置其绝对高

@@ -59,7 +59,8 @@
     ///===============================================
     EUITemplet *one = TColumn(self.avatar,
                               TRow(self.userName,
-                                   self.userInfo)
+//                                   self.userInfo
+                                   )
                               );
     if (testCase == 0) {
         [one addLayout:self.action];

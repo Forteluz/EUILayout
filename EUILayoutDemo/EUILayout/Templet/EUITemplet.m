@@ -263,6 +263,7 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     if (!object) return;
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     EUILayout *layout = [EUILayout findNode:object];
+    layout.view = nil;
     if ([one containsObject:layout]) {
         [one removeObject:layout];
     }

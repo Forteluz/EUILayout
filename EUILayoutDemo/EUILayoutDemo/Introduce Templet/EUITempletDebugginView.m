@@ -70,7 +70,9 @@
     if (lastGravityN > 3) {
         lastGravityN = 1;
     }
+//    lastGravityN = 3;
     int i = EUIRandom(2, 3);
+//    i = 3;
     UIView *one = nil;
     if (i == 1) {
         one = self;
@@ -200,10 +202,11 @@
         return;
     }
     UIView *one = [self eui_viewWithTag:_controlIndex - 1];
-    [self.eui_templet removeLayout:one];
-    [self eui_reload];
-    
-    _controlIndex = MAX(1, --_controlIndex);
+    if (one) {
+        [self.eui_templet removeLayout:one];
+        [self eui_reload];
+        _controlIndex = MAX(1, --_controlIndex);
+    }
 }
 
 - (void)randomInsert {

@@ -32,11 +32,20 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
     if (!items || items.count == 0) {
         return nil;
     }
-    if (items.count == 1 && [[items objectAtIndex:0] isKindOfClass:NSArray.class]) {
-        items = items[0];
-    }
+//    if (items.count == 1 && [[items objectAtIndex:0] isKindOfClass:NSArray.class]) {
+//        items = items[0];
+//    }
     NSMutableArray *one = @[].mutableCopy;
     for (id item in items) {
+        BOOL isArray = [item isKindOfClass:NSArray.class];
+        if ( isArray ) {
+            NSArray *arrayItem = (NSArray *)item;
+            if (arrayItem.count) {
+                NSArray *nodes = [self nodesFromItems:arrayItem];
+                [one addObjectsFromArray:nodes];
+            }
+            continue;
+        }
         EUILayout *node = [EUILayout findNode:item];
         if (node) {
             [one addObject:node];

@@ -27,7 +27,6 @@
  */
 @property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
 
-
 #pragma mark - Access
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

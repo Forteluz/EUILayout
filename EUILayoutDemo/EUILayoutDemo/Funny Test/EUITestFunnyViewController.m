@@ -9,6 +9,7 @@
 #import "EUITestFunnyViewController.h"
 #import "EUILayoutKit.h"
 #import "TestFactory.h"
+#import "Masonry.h"
 
 @interface EUITestFunnyViewController ()
 
@@ -18,6 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    @weakify(self)
+    UIButton *back = EButton(@"BACK", ^{
+        @strongify(self);
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    });
     
 //    UIView *bannerView = [UIView new];
 //    bannerView.backgroundColor = [UIColor redColor];
@@ -37,7 +44,40 @@
     ///===============================================
     /// 随意测试
     ///===============================================
-    [self.view eui_lay:TRow(EText(@"1"),EText(@"1"),EText(@"1"),EText(@"1"),EText(@"1"),EText(@"1"),)];
+    
+    UIView *one = EText(@"1");
+    one.eui_width = self.view.bounds.size.width * 2 / 3;
+    [one eui_reload];
+    
+    UIView *two = EText(@"s");
+    UIView *tre = EText(@"d");
+    
+    NSArray *arr = @[one, two, tre];
+    
+    UIView *container= [UIView new];
+    container.frame = CGRectMake(10, 10, 100, 100);
+    [container eui_lay:TRow(EText(@"c1"),EText(@"c2"))];
+    
+    [self.view eui_lay:TRow(
+                            back,
+//                             container,
+//                             EText(@"1"),
+//                             EText(@"2"),
+//                             EText(@"3"),
+//                             EText(@"4"),
+//                             EText(@"5"),
+                             arr,
+                             )];
+//    EUIAfter(dispatch_get_main_queue(), 1, ^{
+//        [UIView animateWithDuration:0.2 animations:^{
+//            [self.view eui_lay:TRow(back,
+//                                    one,
+//                                    TColumn(two,tre),
+//                                    )];
+//
+//            ///<
+//        }];
+//    });
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 

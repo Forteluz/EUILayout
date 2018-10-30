@@ -141,6 +141,9 @@ typedef id EUIObject;
 
 - (__kindof EUILayout * (^)(void(^)(__kindof EUILayout *)))config;
 
+///< 用于扩展 autolayout 语法
+- (__kindof EUILayout * (^)(void(^)(id)))make;
+
 ///< 获取Node当前一个有效的尺寸
 - (CGSize)validSize;
 

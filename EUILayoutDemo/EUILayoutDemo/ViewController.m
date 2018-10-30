@@ -15,14 +15,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     @weakify(self);
-    EUITemplet *templet =
-        TRow(EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];}),
-             EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
-             EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
-             EButton(@"Test Funny", ^{ @strongify(self); [self testFunny];}),
-             );
+    UIView *view = EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];});
+    EUITemplet *templet = TRow(view,
+                               EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
+                               EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
+                               EButton(@"Test Funny", ^{ @strongify(self); [self testFunny];}),
+                               );
     templet.padding = EUIEdgeMake(10, 10, 10, 10);
     templet.margin.top = 40;
     

@@ -119,19 +119,15 @@
     CGFloat tplt_w = tplt_r.size.width;
     CGFloat node_w = frame->size.width ?: node.size.width;
     if ((node.gravity & EUIGravityHorzEnd)) {
-        if (!EUIValueIsValid(tplt_w)) {
-            NSCAssert(0, @"EUIError : x[EUIGravityHorzEnd]的计算必须依赖模板的宽");
-            return;
-        }
-        if (!EUIValueIsValid(node_w)) {
-            NSCAssert(0, @"x[EUIGravityHorzEnd] 还未获得有效的 node 宽度");
-            return;
-        }
         CGFloat x = 0;
-        if (templet.isHolder) {
-            x = tplt_w - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
+        if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
+            NSLog(@"Node 或者 templet 的宽度异常！");
         } else {
-            x = EUIValue(CGRectGetMaxX(tplt_r)) - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
+            if (templet.isHolder) {
+                x = tplt_w - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
+            } else {
+                x = EUIValue(CGRectGetMaxX(tplt_r)) - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
+            }
         }
         frame -> origin.x = CGFloatPixelRound(x);
         *step |= EUIParsedStepX;
@@ -139,17 +135,14 @@
     }
     
     if (node.gravity & EUIGravityHorzCenter) {
-        if (!EUIValueIsValid(tplt_w)) {
-            NSCAssert(0, @"EUIError : x[EUIGravityHorzEnd]的计算必须依赖模板的宽");
-            return;
-        }
-        if (!EUIValueIsValid(node_w)) {
-            NSCAssert(0, @"x[EUIGravityHorzEnd] 还未获得有效的 node 宽度");
-            return;
-        }
-        CGFloat x = ((NSInteger)(tplt_w - node_w) >> 1);
-        if (!templet.isHolder) {
-            x += EUIValue(tplt_r.origin.x);
+        CGFloat x = 0;
+        if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
+            NSLog(@"Node 或者 templet 的宽度异常！");
+        } else {
+            x = ((NSInteger)(tplt_w - node_w) >> 1);
+            if (!templet.isHolder) {
+                x += EUIValue(tplt_r.origin.x);
+            }
         }
         frame -> origin.x = CGFloatPixelRound(x);
         *step |= EUIParsedStepX;
@@ -217,37 +210,32 @@
     CGFloat node_h = frame->size.height ?: node.size.height;
     
     if ((node.gravity & EUIGravityVertEnd)) {
-        if (!EUIValueIsValid(tplt_h)) {
-            NSCAssert(0, @"EUIError : x[EUIGravityVertEnd]的计算必须依赖模板的高");
-            return;
-        }
-        if (!EUIValueIsValid(node_h)) {
-            NSCAssert(0, @"x[EUIGravityVertEnd] 还未获得有效的 node 高");
-            return;
-        }
-        if (templet.isHolder) {
-            frame -> origin.y = tplt_h - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
+        CGFloat y = 0;
+        if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
+            NSLog(@"node 或者 templet 的高异常");
         } else {
-            frame -> origin.y = EUIValue(CGRectGetMaxY(tplt_r)) - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
+            if (templet.isHolder) {
+                y = tplt_h - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
+            } else {
+                y = EUIValue(CGRectGetMaxY(tplt_r)) - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
+            }
         }
+        frame -> origin.y = CGFloatPixelRound(y);
         *step |= EUIParsedStepY;
         return;
     }
     
     if (node.gravity & EUIGravityVertCenter) {
-        if (!EUIValueIsValid(tplt_h)) {
-            NSCAssert(0, @"EUIError : x[EUIGravityVertEnd]的计算必须依赖模板的高");
-            return;
+        CGFloat y = 0;
+        if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
+            NSLog(@"node 或者 templet 的高异常");
+        } else {
+            y = ((NSInteger)(tplt_h - node_h) >> 1);
         }
-        if (!EUIValueIsValid(node_h)) {
-            NSCAssert(0, @"x[EUIGravityVertEnd] 还未获得有效的 node 高");
-            return;
-        }
-        CGFloat y = ((NSInteger)(tplt_h - node_h) >> 1);
         if (!templet.isHolder) {
             y += EUIValue(tplt_r.origin.y);
         }
-        frame -> origin.y = y;
+        frame -> origin.y = CGFloatPixelRound(y);
         *step |= EUIParsedStepY;
     }
 }
