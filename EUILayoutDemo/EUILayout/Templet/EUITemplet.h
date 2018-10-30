@@ -78,6 +78,9 @@
 ///< 插入一个Node
 - (void)insertLayout:(EUIObject)object atIndex:(NSInteger)index;
 
+///< 替换一个Node
+- (void)replaceLayout:(EUIObject)object atIndex:(NSInteger)index;
+
 ///< 移除一个Layout
 - (void)removeLayout:(EUIObject)object;
 - (void)removeLayoutAtIndex:(NSInteger)index;
