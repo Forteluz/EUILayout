@@ -63,7 +63,7 @@
                                    )
                               );
     if (testCase == 0) {
-        [one addLayout:self.action];
+        [one addNode:self.action];
     }
     [self eui_lay:one];
     

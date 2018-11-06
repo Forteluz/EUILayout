@@ -21,7 +21,7 @@
 @implementation EUIDemoORViewController
 
 - (void)configureBackBtn {
-    [self.backButton eui_configure:^(EUILayout *node) {
+    [self.backButton eui_configure:^(EUINode *node) {
         node.maxHeight = 80;
     }];
 }
@@ -218,6 +218,7 @@
     one.padding.right = 10;
     
     [self.view eui_lay:one];
+    [self.view eui_layoutSubviews];
 }
 
 @end

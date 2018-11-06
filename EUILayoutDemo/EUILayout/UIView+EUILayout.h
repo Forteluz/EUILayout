@@ -12,16 +12,27 @@
 
 #pragma mark -
 
-typedef void (^EUIConfigurationBlock)(EUILayout *node);
+typedef void (^EUIConfigurationBlock)(EUINode *node);
 
 #pragma mark -
 
+/*!
+ *
+ 如何使用，从 Container 的视角，示例：
+ ///< 布局一个模板
+ [self eui_layout:TRow(view1, view2, view3, ...)];
+ 
+ 注意事项：
+    1、EUILayout 布局不要和其他布局体系混用；
+    2、EUILayout 默认处理了视图的加载和移除操作；
+    3、EUILayout 
+ */
 @interface UIView (EUILayout)
 
 #pragma mark - EUI Node Properties
 
-/**
- 如果自己是容器，则返回容器的根模板，如果自己是子布局，则返回其父容器模板
+/*!
+ *  如果自己是容器，则返回容器的根模板，如果自己是子布局，则返回其父容器模板
  */
 @property (nonatomic, readonly) __kindof EUITemplet *eui_templet;
 
@@ -65,51 +76,88 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 @property (nonatomic) EUIGravity eui_gravity;
 
 /**
- 外边距，总用于相邻布局对象的间距关系
+ 外边距，总用于相邻布局对象的间距关系，如果无相邻对象，该值设置无效
+ @note 比如
+     UIViewController *one;
+     one.view.eui_margin = margin; ///< 该设置无效，因为 vc 的视图是根容器没有相对布局的对象
+     …………
  */
 @property (nonatomic, strong) EUIEdge *eui_margin;
 
-/**
- 内边距，当 layout 作为 templet 容器时，该值才有意义，EUIEdge.Zero
+/*!
+ *  内边距，当 layout 作为 templet 容器时，该值才有意义，EUIEdge.Zero
  */
 @property (nonatomic, strong) EUIEdge *eui_padding;
 
-/**
- layout 的唯一标示，默认是 nil（暂未实现）
+/*!
+ *  layout 的唯一标示，默认是 nil（暂未实现）
  */
 @property (nonatomic, copy) NSString *eui_uniqueID;
 
 #pragma mark - Access
 
-/**
- 布局一个模板
+/*!
+ *  开始布置模板并计算，但并不会立即刷新视图，视图更新需要调用：eui_layoutSubviews
  */
 - (void)eui_lay:(EUITemplet *)templet;
 
-/**
- 自动刷新当前模板
+/*!
+ *  立即布局模板上的视图
+ */
+- (void)eui_layoutSubviews;
+
+/*!
+ *  开始布局模板，并刷新视图，相当于
+ *  [self eui_lay:templet];
+ *  [self eui_layoutSubviews];
+ */
+- (void)eui_layout:(EUITemplet *)templet;
+
+#pragma mark - 增删查改 Layout
+
+/*!
+ *  添加一个布局 Node 并刷新视图布局
+ */
+- (void)eui_addLayout:(EUIObject)object;
+
+/*!
+ *  移除对应节点和视图，并刷新布局
+ */
+- (void)eui_removeLayout:(EUIObject)object;
+
+/*!
+ *  移除所有的布局节点和视图
+ */
+- (void)eui_removeAllLayouts;
+
+/*!
+ *  立即刷新当前模板，相当于
+ *  [self eui_lay:templet];
+ *  [self eui_layoutSubviews];
  */
 - (void)eui_reload;
 
-/**
- 移除所有的模板
+/*!
+ *  查询对应 index 的 layout; index 的范围是 [0 -- (count - 1)];
+ *  @warning 只有容器视图才可以查询，否则返回 nil, 且 index 错误会返回 nil;
+ *  @return 一个 layout 对象（或者 Templet 对象）
  */
-- (void)eui_cleanUp;
+- (__kindof EUINode *)eui_nodeAtIndex:(NSInteger)index;
 
-/**
- 重新设置自己的 layout 布局对象
+/*!
+ *  清空模板上所有的节点，并移除所有的视图
  */
-- (void)eui_setNode:(EUILayout *)node;
+- (void)eui_cleanup;
+
+/*!
+ *  重新设置自己的 layout 布局对象
+ */
+- (void)eui_updateNode:(__kindof EUINode *)layout;
 
 /**
  提供一个配置接口，主要用于结构化配置代码 ( for perty code if needed )
  */
-- (EUILayout *)eui_configure:(EUIConfigurationBlock)block;
-
-/**
- 返回根模板上的视图
- */
-- (UIView *)eui_viewWithTag:(NSInteger)tag;
+- (EUINode *)eui_configure:(EUIConfigurationBlock)block;
 
 #pragma mark -
 
@@ -117,6 +165,6 @@ typedef void (^EUIConfigurationBlock)(EUILayout *node);
 @property (nonatomic, strong, readonly) EUIEngine *eui_engine;
 
 ///< 自己的 EUI 布局描述对象（LazyLoad）
-@property (nonatomic, strong, readonly) __kindof EUILayout *eui_layout;
+@property (nonatomic, strong, readonly) __kindof EUINode *eui_node;
 
 @end

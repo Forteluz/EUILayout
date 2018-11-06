@@ -51,7 +51,7 @@
     int i = EUIRandom(1, 2);
     if (i == 2) {
         UILabel *one = EText(@"|🧔🏼-🧔🏼|");
-        [templet addLayout:one];
+        [templet addNode:one];
     }
     [self eui_lay:templet];
 }

@@ -11,13 +11,13 @@
 #import "EUIColumnTemplet.h"
 
 @interface EUIGridTemplet()
-@property (copy, readwrite) NSArray <EUILayout *> *nodes;
+@property (copy, readwrite) NSArray <EUINode *> *nodes;
 @end
 @implementation EUIGridTemplet
 @dynamic nodes;
 
-- (void)willLoadSubLayouts {
-    [super willLoadSubLayouts];
+- (void)willLoadSubnodes {
+    [super willLoadSubnodes];
     
     if (self.nodes.count == 0) {
         return;
@@ -42,7 +42,7 @@
         self.rows = n;
     }
     
-    NSArray <EUILayout *> *nodes = self.nodes;
+    NSArray <EUINode *> *nodes = self.nodes;
     NSInteger n = 0;
 
     EUITemplet *row = TRow(@"");
@@ -52,11 +52,11 @@
             if (n >= nodes.count) {
                 break;
             }
-            EUILayout *node = [nodes objectAtIndex:n];
-            [column addLayout:node];
+            EUINode *node = [nodes objectAtIndex:n];
+            [column addNode:node];
             n++;
         }
-        [row addLayout:column];
+        [row addNode:column];
     }
     self.nodes = @[row];
 }
@@ -68,8 +68,8 @@
     };
 }
 
-- (EUIGridTemplet * (^)(void(^)(__kindof EUILayout *)))config {
-    return ^ EUIGridTemplet * (void(^block)(__kindof EUILayout *)) {
+- (EUIGridTemplet * (^)(void(^)(__kindof EUINode *)))config {
+    return ^ EUIGridTemplet * (void(^block)(__kindof EUINode *)) {
         if (block) block(self);
         return self;
     };

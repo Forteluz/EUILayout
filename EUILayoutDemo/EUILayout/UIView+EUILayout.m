@@ -20,57 +20,95 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
 
 #pragma mark - Access
 
-- (EUILayout *)eui_configure:(EUIConfigurationBlock)block {
+- (EUINode *)eui_configure:(EUIConfigurationBlock)block {
     if (block) {
-        block(self.eui_layout);
+        block(self.eui_node);
     }
-    return self.eui_layout;
+    return self.eui_node;
 }
 
-- (void)eui_cleanUp {
-    EUITemplet *root = [self.eui_engine rootTemplet];
-    if (root) {
-        [self.eui_engine cleanUp];
-        [self eui_releaseEngine];
+- (void)eui_cleanup {
+    [self.eui_engine cleanUp];
+    [self eui_releaseEngine];
+}
+
+- (void)eui_lay:(EUITemplet *)templet {
+    [self.eui_engine updateTemplet:templet];
+    [self.eui_engine lay];
+}
+
+- (void)eui_layoutSubviews {
+    EUITemplet *temp = (self.eui_node.isTemplet ? (EUITemplet *)self.eui_node :
+                        self.eui_node.templet);
+    EUITemplet *root = temp.rootTemplet;
+    if ( root ) {
+        [root.view.eui_engine layoutIfNeeded];
+    }
+}
+
+- (void)eui_layout:(EUITemplet *)templet {
+    [self eui_lay:templet];
+    [self eui_layoutSubviews];
+}
+
+#pragma mark -
+
+- (void)eui_addLayout:(EUIObject)object {
+    if (self.eui_node.isTemplet) {
+        EUITemplet *one = (EUITemplet *)self.eui_node;
+        [one addNode:object];
+        [self eui_reload];
     } else {
-        root = self.eui_templet.rootTemplet;
-        [root.view eui_cleanUp];
+        NSLog(@"Error:【%@】并不是 Container!", self);
+    }
+}
+
+- (void)eui_removeLayout:(EUIObject)object {
+    if ([self.eui_node isTemplet]) {
+        EUITemplet *one = (EUITemplet *)self.eui_node;
+        [one removeNode:object];
+        [self eui_reload];
+    } else {
+        NSLog(@"Error:【%@】并不是 Container!", self);
+    }
+}
+
+- (void)eui_removeAllLayouts {
+    if (self.eui_node.isTemplet) {
+        if ([self.eui_engine isWorking]) {
+            [self.eui_engine cleanUp];
+        }
+        [self eui_reload];
     }
 }
 
 - (void)eui_reload {
-    EUITemplet *root = [self.eui_engine rootTemplet];
-    if (root) {
-        [self.eui_engine layoutTemplet:root];
-    } else {
-        root = self.eui_templet.rootTemplet;
-        [root.view eui_reload];
-    }
+    [self eui_lay:self.eui_node];
+    [self eui_layoutSubviews];
 }
 
-- (void)eui_lay:(EUITemplet *)templet {
-    if (!templet) {
-        return;
+- (__kindof EUINode *)eui_nodeAtIndex:(NSInteger)index {
+    EUINode *one = nil;
+    if (self.eui_node.isTemplet) {
+        one = [(EUITemplet *)self.eui_node nodeAtIndex:index];
     }
-    [self.eui_engine layoutTemplet:templet];
+    return one;
 }
 
-- (UIView *)eui_viewWithTag:(NSInteger)tag {
-    UIView *root = self.eui_engine.rootTemplet.view;
-    if (root) {
-        return [root viewWithTag:tag];
+- (void)eui_removeNode:(EUIObject)object {
+    if ([self.eui_node isKindOfClass:EUITemplet.class]) {
+        [(EUITemplet *)self.eui_node removeNode:object];
     }
-    return nil;
 }
 
 #pragma mark - Properties
 
 #define EUIProperty(_TYPE_, _PROPERTY_) \
     - (void)setEui_##_PROPERTY_:(_TYPE_)eui_##_PROPERTY_ { \
-        self.eui_layout._PROPERTY_ = eui_##_PROPERTY_; \
+        self.eui_node._PROPERTY_ = eui_##_PROPERTY_; \
     } \
     - (_TYPE_)eui_##_PROPERTY_ { \
-        return self.eui_layout._PROPERTY_; \
+        return self.eui_node._PROPERTY_; \
     }
 
 EUIProperty(CGFloat, x)
@@ -82,39 +120,14 @@ EUIProperty(CGFloat, minWidth)
 EUIProperty(CGFloat, maxHeight)
 EUIProperty(CGFloat, minHeight)
 EUIProperty(CGSize,  size)
-EUIProperty(CGPoint, origin)
 EUIProperty(CGRect,  frame)
-EUIProperty(NSString *, uniqueID)
+EUIProperty(CGPoint, origin)
 EUIProperty(EUIEdge  *, margin)
+EUIProperty(EUIEdge  *, padding)
+EUIProperty(NSString *, uniqueID)
 EUIProperty(EUIGravity,  gravity)
 EUIProperty(EUISizeType, sizeType)
-
-- (EUITemplet *)eui_templet {
-    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
-    if (!isTempletContainer) {
-        return self.eui_engine.rootTemplet;
-    } else {
-        return self.eui_layout.templet;
-    }
-}
-
-- (EUIEdge *)eui_padding {
-    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
-    if (!isTempletContainer) {
-        return self.eui_templet.padding;
-    } else {
-        return self.eui_layout.padding;
-    }
-}
-
-- (void)setEui_padding:(EUIEdge *)eui_padding {
-    BOOL isTempletContainer = [self isKindOfClass:EUITempletView.class];
-    if (!isTempletContainer) {
-        self.eui_templet.padding = eui_padding;
-    } else {
-        self.eui_layout.padding = eui_padding;
-    }
-}
+EUIProperty(EUITemplet *, templet)
 
 #pragma mark - EUIEngine
 
@@ -131,20 +144,18 @@ EUIProperty(EUISizeType, sizeType)
     objc_setAssociatedObject(self, kDCEngineAssociatedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark - DCUILayout
-
-- (EUILayout *)eui_layout {
-    EUILayout *one = objc_getAssociatedObject(self, kDCLayoutAssociatedKey);
+- (EUINode *)eui_node {
+    EUINode *one = objc_getAssociatedObject(self, kDCLayoutAssociatedKey);
     if (one == nil) {
-        one = [EUILayout new];
+        one = [EUINode new];
         one.view = self;
         objc_setAssociatedObject(self, kDCLayoutAssociatedKey, one, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return one;
 }
 
-- (void)eui_setNode:(EUILayout *)node {
-    EUILayout *one = objc_getAssociatedObject(self, kDCLayoutAssociatedKey);
+- (void)eui_updateNode:(EUINode *)node {
+    EUINode *one = objc_getAssociatedObject(self, kDCLayoutAssociatedKey);
     if (!one || one != node) {
         objc_setAssociatedObject(self,
                                  kDCLayoutAssociatedKey,

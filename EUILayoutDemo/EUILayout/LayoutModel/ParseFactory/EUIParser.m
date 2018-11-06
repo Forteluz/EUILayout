@@ -31,8 +31,8 @@
         [obj parse:node _:preNode _:context]; \
     }]; \
 
-- (void)parse:(EUILayout *)node
-            _:(EUILayout *)preNode
+- (void)parse:(EUINode *)node
+            _:(EUINode *)preNode
             _:(EUIParseContext *)context
 {
     if (self.parsingBlock) {
@@ -63,8 +63,8 @@
 
 @implementation EUIXParser
 
-- (void)parse:(EUILayout *)node
-            _:(EUILayout *)preNode
+- (void)parse:(EUINode *)node
+            _:(EUINode *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -94,7 +94,7 @@
     CGRect tplt_r = templet.cacheFrame;
     if (!EUIValueIsUndefine(node.x)) {
         CGFloat x = node.x;
-        if (!templet.isHolder) {
+        if (!templet.view) {
             x += EUIValue(tplt_r.origin.x);
         }
         frame -> origin.x = CGFloatPixelRound(x);
@@ -102,13 +102,14 @@
         return;
     }
     
-    if (!((node.gravity) & (EUIGravityHorzStart | EUIGravityHorzCenter | EUIGravityHorzEnd))) {
-        node.gravity |= EUIGravityHorzStart;
+    EUIGravity gravity = node.gravity;
+    if (!(gravity & (EUIGravityHorzStart | EUIGravityHorzCenter | EUIGravityHorzEnd))) {
+        gravity = EUIGravityHorzStart;
     }
     
-    if (node.gravity & EUIGravityHorzStart) {
+    if (gravity & EUIGravityHorzStart) {
         CGFloat x = EUIValue(templet.padding.left) + EUIValue(node.margin.left);
-        if (!templet.isHolder) {
+        if (!templet.isRoot) {
             x += EUIValue(tplt_r.origin.x);
         }
         frame -> origin.x = CGFloatPixelRound(x);
@@ -118,12 +119,12 @@
     
     CGFloat tplt_w = tplt_r.size.width;
     CGFloat node_w = frame->size.width ?: node.size.width;
-    if ((node.gravity & EUIGravityHorzEnd)) {
+    if ((gravity & EUIGravityHorzEnd)) {
         CGFloat x = 0;
         if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
             NSLog(@"Node 或者 templet 的宽度异常！");
         } else {
-            if (templet.isHolder) {
+            if (templet.isRoot) {
                 x = tplt_w - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
             } else {
                 x = EUIValue(CGRectGetMaxX(tplt_r)) - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
@@ -134,13 +135,13 @@
         return;
     }
     
-    if (node.gravity & EUIGravityHorzCenter) {
+    if (gravity & EUIGravityHorzCenter) {
         CGFloat x = 0;
         if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
             NSLog(@"Node 或者 templet 的宽度异常！");
         } else {
             x = ((NSInteger)(tplt_w - node_w) >> 1);
-            if (!templet.isHolder) {
+            if (!templet.isRoot) {
                 x += EUIValue(tplt_r.origin.x);
             }
         }
@@ -153,8 +154,8 @@
 
 @implementation EUIYParser
 
-- (void)parse:(EUILayout *)node
-            _:(EUILayout *)preNode
+- (void)parse:(EUINode *)node
+            _:(EUINode *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -184,7 +185,7 @@
     CGRect tplt_r = templet.cacheFrame;
     if (!EUIValueIsUndefine(node.y)) {
         CGFloat y = node.y;
-        if (!templet.isHolder) {
+        if (!templet.isRoot) {
             y += EUIValue(tplt_r.origin.y);
         }
         frame -> origin.y = CGFloatPixelRound(y);
@@ -192,13 +193,14 @@
         return;
     }
 
-    if (!((node.gravity) & (EUIGravityVertStart | EUIGravityVertCenter | EUIGravityVertEnd))) {
-        node.gravity |= EUIGravityVertStart;
+    EUIGravity gravity = node.gravity;
+    if (!(gravity & (EUIGravityVertStart | EUIGravityVertCenter | EUIGravityVertEnd))) {
+        gravity = EUIGravityVertStart;
     }
     
-    if (node.gravity & EUIGravityVertStart) {
+    if (gravity & EUIGravityVertStart) {
         CGFloat y = EUIValue(node.margin.top) + EUIValue(templet.padding.top);;
-        if (!templet.isHolder) {
+        if (!templet.isRoot) {
             y += EUIValue(CGRectGetMinY(tplt_r));
         }
         frame -> origin.y = CGFloatPixelRound(y);
@@ -209,12 +211,12 @@
     CGFloat tplt_h = tplt_r.size.height;
     CGFloat node_h = frame->size.height ?: node.size.height;
     
-    if ((node.gravity & EUIGravityVertEnd)) {
+    if ((gravity & EUIGravityVertEnd)) {
         CGFloat y = 0;
         if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
             NSLog(@"node 或者 templet 的高异常");
         } else {
-            if (templet.isHolder) {
+            if (templet.isRoot) {
                 y = tplt_h - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
             } else {
                 y = EUIValue(CGRectGetMaxY(tplt_r)) - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
@@ -225,14 +227,14 @@
         return;
     }
     
-    if (node.gravity & EUIGravityVertCenter) {
+    if (gravity & EUIGravityVertCenter) {
         CGFloat y = 0;
         if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
             NSLog(@"node 或者 templet 的高异常");
         } else {
             y = ((NSInteger)(tplt_h - node_h) >> 1);
         }
-        if (!templet.isHolder) {
+        if (!templet.isRoot) {
             y += EUIValue(tplt_r.origin.y);
         }
         frame -> origin.y = CGFloatPixelRound(y);
@@ -244,8 +246,8 @@
 
 @implementation EUIWParser
 
-- (void)parse:(EUILayout *)node
-            _:(EUILayout *)preNode
+- (void)parse:(EUINode *)node
+            _:(EUINode *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -278,7 +280,12 @@
 //        NSCAssert(0, @"EUIError : 计算的约束宽值异常!");
     }
     
-    if ((EUISizeTypeToVertFit & node.sizeType) && (EUISizeTypeToHorzFit & node.sizeType)) {
+    EUISizeType sizeType = node.sizeType;
+    if (!(sizeType & (EUISizeTypeToHorzFill | EUISizeTypeToHorzFit))) {
+        sizeType = EUISizeTypeToHorzFill;
+    }
+    
+    if ((EUISizeTypeToVertFit & sizeType) && (EUISizeTypeToHorzFit & sizeType)) {
         CGSize size = [node sizeThatFits:constraintSize];
         if (size.width == 0 || size.height == 0) {
             NSCAssert(0, @"EUIError : sizeThatFits 计算结果异常! node:[%@]", node);
@@ -288,20 +295,16 @@
         return;
     }
     
-    if (!(node.sizeType & (EUISizeTypeToHorzFill | EUISizeTypeToHorzFit))) {
-        node.sizeType |= EUISizeTypeToHorzFill;
-    }
-    
     CGFloat w = 0;
     CGFloat inner = EUIValue(node.margin.left) + EUIValue(node.margin.right);
     
-    if (EUISizeTypeToHorzFill & node.sizeType) {
+    if (EUISizeTypeToHorzFill & sizeType) {
         w = constraintSize.width - inner;
         if (w < 0) {
             w = 0;
         }
     }
-    else if (EUISizeTypeToHorzFit & node.sizeType) {
+    else if (EUISizeTypeToHorzFit & sizeType) {
         inner = EUIValue(node.padding.left) + EUIValue(node.padding.right);
         if (frame -> size.height) {
             constraintSize.height = frame -> size.height;
@@ -333,8 +336,8 @@
 
 @implementation EUIHParser
 
-- (void)parse:(EUILayout *)node
-            _:(EUILayout *)preNode
+- (void)parse:(EUINode *)node
+            _:(EUINode *)preNode
             _:(EUIParseContext *)context
 {
     EUIParsedStep *step = &(context->step);
@@ -361,10 +364,11 @@
         return;
     }
     
-    if (!(node.sizeType & (EUISizeTypeToVertFill | EUISizeTypeToVertFit))) {
-        node.sizeType |= EUISizeTypeToVertFill;
+    EUISizeType sizeType = node.sizeType;
+    if (!(sizeType & (EUISizeTypeToVertFill | EUISizeTypeToVertFit))) {
+        sizeType = EUISizeTypeToVertFill;
     }
-    
+
     CGSize constraintSize = context->constraintSize;
     if (!EUIValueIsValid(constraintSize.height) || constraintSize.height == 0) {
 //        NSCAssert(0, @"EUIError : 计算的约束高值异常! %f", constraintSize.height);
@@ -373,13 +377,13 @@
     CGFloat h = 0;
     CGFloat inner = EUIValue(node.margin.top) + EUIValue(node.margin.bottom);
 
-    if (EUISizeTypeToVertFill & node.sizeType) {
+    if (EUISizeTypeToVertFill & sizeType) {
         h = constraintSize.height - inner;
         if (h < 0) {
             h = 0;
         }
     }
-    else if (EUISizeTypeToVertFit & node.sizeType)
+    else if (EUISizeTypeToVertFit & sizeType)
     {
         inner = EUIValue(node.padding.top) + EUIValue(node.padding.bottom);
         if (EUIValueIsValid(frame->size.width)) {

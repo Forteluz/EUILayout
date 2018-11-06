@@ -48,21 +48,26 @@
         _insertBtn = EButton(@"INSERT", ^{
             @strongify(self); [self randomInsert];
         });
-        
         _controlIndex = 1;
     }
     return self;
+}
+
+- (void)dealloc {
+    NSLog(@"EUITempletDebugginView dealloc");
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
 
     ///< Not Perty..., but clear!
-    EUITemplet *one = TRow(_gravityBtn,
-                           _sizeTpBtn,
-                           TColumn(_frameBtn, _edgeBtn),
-                           TColumn(_addBtn, _delBtn, _insertBtn));
-    [self eui_lay:one];
+    EUITemplet *one = TRow(
+//                           _gravityBtn,
+//                           _sizeTpBtn,
+//                           TColumn(_frameBtn, _edgeBtn),
+//                           TColumn(_delBtn, _insertBtn)
+                           _addBtn);
+    [self eui_layout:one];
 }
 
 - (void)randomGravity {
@@ -77,7 +82,7 @@
     if (i == 1) {
         one = self;
     } else if (i == 2) {
-        one = (UIButton *)[self eui_viewWithTag:_controlIndex - 1];
+        one = (UIButton *)[self viewWithTag:_controlIndex - 1];
     } else {
         one = _edgeBtn;
     }
@@ -95,10 +100,10 @@
     if (one == self) {
         ///< 作为子模板修改自己的gravity 或者 sizetype 属性后，需要父 templet 刷新
         ///< TODO : 如何快速找到父模板?
-        EUITemplet *one = self.superview.eui_engine.rootTemplet;
+        EUITemplet *one = self.superview.eui_engine.templet;
         [one layout];
     } else {
-        [self eui_reload];
+        [self eui_layoutSubviews];
     }
     lastGravityN ++;
 }
@@ -108,8 +113,8 @@
     if (lastSizeTypeN > 4) {
         lastSizeTypeN = 1;
     }
-    UIButton *one = (UIButton *)[self eui_viewWithTag:_controlIndex - 1];
-    EUILayout *node = one.eui_layout;
+    UIButton *one = (UIButton *)[self viewWithTag:_controlIndex - 1];
+    EUINode *node = one.eui_node;
     switch (lastSizeTypeN) {
         case 1:node.sizeType = EUISizeTypeToFit;
             [one setTitle:@"sizeType : EUISizeTypeToFit" forState:UIControlStateNormal];
@@ -124,7 +129,7 @@
             [one setTitle:@"sizeType : EUISizeTypeToHorzFit \n | EUISizeTypeToVertFill" forState:UIControlStateNormal];
             break;
     }
-    [self eui_reload];
+    [self eui_layoutSubviews];
     lastSizeTypeN ++;
 }
 
@@ -174,7 +179,7 @@
             }
         }break;
         case 4: {
-            UIView *one = [self eui_viewWithTag:_controlIndex - 1];
+            UIView *one = [self viewWithTag:_controlIndex - 1];
             if (one.eui_margin.top == 10) {
                 one.eui_margin = EUIEdge.zero;
             } else {
@@ -182,7 +187,7 @@
             }
         }break;
     }
-    [self eui_reload];
+    [self eui_layoutSubviews];
     edgeLastN ++;
 }
 
@@ -192,8 +197,7 @@
             
         });
     [one setTag:_controlIndex];
-    [self.eui_templet addLayout:one];
-    [self eui_reload];
+    [self eui_addLayout:one];
     _controlIndex ++;
 }
 
@@ -201,10 +205,10 @@
     if (_controlIndex < 2) {
         return;
     }
-    UIView *one = [self eui_viewWithTag:_controlIndex - 1];
+    UIView *one = [self viewWithTag:_controlIndex - 1];
     if (one) {
-        [self.eui_templet removeLayout:one];
-        [self eui_reload];
+        [self.eui_templet removeNode:one];
+        [self eui_layoutSubviews];
         _controlIndex = MAX(1, --_controlIndex);
     }
 }
@@ -217,8 +221,8 @@
     [one setTag:_controlIndex];
     
     NSInteger n = EUIRandom(0, (int)self.eui_templet.nodes.count + 1);
-    [self.eui_templet insertLayout:one atIndex:n];
-    [self eui_reload];
+    [self.eui_templet insertNode:one atIndex:n];
+    [self eui_layoutSubviews];
     _controlIndex ++;
 }
 

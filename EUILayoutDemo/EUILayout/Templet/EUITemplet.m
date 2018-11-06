@@ -9,38 +9,33 @@
 #import "EUITemplet.h"
 #import "UIView+EUILayout.h"
 
-static void blockCleanUp(__strong void(^*block)(void)) {
-    (*block)();
+@interface EUITemplet() {
+    ///===============================================
+    /// Templet 对于 container 是弱持有，和 Node 不同；
+    /// 同 weakView 一样处理；
+    ///===============================================
+    __weak UIView *_container;
 }
-
-@interface EUITemplet()
-@property (copy, readwrite) NSArray <EUILayout *> *nodes;
+@property (nonatomic, weak) UIView *weakView;
+@property (copy, readwrite) NSArray <EUINode *> *nodes;
+@property (nonatomic, strong) NSMutableArray <UIView *> *subviews;
 @end
 
 @implementation EUITemplet
+@synthesize view = _view;
 
 #pragma mark - Override
-
-+ (instancetype)templetWithItems:(NSArray <EUIObject> *)items {
-    EUITemplet *one = [[self.class alloc] initWithItems:items];
-    return one;
-}
 
 - (instancetype)initWithItems:(NSArray <id> *)items {
     self = [super init];
     if (self) {
-        _nodes = [EUILayout nodesFromItems:items];
-        self.isHolder = NO;
-        self.sizeType = EUISizeTypeToFill;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [items count];
-        });
+        _nodes = [EUINode nodesFromItems:items];
     }
     return self;
 }
 
 - (void)dealloc {
-//    NSLog(@"dealloc templet:%@", self);
+    NSLog(@"dealloc templet:%@", self);
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
@@ -53,8 +48,8 @@ static void blockCleanUp(__strong void(^*block)(void)) {
         size.height = constrainedSize.height - EUIValue(margin.top) - EUIValue(margin.right);
     }
     if (self.sizeType & EUISizeTypeToFit) {
-        EUILayout *lastOne = nil;
-        for (EUILayout *one in self.nodes) {
+        EUINode *lastOne = nil;
+        for (EUINode *one in self.nodes) {
             EUIParseContext ctx = (EUIParseContext) {
                 .step = (EUIParsedStepX | EUIParsedStepY),
                 .recalculate = YES,
@@ -85,47 +80,43 @@ static void blockCleanUp(__strong void(^*block)(void)) {
 #pragma mark -
 
 - (void)layout {
-    EUIAssertMainThread();
-    [self willLoadSubLayouts];
-    [self loadSubLayouts:self.nodes];
-    [self didLoadSubLayouts];
+    [self willLoadSubnodes];
+    [self loadSubnodes:self.nodes];
+    [self didLoadSubnodes];
 }
 
-- (void)willLoadSubLayouts {
-    [self clearSubviewsIfNeeded];
+- (void)willLoadSubnodes {
+
 }
 
 - (BOOL)isBoundsValid {
     CGSize size = self.validSize;
     if (!EUIValueIsValid(size.width) ||
-        !EUIValueIsValid(size.height) ||
-        (size.width  == 0) ||
-        (size.height == 0)) {
+        !EUIValueIsValid(size.height)) {
         return NO;
     }
     return YES;
 }
 
-- (void)didLoadSubLayouts {
-    if (self.didLoadSubLayoutsBlock) {
-        self.didLoadSubLayoutsBlock(self);
+- (void)didLoadSubnodes {
+    if (self.didLoadSubnodesBlock) {
+        self.didLoadSubnodesBlock(self);
     }
     ///< TODO : 视图层级调整功能
     ///< TODO : release...
 }
 
-- (void)loadSubLayouts:(NSArray *)nodes {
+- (void)loadSubnodes:(NSArray *)nodes {
     if (!nodes ||
         !nodes.count ||
         ![self isBoundsValid])
     {
         return;
     }
-    EUILayout *preNode = nil;
-    for (EUILayout *node in nodes) {
+    EUINode *preNode = nil;
+    for (EUINode *node in nodes) {
         [node setTemplet:self];
-        [self loadViewIfNeededByNode:node];
-        [self loadLayout:node preLayout:preNode context:NULL];
+        [self loadNode:node preNode:preNode context:NULL];
         if ([node isKindOfClass:EUITemplet.class]) {
             [(EUITemplet *)node layout];
         }
@@ -133,162 +124,188 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     }
 }
 
-- (void)loadLayout:(EUILayout *)node preLayout:(EUILayout *)preNode context:(EUIParseContext *)context {
-    if (!context) {
-         context = &(EUIParseContext) {
-             .constraintSize = (CGSize) {
-                 self.validSize.width  - EUIValue(self.padding.left) - EUIValue(self.padding.right),
-                 self.validSize.height - EUIValue(self.padding.top)  - EUIValue(self.padding.bottom)
-             }
-         };
+- (void)loadNode:(EUINode *)node preNode:(EUINode *)preNode context:(EUIParseContext *)context {
+    if (context == NULL) {
+        CGSize size = (CGSize) {
+            self.validSize.width  - EUIValue(self.padding.left) - EUIValue(self.padding.right),
+            self.validSize.height - EUIValue(self.padding.top)  - EUIValue(self.padding.bottom)
+        };
+        context = &(EUIParseContext) {
+            .constraintSize = size
+        };
     }
     [self.parser parse:node _:preNode _:context];
     CGRect r = context->frame;
     [node setCacheFrame:r];
-    if ( node.view ) {
-        [node.view setFrame:r];
+}
+
+#pragma mark -
+
+- (UIView *)container {
+    if (!_container) {
+        UIView *container = nil;
+        EUITemplet *one = self;
+        do {
+            if (one.view) {
+                container = one.view;
+                break;
+            } else {
+                one = one.templet;
+            }
+        } while (one != nil);
+        _container = container;
     }
+    return _container;
 }
 
-- (EUITemplet *)vaildContainerTemplet {
-    EUITemplet *one = self;
-    do {
-        if (one.isHolder) {
-            return one;
+- (NSArray *)loadSubviews {
+    EUIAssertMainThread();
+
+    UIView *container = [self container];
+    if (!container) {
+        NSCAssert(0, @"找不到容器视图");
+    }
+
+    NSMutableArray *views = @[].mutableCopy;
+
+    for (EUINode *node in _nodes) {
+        if ([node isKindOfClass:EUITemplet.class]) {
+            NSArray *arr = [(EUITemplet *)node loadSubviews];
+            [views addObjectsFromArray:arr];
         }
-        one = one.templet;
-    } while (one);
-    return one;
-}
-
-- (void)loadViewIfNeededByNode:(EUILayout *)node {
-    EUITemplet *cTemplet = [self vaildContainerTemplet];
-    UIView *container = cTemplet.view;
-    UIView *view = node.view;
-
-    BOOL isTempletNode = [node isKindOfClass:EUITemplet.class];
-    if ( isTempletNode && [(EUITemplet *)node isHolder] ) {
+        
+        UIView *view = node.view;
         if (!view) {
-            view = [EUITempletView new];
-            [(EUITemplet *)node setView:view];
+            continue;
+        }
+        
+        [views addObject:view];
+        
+        CGRect r = node.cacheFrame;
+        view.frame = r;
+
+        if ([view superview]) {
+            if ([view superview] != container) {
+                [view removeFromSuperview];
+            } else {
+                [container bringSubviewToFront:view];
+            }
+        }
+        if (!view.superview) {
+            [container addSubview:view];
+        } else if (view.isHidden) {
+            view.hidden = NO;
         }
     }
-    if (view == nil) return;
-    if (view.superview) {
-        if (view.superview != container) {
-            [view removeFromSuperview];
-        } else {
-            [container bringSubviewToFront:view];
-        }
-    }
-    if (!view.superview) {
-        [container addSubview:view];
-    } else if (view.isHidden) {
-        view.hidden = NO;
-    }
-}
-
-#pragma mark - Private
-
-- (void)clearSubviewsIfNeeded {
-    NSInteger count = self.view.subviews.count;
-    if (count == 0) {
-        return;
-    }
-    [self.view.subviews enumerateObjectsUsingBlock:^
-     (__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
-     {
-         if ([obj.eui_layout isKindOfClass:EUITemplet.class]) {
-             EUITemplet *one = (EUITemplet *)obj.eui_layout;
-             [one clearSubviewsIfNeeded];
-             [one.view removeFromSuperview];
-//             [one.view setHidden:YES];
-             (one.view = nil);
-         } else {
-//             [obj setHidden:YES];
-             [obj removeFromSuperview];
-             (obj = nil);
-         }
-     }];
+    
+    return views.copy;
 }
 
 #pragma mark - Node Filter
 
-- (__kindof EUILayout *)nodeWithUniqueID:(NSString *)uniqueID {
+- (__kindof EUINode *)nodeWithUniqueID:(NSString *)uniqueID {
     return nil;
 }
 
-- (__kindof EUILayout *)layoutAtIndex:(NSInteger)index {
+- (__kindof EUINode *)nodeAtIndex:(NSInteger)index {
     NSArray *nodes = self.nodes;
-    if (!nodes || index < 0 || index > nodes.count) {
+    if (!nodes || index < 0 || index >= nodes.count) {
         return nil;
     }
     return nodes[index];
 }
 
-- (void)addLayout:(EUIObject)object {
+- (void)addNode:(EUIObject)object {
     if (!object) {
         return;
     }
-    EUILayout *node = [EUILayout findNode:object];
+    EUINode *node = [EUINode findNode:object];
     if (!node) {
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [object class];
-    });
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     [one addObject:node];
     [self setNodes:one.copy];
 }
 
-- (void)insertLayout:(EUIObject)object atIndex:(NSInteger)index {
+- (void)insertNode:(EUIObject)object atIndex:(NSInteger)index {
     if (!object) {
         return;
     }
-    EUILayout *node = [EUILayout findNode:object];
+    EUINode *node = [EUINode findNode:object];
     if (!node) {
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [object class];
-    });
     index = EUI_CLAMP(index, 0, self.nodes.count - 1);
     NSMutableArray *one = _nodes.mutableCopy;
     [one insertObject:node atIndex:index];
     [self setNodes:one.copy];
 }
 
-- (void)replaceLayout:(EUIObject)object atIndex:(NSInteger)index {
+- (void)replaceNode:(EUIObject)object atIndex:(NSInteger)index {
     if (!object) {
         return;
     }
-    EUILayout *node = [EUILayout findNode:object];
+    EUINode *node = [EUINode findNode:object];
     if (!node) {
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [object class];
-    });
-    index = EUI_CLAMP(index, 0, self.nodes.count - 1);
-    NSMutableArray *one = _nodes.mutableCopy;
+    NSArray *nodes = self.nodes;
+    if (!nodes || index < 0 || index >= nodes.count) {
+        return;
+    }
+    if ([nodes containsObject:object]) {
+        return;
+    }
+    NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
+    [one replaceObjectAtIndex:index withObject:object];
+}
+
+- (void)replaceNode:(EUIObject)object atNode:(EUIObject)atNode {
+    if (!object || !atNode) {
+        return;
+    }
+    NSArray *nodes = self.nodes;
+    if (!nodes || nodes.count == 0) {
+        return;
+    }
+    if (![nodes containsObject:atNode]) {
+        return;
+    }
+    EUINode *toNode = [EUINode findNode:atNode];
+    if (!toNode) {
+        return;
+    }
+    NSInteger index = [nodes indexOfObject:toNode];
+    if (index == NSNotFound) {
+        return;
+    }
+    EUINode *node = [EUINode findNode:object];
+    if (!node) {
+        return;
+    }
+    NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
     [one replaceObjectAtIndex:index withObject:node];
     [self setNodes:one.copy];
 }
 
-- (void)removeLayout:(EUIObject)object {
+- (void)removeNode:(EUIObject)object {
     if (!object) return;
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
-    EUILayout *layout = [EUILayout findNode:object];
-    layout.view = nil;
+    EUINode *layout = [EUINode findNode:object];
+    if (layout.isTemplet) {
+        [(EUITemplet *)layout removeAllSubnodes];
+    } else {
+        layout.view = nil;
+    }
     if ([one containsObject:layout]) {
         [one removeObject:layout];
     }
     [self setNodes:one.copy];
 }
 
-- (void)removeLayoutAtIndex:(NSInteger)index {
-    if (!_nodes || index < 0 || index > _nodes.count) {
+- (void)removeNodeAtIndex:(NSInteger)index {
+    if (!_nodes || index < 0 || index >= _nodes.count) {
         return;
     }
     NSMutableArray *one = _nodes ? _nodes.mutableCopy : @[].mutableCopy;
@@ -296,11 +313,11 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     [self setNodes:one.copy];
 }
 
-- (void)removeAllSubLayouts {
+- (void)removeAllSubnodes {
     if (_nodes.count) {
-        for (EUILayout *node in _nodes) {
+        for (EUINode *node in _nodes) {
             if ([node isKindOfClass:EUITemplet.class]) {
-                [(EUITemplet *)node removeAllSubLayouts];
+                [(EUITemplet *)node removeAllSubnodes];
             } else {
                 node.view = nil;
             }
@@ -318,11 +335,29 @@ static void blockCleanUp(__strong void(^*block)(void)) {
     return _parser;
 }
 
-- (void)setView:(UIView *)view {
-    [super setView:view];
-    if ( view ) {
-        [view eui_setNode:self];
+- (void)setView:(__weak UIView *)view {
+    if (_weakView != view) {
+        _weakView  = view;
     }
+    if (_weakView) {
+        EUINode *node = view.eui_node;
+        if (node != self) {
+            [self inheritBy:node];
+            [_weakView eui_updateNode:self];
+            ///===============================================
+            /// node 替换后，还要更新父 templet 里的数据结构
+            ///===============================================
+            EUITemplet *superT = node.templet;
+            if ( superT ) {
+                [superT replaceNode:self atNode:node];
+            }
+            node = nil;
+        }
+    }
+}
+
+- (UIView *)view {
+    return _weakView;
 }
 
 - (EUITemplet *)rootTemplet {
@@ -332,8 +367,15 @@ static void blockCleanUp(__strong void(^*block)(void)) {
             return one;
         }
         one = one.templet;
-    } while (one);
+    } while (one != nil);
     return nil;
+}
+
+- (BOOL)isRoot {
+    if (self.view && self.view.eui_engine.isWorking) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

@@ -34,7 +34,7 @@
     [JPFPSStatus sharedInstance].fpsLabel = label;
     
     EUITemplet *one = TRow([TColumn(back, label)
-                            configure:^(EUILayout *layout) {
+                            configure:^(EUINode *layout) {
                                     layout.maxHeight = 44;
                            }],
                            self.tableView);

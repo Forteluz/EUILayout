@@ -10,22 +10,26 @@
 
 @class EUITemplet;
 
-/**
- TODO :
-    · 容器视图和容器模板的关系分析
-    · 结构优化
+/*!
+ *  容器的布局引擎
+ *
  */
 @interface EUIEngine : NSObject
 
 /**
- *  EUIEngine 负责的跟视图
+ *  负责驱动布局的视图
  */
 @property (nonatomic, weak, readonly) UIView *view;
 
 /**
- *  EUIEngine 负责的根模板
+ *  负责驱动的视图模板
  */
-@property (nonatomic, strong, readonly) EUITemplet *rootTemplet;
+@property (nonatomic, strong, readonly) EUITemplet *templet;
+
+/*!
+ *  布局引擎是否在工作
+ */
+@property (nonatomic, readonly) BOOL isWorking;
 
 #pragma mark - Access
 
@@ -35,9 +39,24 @@
 - (instancetype)initWithView:(UIView *)view;
 
 /*!
- *  @brief 更新为一个指定的模板
+ *  @brief 更新根模板
  */
-- (void)layoutTemplet:(EUITemplet *)templet;
+- (void)updateTemplet:(EUITemplet *)templet;
+
+/*!
+ *  驱动模板布局
+ */
+- (void)lay;
+
+/*!
+ *  立即更新所有模板视图的 frame
+ */
+- (void)layoutIfNeeded;
+
+/*!
+ *  移除所有的视图
+ */
+- (void)removeSubviews;
 
 /*!
  *  清空根模板上的所有内容

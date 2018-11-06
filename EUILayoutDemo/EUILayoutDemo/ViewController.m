@@ -17,33 +17,32 @@
     [super viewDidLoad];
 
     @weakify(self);
-    UIView *view = EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];});
-    EUITemplet *templet = TRow(view,
-                               EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];}),
-                               EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];}),
-                               EButton(@"Test Funny", ^{ @strongify(self); [self testFunny];}),
-                               );
-    templet.padding = EUIEdgeMake(10, 10, 10, 10);
-    templet.margin.top = 40;
-    
-    [self.view eui_lay:templet];
+    UIView *a = EButton(@"Template Introduction", ^{ @strongify(self); [self templateIntroduction];});
+    UIView *b = EButton(@"Copy Scene Case", ^{ @strongify(self); [self copySceneCase];});
+    UIView *c = EButton(@"Test FPS 😁", ^{ @strongify(self); [self testFPS];});
+    UIView *d = EButton(@"Test Funny", ^{ @strongify(self); [self testFunny];});
+    UIView *e = EButton(@"Base Function", ^{ @strongify(self); [self baseFunction];});
+    EUITemplet *one = TRow(
+                           a,
+                           e,
+                           TColumn(b, c, d)
+                           );
+    [self.view eui_layout:one];
 }
 
 #pragma mark - Action
 
 - (void)templateIntroduction {
     @weakify(self);
-    EUIGridTemplet *one =
-        TGrid(EButton(@"TBase",   ^{@strongify(self) [self introduceTBase];}),
-              EButton(@"TGrid",   ^{@strongify(self) [self introduceTGrid];}),
-              EButton(@"TRow" ,   ^{@strongify(self) [self introduceTRow];}),
-              EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
-              EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
-    one.columns = 4;
-    one.margin = EUIEdgeMake(10, 10, 10, 10);
-    
-    EUILayout *node = [self.view.eui_templet layoutAtIndex:0];
-    [node.view eui_lay:one];
+    EUITemplet *one =
+        TColumn(EButton(@"TBase",   ^{@strongify(self) [self introduceTBase];}),
+                EButton(@"TGrid",   ^{@strongify(self) [self introduceTGrid];}),
+                EButton(@"TRow" ,   ^{@strongify(self) [self introduceTRow];}),
+                EButton(@"TColumn", ^{@strongify(self) [self introduceTColumn];}),
+                EButton(@"Close",   ^{@strongify(self) [self introduceColse];}));
+    one.padding = EUIEdgeMake(10, 10, 10, 10);
+    EUINode *node = [self.view eui_nodeAtIndex:0];
+    [node.view eui_layout:one];
 }
 
 - (void)copySceneCase {
@@ -56,6 +55,10 @@
 
 - (void)testFunny {
     EUIGoto(self, @"EUITestFunnyViewController");
+}
+
+- (void)baseFunction {
+    EUIGoto(self, @"EUIBaseFunctionTestViewController");
 }
 
 #pragma mark - Introduce Templet
@@ -77,8 +80,9 @@
 }
 
 - (void)introduceColse {
-    EUITemplet *templet = [self.view.eui_templet layoutAtIndex:0];
-    [templet.view eui_cleanUp];
+    EUITemplet *templet = [self.view eui_nodeAtIndex:0];
+    [templet removeAllSubnodes];
+    [self.view eui_reload];
 }
 
 @end

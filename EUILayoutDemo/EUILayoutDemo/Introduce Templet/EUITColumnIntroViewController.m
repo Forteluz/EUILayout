@@ -19,21 +19,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    EUITempletDebugginView *debug1 = [EUITempletDebugginView new];
-    EUITempletDebugginView *debug2 = [EUITempletDebugginView new];
-    EUITempletDebugginView *debug3 = [EUITempletDebugginView new];
+    self.backButton.eui_maxHeight = 80;
     
-    EUITemplet *one = TColumn
-    (
-        [self.backButton eui_configure:^(EUILayout *node) {
-            node.maxHeight = 80;
-        }],
-        debug1,
-        debug2,
-        debug3,
-     );
+    @weakify(self);
+    UIView *a = EButton(@"a", ^{@strongify(self) [self a];});
+    UIView *b = EButton(@"b", ^{@strongify(self) [self b];});
+    UIView *c = EButton(@"c", ^{@strongify(self) [self c];});
+    UIView *d = EButton(@"d", ^{@strongify(self) [self d];});
+    UIView *e = EButton(@"e", ^{@strongify(self) [self e];});
     
-    [self.view eui_lay:one];
+    UIView *one = [UIView new];
+    [one setBackgroundColor:EUIRandomColor];
+    [one eui_lay:TRow(a, b)];
+    
+    UIView *two = [UIView new];
+    [two setBackgroundColor:EUIRandomColor];
+    [two eui_lay:TRow(c, d)];
+    
+    [self.view eui_lay:TColumn(
+                               self.backButton,
+                               one,
+                               e
+                               )];
+    [self.view eui_layoutSubviews];
 }
+
+- (void)a {
+    [self.view setEui_padding:EUIEdgeMake(10, 10, 10, 10)];
+    [self.view eui_reload];
+}
+
+- (void)b {
+    [self.view setEui_margin:EUIEdgeMake(10, 10, 10, 10)];
+    [self.view eui_reload];
+}
+
+- (void)c {}
+
+- (void)d {}
+
+- (void)e {}
 
 @end

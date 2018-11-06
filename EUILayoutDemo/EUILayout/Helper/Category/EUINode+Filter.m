@@ -12,15 +12,14 @@
 
 static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociatedKey;
 
-@implementation EUILayout (Filter)
+@implementation EUINode (Filter)
 
-+ (EUILayout * __nullable)findNode:(EUIObject)object {
++ (EUINode * __nullable)findNode:(EUIObject)object {
     if (!object) return nil;
-    EUILayout *one = nil;
+    EUINode *one = nil;
     if ([object isKindOfClass:UIView.class]) {
-        one = [(UIView *)object eui_layout];
-        one.view = object;
-    } else if ([object isKindOfClass:EUILayout.class]) {
+        one = [(UIView *)object eui_node];
+    } else if ([object isKindOfClass:EUINode.class]) {
         one = object;
     } else {
         return nil;
@@ -28,7 +27,7 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
     return one;
 }
 
-+ (NSArray <EUILayout *> *)nodesFromItems:(NSArray <id> *)items {
++ (NSArray <EUINode *> *)nodesFromItems:(NSArray <id> *)items {
     if (!items || items.count == 0) {
         return nil;
     }
@@ -46,7 +45,7 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
             }
             continue;
         }
-        EUILayout *node = [EUILayout findNode:item];
+        EUINode *node = [EUINode findNode:item];
         if (node) {
             [one addObject:node];
         }
@@ -70,6 +69,14 @@ static const void *kEUINodeFrameCacheAssociatedKey = &kEUINodeFrameCacheAssociat
         return [value CGRectValue];
     }
     return CGRectMake(NSNotFound, NSNotFound, NSNotFound, NSNotFound);
+}
+
+- (BOOL)needCalculate {
+    CGRect cache = self.cacheFrame;
+    return (EUIValueIsUndefine(cache.origin.x) ||
+            EUIValueIsUndefine(cache.origin.y) ||
+           !EUIValueIsValid(cache.size.width)  ||
+           !EUIValueIsValid(cache.size.height));
 }
 
 @end

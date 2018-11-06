@@ -15,7 +15,7 @@
     if (self) {
         @weakify(self);
         self.parser.xParser.parsingBlock = ^
-        (EUILayout *node, EUILayout *preNode,EUIParseContext *context)
+        (EUINode *node, EUINode *preNode,EUIParseContext *context)
         {
             @strongify(self);
             [self parseX:node _:preNode _:context];
@@ -24,8 +24,8 @@
     return self;
 }
 
-- (void)willLoadSubLayouts {
-    [super willLoadSubLayouts];
+- (void)willLoadSubnodes {
+    [super willLoadSubnodes];
     if (![self isBoundsValid]) {
         if (!(self.sizeType & EUISizeTypeToHorzFit)) {
             return;
@@ -44,10 +44,10 @@
     
     CGFloat innerVertSide = EUIValue(self.padding.top) + EUIValue(self.padding.bottom);
     
-    NSArray <EUILayout *> *nodes = self.nodes;
-    NSMutableArray <EUILayout *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
+    NSArray <EUINode *> *nodes = self.nodes;
+    NSMutableArray <EUINode *> *fillNodes = [NSMutableArray arrayWithCapacity:nodes.count];
     CGFloat fitWidth = 0;
-    for (EUILayout *node in nodes) {
+    for (EUINode *node in nodes) {
         BOOL needFit = (node.sizeType & EUISizeTypeToHorzFit) || EUIValueIsValid(node.maxWidth) || EUIValueIsValid(node.width);
         if ( needFit ) {
             EUIParseContext ctx = (EUIParseContext) {
@@ -109,7 +109,7 @@
     }
     
     CGFloat aw  = (innerWidth - fitWidth) / fillNodes.count;
-    for (EUILayout *node in fillNodes) {
+    for (EUINode *node in fillNodes) {
         CGFloat min = 1.f;
         CGFloat h = 0;
         CGRect  r = EUIRectUndefine();
@@ -140,22 +140,43 @@
     return size;
 }
 
-- (void)parseX:(EUILayout *)node _:(EUILayout *)preNode _:(EUIParseContext *)context {
+- (void)parseX:(EUINode *)node _:(EUINode *)pre_node _:(EUIParseContext *)context {
     EUIParsedStep *step = &(context->step);
     CGRect *frame = &(context->frame);
-    CGRect preFrame = preNode ? preNode.cacheFrame : CGRectZero;
-    if (preNode && CGRectEqualToRect(CGRectZero, preFrame)) {
-        NSCAssert(0, @"EUIError : Layout:[%@] 在 Row 模板下的 Frame 计算异常", preNode);
-    }
-    CGFloat x = 0;
-    if (preNode) {
-        x = EUIValue(node.margin.left) + EUIValue(CGRectGetMaxX(preFrame)) + EUIValue(preNode.margin.right);
-    } else {
-        x = EUIValue(node.margin.left) + EUIValue(self.padding.left);
-        if (!self.isHolder) {
-            x += EUIValue(CGRectGetMinX(self.cacheFrame));
+    CGRect pre_frame = pre_node ? pre_node.cacheFrame : CGRectZero;
+    
+    if (pre_node) {
+        if (EUIValueIsUndefine(pre_frame.origin.x) ||
+            EUIValueIsUndefine(pre_frame.origin.y) ||
+            !EUIValueIsValid(pre_frame.size.width)  ||
+            !EUIValueIsValid(pre_frame.size.height)) {
+            NSString *msg = @"EUIError ==> TColumb parse x 异常 : [%@ 前置 layout 的 cahce frame 错误！]";
+            NSCAssert(0, msg, pre_node);
         }
     }
+
+    CGFloat x = 0;
+    CGFloat gap = 0;
+    CGFloat left = EUIValue(node.margin.left);
+    
+    if (pre_node) {
+        CGFloat pre_margin_right = EUIValue(pre_node.margin.right);
+        CGFloat pre_frame_right = EUIValue(CGRectGetMaxX(pre_frame));
+        x = pre_frame_right + pre_margin_right + gap + left;
+    }
+    else {
+        CGFloat inner_left = EUIValue(self.padding.left);
+//        CGFloat margn_left = EUIValue(self.margin.left);
+        x = /*margn_left +*/ inner_left + gap + left;
+        
+        BOOL isVirtualContainer = !self.view;
+        if ( isVirtualContainer ) {
+            CGRect  r = self.cacheFrame;
+            CGFloat templet_left = EUIValue(CGRectGetMinX(r));
+            x += templet_left;
+        }
+    }
+    
     frame -> origin.x = CGFloatPixelRound(x);
     *step |= EUIParsedStepX;
 }

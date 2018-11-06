@@ -7,25 +7,16 @@
 //
 
 #import "EUIEngine.h"
-#import "EUITemplet.h"
 #import "UIView+EUILayout.h"
 
 #pragma mark -
 
-NSInteger EUIRootViewTag() {
-    static NSInteger tag;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        tag = @"lxvii".hash;
-    });
-    return tag;
+@interface EUIEngine() {
+    BOOL _working;
 }
-
-#pragma mark -
-
-@interface EUIEngine()
 @property (nonatomic, weak, readwrite) UIView *view;
-@property (nonatomic, strong, readwrite) EUITemplet *rootTemplet;
+@property (nonatomic, strong, readwrite) EUITemplet *templet;
+@property (nonatomic, copy) NSArray *subviews;
 @end
 
 @implementation EUIEngine
@@ -34,6 +25,7 @@ NSInteger EUIRootViewTag() {
     self = [super init];
     if (self) {
         _view = view;
+        _working = NO;
     }
     return self;
 }
@@ -45,90 +37,141 @@ NSInteger EUIRootViewTag() {
 
 #pragma mark - Update
 
-- (void)layoutTemplet:(EUITemplet *)templet {
-    self.rootTemplet = templet;
+- (void)layoutIfNeeded {
+    EUIAssertMainThread();
+ 
+    if (!_view || !_templet)
+        return;
 
-    ///===============================================
-    /// 暂时根模板需要支持holder，后续考虑优化方案
-    ///===============================================
-    templet.isHolder = YES;
+    [self updateViewBoundsIfNeeded];
     
-    if ([templet isHolder]) {
-        [templet setView:self.rootContainer];
-    } else {
-        EUITempletView *one = [self.view viewWithTag:EUIRootViewTag()];
-        if ( one && one.superview ) {
-            [one removeFromSuperview];
-             one = nil;
-        }
-    }
-//    [self copyEUIToTemplet];
-    [self parseViewFrameIfNeeded];
-    [self updateRootTempletFrame:templet];
-    [templet layout];
-}
-
-- (void)parseViewFrameIfNeeded {
-    CGRect r = self.view.frame;
-    ///< Fill
-    if (!EUIValueIsValid(r.size.width)) {
-        EUILayout *one = self.view.eui_layout;
-        if (EUIValueIsValid(one.width)) {
-            r.size.width = one.width;
-        }
-    }
-    if (!EUIValueIsValid(r.size.height)) {
-        EUILayout *one = self.view.eui_layout;
-        if (EUIValueIsValid(one.height)) {
-            r.size.height = one.height;
-        }
-    }
-    if (r.size.width == 0 || r.size.height == 0) {
-        ///===============================================
-        /// 自动 Fit 子容器的功能待开发
-        ///===============================================
-        NSCAssert(0, @"EUIError : 布局模板时，容器需要有明确的 size!");
-    }
-
-    if ((self.rootTemplet.sizeType & EUISizeTypeToFit)) {
-        [self.rootTemplet sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
-        CGSize size = self.rootTemplet.cacheFrame.size;
-        if (EUIValueIsValid(size.width)) {
-            r.size.width = size.width;
-        }
-        if (EUIValueIsValid(size.height)) {
-            r.size.height = size.height;
-        }
+    if (self.view.bounds.size.width  == 0 ||
+        self.view.bounds.size.height == 0) {
+        return;
+        NSCAssert(0, @" EUI ERROR : 容器布局时没有有效的宽或者高，请检查！");
     }
     
-    self.view.frame = r;
+    ///===============================================
+    /// TODO : 需要扩展成 subnodes
+    ///===============================================
+    NSArray *subviews = [self.templet loadSubviews];
+    
+    ///===============================================
+    /// Diff subviews for remove or hidden
+    /// TODO : 思考视图的管理是不是可以增加策略控制
+    ///===============================================
+    NSMutableArray <UIView *> *unuseViews = @[].mutableCopy;
+    [_subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![subviews containsObject:obj]) {
+            [unuseViews addObject:obj];
+        }
+    }];
+    if ([unuseViews count]) {
+        [unuseViews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [obj removeFromSuperview];
+            (obj = nil);
+        }];
+        [unuseViews removeAllObjects];
+    }
+    unuseViews = nil;
+    
+    ///< Caching
+    self.subviews = subviews;
 }
 
-- (void)updateRootTempletFrame:(EUITemplet *)templet {
+- (void)updateTemplet:(EUITemplet *)templet {
+     _working = YES;
+    ///=====================================================
+    /// engine 当第三者插足 view 和 templet 的关系，
+    ///===================================================
+    [self setTemplet:templet];   ///< strongify templet
+    [templet setView:self.view]; ///< weakify view
+}
+
+- (void)lay {
+    EUITemplet *one = _templet;
+    
+    ///< Update templet's bounds if needed
+    CGSize old = one.cacheFrame.size;
+    BOOL needUpdateTempletBounds = [one needCalculate];
+    if ( needUpdateTempletBounds ) {
+        [self updateTempletBounds];
+    }
+    CGSize new = one.cacheFrame.size;
+
+    if (needUpdateTempletBounds) {
+        ///=================================================
+        /// 子节点 size 改变可能影响整体布局，所以整体刷新
+        ///=================================================
+        BOOL isRootEngine = one.templet == nil;
+        BOOL sizeDidChanged = !CGSizeEqualToSize(old, new);
+        if ( sizeDidChanged && !isRootEngine) {
+            EUITemplet *root = one.rootTemplet;
+            [root layout];
+            return;
+        }
+    }
+    [self.templet layout];
+}
+
+- (void)updateViewBoundsIfNeeded {
+    ///===============================================================
+    /// update view's bounds if width or height is 0
+    ///===============================================================
+    CGRect r = _view.frame;
+    CGSize size = r.size;
+    CGSize cacheS = _view.eui_node.cacheFrame.size;
+
+    if (!EUIValueIsValid(size.width) && EUIValueIsValid(cacheS.width)) {
+        size.width = cacheS.width;
+    }
+    if (!EUIValueIsValid(size.height) && EUIValueIsValid(cacheS.height)) {
+        size.height = cacheS.height;
+    }
+
+    r.size = size;
+    _view.frame = r;
+}
+
+- (CGRect)boundsByContainer:(UIView *)view {
+    return CGRectZero;
+}
+
+- (void)updateTempletBounds {
+    EUITemplet *templet = self.templet;
     CGRect frame = (CGRect){.origin = {0}, .size = self.view.bounds.size};
+    
+    ///< Margin 的计算必须明确有父 templet 时才处理
+    BOOL canCalculateMargin = templet.templet != nil;
+    
+    ///< Parse position x
     if (EUIValueIsValid(templet.x)) {
         frame.origin.x = templet.x;
     } else if (EUIValueIsValid(templet.margin.left)) {
-        frame.origin.x = templet.margin.left;
+        if (canCalculateMargin) {
+            frame.origin.x = templet.margin.left;
+        }
     }
+    
+    ///< Parse position y
     if (EUIValueIsValid(templet.y)) {
         frame.origin.y = templet.y;
     } else if (EUIValueIsValid(templet.margin.top)) {
-        frame.origin.y = templet.margin.top;
+        if (canCalculateMargin) {
+            frame.origin.y = templet.margin.top;
+        }
     }
+    
+    ///< Parse size width
     if (EUIValueIsValid(templet.width)) {
         frame.size.width = templet.width;
     } else if (EUIValueIsValid(templet.cacheFrame.size.width)) {
         frame.size.width = templet.cacheFrame.size.width;
     } else if (EUIValueIsValid(templet.margin.right) || EUIValueIsValid(templet.margin.left)) {
-        frame.size.width -= EUIValue(templet.margin.left) + EUIValue(templet.margin.right);
-    }
-    if (EUIValueIsValid(templet.height)) {
-        frame.size.height = templet.height;
-    } else if (EUIValueIsValid(templet.cacheFrame.size.height)) {
-        frame.size.height = templet.cacheFrame.size.height;
-    } else if (EUIValueIsValid(templet.margin.bottom) || EUIValueIsValid(templet.margin.top)) {
-        frame.size.height -= EUIValue(templet.margin.top) + EUIValue(templet.margin.bottom);
+        if (canCalculateMargin) {
+            frame.size.width -= EUIValue(templet.margin.left) + EUIValue(templet.margin.right);
+        }
     }
     if (EUIValueIsValid(templet.maxWidth) || EUIValueIsValid(templet.minWidth)) {
         CGFloat val = frame.size.width;
@@ -136,74 +179,55 @@ NSInteger EUIRootViewTag() {
         CGFloat min = EUIValueIsValid(templet.minWidth) ? templet.minWidth : val;
         frame.size.width = EUI_CLAMP(val, min, max);
     }
+    
+    ///< Parse size height
+    if (EUIValueIsValid(templet.height)) {
+        frame.size.height = templet.height;
+    } else if (EUIValueIsValid(templet.cacheFrame.size.height)) {
+        frame.size.height = templet.cacheFrame.size.height;
+    } else if (EUIValueIsValid(templet.margin.bottom) || EUIValueIsValid(templet.margin.top)) {
+        if (canCalculateMargin) {
+            frame.size.height -= EUIValue(templet.margin.top) + EUIValue(templet.margin.bottom);
+        }
+    }
     if (EUIValueIsValid(templet.maxHeight) || EUIValueIsValid(templet.minHeight)) {
         CGFloat val = frame.size.height;
         CGFloat max = EUIValueIsValid(templet.maxHeight) ? templet.maxHeight : val;
         CGFloat min = EUIValueIsValid(templet.minHeight) ? templet.minHeight : val;
         frame.size.height = EUI_CLAMP(val, min, max);
     }
+
     [templet setCacheFrame:frame];
-    [templet.view setFrame:frame];
 }
 
 - (void)cleanUp {
-    EUITemplet *one = self.rootTemplet;
-    if (!one) return;
+    EUIAssertMainThread();
     
+    EUITemplet *one = self.templet;
+    if (!one) return;
     if ([one isKindOfClass:EUITemplet.class]) {
-        [one clearSubviewsIfNeeded];
+        [one removeAllSubnodes];
     }
-    [one removeAllSubLayouts];
-    if (one.isHolder) {
-        UIView *container = one.view;
-        if ( container ) {
-            [container removeFromSuperview];
-            (container = nil);
-        }
-        one.view = nil;
-    }
-    _rootTemplet = nil;
+    [self removeSubviews];
+
+    _templet = nil;
+    _working = NO;
 }
 
-#pragma mark -
-
-#define EUISetCopyValueIfNeeded(_VAL_) \
-if ((self.view.eui_##_VAL_ != self.rootTemplet._VAL_) && \
-    (!EUIValueIsUndefine(self.view.eui_##_VAL_))) { \
-self.rootTemplet._VAL_ = self.view.eui_##_VAL_; \
-}
-
-- (void)copyEUIToTemplet {
-    EUISetCopyValueIfNeeded(x)
-    EUISetCopyValueIfNeeded(y)
-    EUISetCopyValueIfNeeded(width)
-    EUISetCopyValueIfNeeded(height)
-    EUISetCopyValueIfNeeded(maxWidth)
-    EUISetCopyValueIfNeeded(minWidth)
-    EUISetCopyValueIfNeeded(maxHeight)
-    EUISetCopyValueIfNeeded(minHeight)
-    EUISetCopyValueIfNeeded(sizeType)
-    EUISetCopyValueIfNeeded(gravity)
-    EUISetCopyValueIfNeeded(padding.left)
-    EUISetCopyValueIfNeeded(padding.top)
-    EUISetCopyValueIfNeeded(padding.right)
-    EUISetCopyValueIfNeeded(padding.bottom)
-    EUISetCopyValueIfNeeded(margin.left)
-    EUISetCopyValueIfNeeded(margin.top)
-    EUISetCopyValueIfNeeded(margin.right)
-    EUISetCopyValueIfNeeded(margin.bottom)
-}
-
-#pragma mark - Root Container
-
-- (EUITempletView *)rootContainer {
-    EUITempletView *one = [self.view viewWithTag:EUIRootViewTag()];
-    if (one == nil) {
-        one = [EUITempletView new];
-        one.tag = EUIRootViewTag();
-        [self.view addSubview:one];
+- (void)removeSubviews {
+    if (!_subviews || !_subviews.count) {
+        return;
     }
-    return one;
+    [_subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+        (obj = nil);
+    }];
+}
+
+#pragma mark - Properties
+
+- (BOOL)isWorking {
+    return _working;
 }
 
 @end
