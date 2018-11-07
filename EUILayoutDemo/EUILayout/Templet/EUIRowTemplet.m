@@ -89,7 +89,7 @@
             CGRect r = EUIRectUndefine();
             r.size = ctx.frame.size;
             if (r.size.height <= 0) {
-                NSCAssert(0, @"EUI Error : Layout fit 计算出来的高度有问题！");
+                EUIFailAssert(@"EUI Error : Layout fit 计算出来的高度有问题！");
             }
             [node setCacheFrame:r];
 
@@ -111,7 +111,7 @@
             ///===============================================
             /// 如果模板需要自撑，则所有 Node 应该都是 Fit 类型 :_)
             ///===============================================
-            NSCAssert(0, @"模板自撑条件不足，以下 Nodes:[%@] 不满足条件", fillNodes);
+            EUIFailAssert(@"模板自撑条件不足，以下 Nodes:[%@] 不满足条件", fillNodes);
         }
 
         ///< Fitting height
@@ -186,12 +186,8 @@
     CGRect pre_frame = pre_node ? pre_node.cacheFrame : CGRectZero;
 
     if (pre_node) {
-        if (EUIValueIsUndefine(pre_frame.origin.x) ||
-            EUIValueIsUndefine(pre_frame.origin.y) ||
-           !EUIValueIsValid(pre_frame.size.width)  ||
-           !EUIValueIsValid(pre_frame.size.height)) {
-            NSString *msg = @"EUIError ==> TRow parse y 异常 : [%@ 前置 layout 的 cahce frame 错误！]";
-            NSCAssert(0, msg, pre_node);
+        if (!EUIRectIsValid(pre_frame)) {
+            EUIFailAssert(@"EUIError ==> TRow parse y 异常 : [%@ 前置 layout 的 cahce frame 错误！]", pre_node);
         }
     }
     

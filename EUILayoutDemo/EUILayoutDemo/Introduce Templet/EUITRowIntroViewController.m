@@ -39,23 +39,22 @@
     [one setBackgroundColor:EUIRandomColor];
     [one setEui_margin:EUIEdgeMake(10, 10, 10, 10)];
     [one setEui_padding:EUIEdgeMake(10, 10, 10, 10)];
-    [one eui_lay:TRow(a, b)];
+    [one eui_layout:TRow(a, b)];
     
     UIView *two = [UIView new];
     [two setBackgroundColor:EUIRandomColor];
     [two setEui_margin:EUIEdgeMake(10, 10, 10, 10)];
     [two setEui_padding:EUIEdgeMake(10, 10, 10, 10)];
-    [two eui_lay:TRow(c, d)];
+    [two eui_layout:TRow(c, d)];
 
     ///< 因为Base 没有父 templet，所以 margin 是无效的
     [base setEui_margin:EUIEdgeMake(10, 10, 10, 10)];
-    [base eui_lay:TRow(
+    [base eui_layout:TRow(
                        self.backButton,
                        one,
                        two,
                        e,
                        )];
-    [base eui_layoutSubviews];
 }
 
 - (void)a {

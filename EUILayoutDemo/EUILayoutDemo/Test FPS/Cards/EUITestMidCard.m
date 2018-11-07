@@ -41,7 +41,7 @@
              self.to),
         self.price
     );
-    [self eui_lay:templet];
+    [self eui_layout:templet];
 }
 
 + (CGFloat)height:(id)object {

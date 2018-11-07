@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EUILayoutMacro.h"
-#import "EUIUtilities.h"
 #import "EUIEdge.h"
+#import "EUIMacro.h"
+#import "EUIAssert.h"
+#import "EUIUtilities.h"
 
 #pragma mark -
 

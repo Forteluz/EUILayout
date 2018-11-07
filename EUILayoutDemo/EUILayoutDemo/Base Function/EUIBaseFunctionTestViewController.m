@@ -37,7 +37,7 @@
     UIView *pannelA = [UIView new];
     pannelA.tag = 11;
     EUITemplet *g = TColumn(add, del);
-    [pannelA eui_lay:g];
+    [pannelA eui_layout:g];
 
     EUITemplet *one = TRow
     (

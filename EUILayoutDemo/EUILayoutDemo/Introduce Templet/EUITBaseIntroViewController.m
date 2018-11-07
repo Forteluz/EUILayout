@@ -29,11 +29,20 @@
     gravity.eui_sizeType = EUISizeTypeToFit;
     gravity.tag = 1;
 
-    self.backButton.eui_size = CGSizeMake(100, 40);
+    self.backButton.eui_height = 40;
     self.backButton.eui_margin.top  = 30;
     self.backButton.eui_margin.left = 10;
     
-    [self.view eui_layout:TBase(gravity, self.backButton)];
+    UIView *a = EText(@"a");a.eui_height = 50;
+    UIView *b = EText(@"b");b.eui_height = 50;
+    UIView *c = EText(@"c");c.eui_height = 50;
+    UIView *d = EText(@"d");d.eui_height = 50;
+
+    UIView *grid = [UIView new];
+    grid.eui_sizeType = EUISizeTypeToVertFit;
+    [grid eui_layout:TRow(a,b,c,d)];
+    
+    [self.view eui_layout:TBase(gravity, self.backButton, grid)];
 
     /* 也可以使用比较鬼畜的结构
      ...
@@ -75,7 +84,7 @@
             node.gravity = EUIGravityHorzEnd | EUIGravityVertEnd;
         } break;
     }
-    [self.view eui_layoutSubviews];
+    [self.view eui_reload];
 }
 
 @end

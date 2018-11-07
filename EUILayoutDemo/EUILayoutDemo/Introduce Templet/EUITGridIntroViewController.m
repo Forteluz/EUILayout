@@ -27,18 +27,18 @@
 //    debug2.eui_margin = EUIEdgeMake(10, 10, 10, 10);
 //    debug3.eui_margin = EUIEdgeMake(10, 10, 10, 10);
 //
-//    EUITemplet *one = TGrid
-//    (
-//        [self.backButton eui_configure:^(EUINode *node) {
-//            node.maxHeight = 80;
-//            node.margin = EUIEdgeMake(10, 10, 10, 10);
-//        }],
-//        debug1,
-//        debug2,
-//        debug3,
-//     );
-//    one.margin.top = 20;
-//    [self.view eui_layout:one];
+    EUITemplet *one = TGrid
+    (
+        [self.backButton eui_configure:^(EUINode *node) {
+            node.maxHeight = 80;
+            node.margin = EUIEdgeMake(10, 10, 10, 10);
+        }],
+        EText(@"1"),
+        EText(@"2"),
+        EText(@"3"),
+        EText(@"4"),
+     );
+    [self.view eui_layout:one];
 }
 
 @end

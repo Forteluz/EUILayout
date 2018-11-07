@@ -65,7 +65,7 @@
     if (testCase == 0) {
         [one addNode:self.action];
     }
-    [self eui_lay:one];
+    [self eui_layout:one];
     
     ///===============================================
     /// Frame

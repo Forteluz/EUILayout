@@ -32,7 +32,7 @@
 
 - (void)dealloc {
     [self cleanUp];
-    NSLog(@"Engine dealloc");
+    EUILog(@"Engine dealloc");
 }
 
 #pragma mark - Update

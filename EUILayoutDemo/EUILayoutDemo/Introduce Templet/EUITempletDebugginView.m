@@ -103,7 +103,7 @@
         EUITemplet *one = self.superview.eui_engine.templet;
         [one layout];
     } else {
-        [self eui_layoutSubviews];
+        [self eui_reload];
     }
     lastGravityN ++;
 }
@@ -129,7 +129,7 @@
             [one setTitle:@"sizeType : EUISizeTypeToHorzFit \n | EUISizeTypeToVertFill" forState:UIControlStateNormal];
             break;
     }
-    [self eui_layoutSubviews];
+    [self eui_reload];
     lastSizeTypeN ++;
 }
 
@@ -187,7 +187,7 @@
             }
         }break;
     }
-    [self eui_layoutSubviews];
+    [self eui_reload];
     edgeLastN ++;
 }
 
@@ -208,7 +208,7 @@
     UIView *one = [self viewWithTag:_controlIndex - 1];
     if (one) {
         [self.eui_templet removeNode:one];
-        [self eui_layoutSubviews];
+        [self eui_reload];
         _controlIndex = MAX(1, --_controlIndex);
     }
 }
@@ -222,7 +222,7 @@
     
     NSInteger n = EUIRandom(0, (int)self.eui_templet.nodes.count + 1);
     [self.eui_templet insertNode:one atIndex:n];
-    [self eui_layoutSubviews];
+    [self eui_reload];
     _controlIndex ++;
 }
 

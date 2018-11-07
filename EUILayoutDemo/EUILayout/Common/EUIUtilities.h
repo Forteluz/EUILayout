@@ -30,6 +30,11 @@ UIKIT_STATIC_INLINE CGFloat EUIValueIsValid(CGFloat one) {
     return !EUIValueIsUndefine(one) && one > 0;
 }
 
+UIKIT_STATIC_INLINE CGFloat EUIRectIsValid(CGRect one) {
+    return !(EUIValueIsUndefine(one.origin.x) || EUIValueIsUndefine(one.origin.y) ||
+             !EUIValueIsValid(one.size.width) || !EUIValueIsValid(one.size.height));
+}
+
 UIKIT_STATIC_INLINE int EUIRandom(int from, int to) {
     return (int)(from + (arc4random() % (to - from + 1)));
 }

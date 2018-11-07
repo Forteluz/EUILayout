@@ -72,7 +72,7 @@
                            grid
                            );
     
-    [self.infoView eui_lay:one];
+    [self.infoView eui_layout:one];
 }
 
 - (void)configureBannerView {
@@ -91,7 +91,7 @@
     });
     btn2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     EUITemplet *bannerViewTemplet = TRow(btn1, btn2);
-    [self.bannerView eui_lay:bannerViewTemplet];
+    [self.bannerView eui_layout:bannerViewTemplet];
 }
 
 - (EUITemplet *)carpoolTemplet {
@@ -130,7 +130,7 @@
     });
     
     EUITemplet *one = TRow(btn);
-    [self.guideView eui_lay:one];
+    [self.guideView eui_layout:one];
 }
 
 - (void)configurePriceView {
@@ -150,7 +150,7 @@
                                     price
                                     );
     
-    [self.priceView eui_lay:priceTemplet];
+    [self.priceView eui_layout:priceTemplet];
 }
 
 - (void)configureConfirmView {
@@ -165,7 +165,7 @@
         
     });
     EUITemplet *one = TRow(btn1);
-    [self.confirmView eui_lay:one];
+    [self.confirmView eui_layout:one];
 }
 
 - (EUITemplet *)aboveTemplet {
@@ -217,8 +217,7 @@
     one.padding.left = 10;
     one.padding.right = 10;
     
-    [self.view eui_lay:one];
-    [self.view eui_layoutSubviews];
+    [self.view eui_layout:one];
 }
 
 @end

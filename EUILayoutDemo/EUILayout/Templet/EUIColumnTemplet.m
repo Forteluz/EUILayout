@@ -81,7 +81,7 @@
     BOOL updateSelfIfNeeded = self.sizeType & EUISizeTypeToHorzFit;
     if ( updateSelfIfNeeded ) {
         if (fillNodes.count != 0) {
-            NSCAssert(0, @"fit计算条件不够，以下 fillNodes:[%@] 的高度无法获知", fillNodes);
+            EUIFailAssert(@"fit计算条件不够，以下 fillNodes:[%@] 的高度无法获知", fillNodes);
         }
         CGRect r = self.cacheFrame;
         r.size.width = fitWidth;
@@ -105,7 +105,7 @@
     CGFloat innerHorzSide = EUIValue(self.padding.left) + EUIValue(self.padding.right);
     CGFloat innerWidth = constrainedSize.width - innerHorzSide;
     if (innerWidth <= 0) {
-        NSCAssert(0, @"constrainedSize太小了！");
+        EUIFailAssert(@"constrainedSize太小了！");
     }
     
     CGFloat aw  = (innerWidth - fitWidth) / fillNodes.count;
@@ -146,12 +146,9 @@
     CGRect pre_frame = pre_node ? pre_node.cacheFrame : CGRectZero;
     
     if (pre_node) {
-        if (EUIValueIsUndefine(pre_frame.origin.x) ||
-            EUIValueIsUndefine(pre_frame.origin.y) ||
-            !EUIValueIsValid(pre_frame.size.width)  ||
-            !EUIValueIsValid(pre_frame.size.height)) {
+        if (!EUIRectIsValid(pre_frame)) {
             NSString *msg = @"EUIError ==> TColumb parse x 异常 : [%@ 前置 layout 的 cahce frame 错误！]";
-            NSCAssert(0, msg, pre_node);
+            EUIFailAssert(msg, pre_node);
         }
     }
 

@@ -44,7 +44,7 @@
     one.margin.top = 10;
     one.margin.bottom = 10;
     
-    [self eui_lay:one];
+    [self eui_layout:one];
     
     ///< Frame
 //    self.topCard.frame = CGRectMake(0,

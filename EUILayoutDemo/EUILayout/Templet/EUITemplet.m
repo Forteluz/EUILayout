@@ -10,10 +10,6 @@
 #import "UIView+EUILayout.h"
 
 @interface EUITemplet() {
-    ///===============================================
-    /// Templet 对于 container 是弱持有，和 Node 不同；
-    /// 同 weakView 一样处理；
-    ///===============================================
     __weak UIView *_container;
 }
 @property (nonatomic, weak) UIView *weakView;
@@ -35,7 +31,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"dealloc templet:%@", self);
+    EUILog(@"dealloc templet:%@", self);
 }
 
 - (CGSize)sizeThatFits:(CGSize)constrainedSize {
@@ -99,11 +95,10 @@
 }
 
 - (void)didLoadSubnodes {
+    
     if (self.didLoadSubnodesBlock) {
         self.didLoadSubnodesBlock(self);
     }
-    ///< TODO : 视图层级调整功能
-    ///< TODO : release...
 }
 
 - (void)loadSubnodes:(NSArray *)nodes {
@@ -393,7 +388,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"EUITempletView:%@ dealloc", self);
+    EUILog(@"EUITempletView:%@ dealloc", self);
 }
 
 - (void)layoutSubviews {

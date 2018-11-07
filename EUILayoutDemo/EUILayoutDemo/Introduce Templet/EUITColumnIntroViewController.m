@@ -30,18 +30,17 @@
     
     UIView *one = [UIView new];
     [one setBackgroundColor:EUIRandomColor];
-    [one eui_lay:TRow(a, b)];
+    [one eui_layout:TRow(a, b)];
     
     UIView *two = [UIView new];
     [two setBackgroundColor:EUIRandomColor];
-    [two eui_lay:TRow(c, d)];
+    [two eui_layout:TRow(c, d)];
     
-    [self.view eui_lay:TColumn(
+    [self.view eui_layout:TColumn(
                                self.backButton,
                                one,
                                e
                                )];
-    [self.view eui_layoutSubviews];
 }
 
 - (void)a {

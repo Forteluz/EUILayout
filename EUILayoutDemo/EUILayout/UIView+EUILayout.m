@@ -59,7 +59,7 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
         [one addNode:object];
         [self eui_reload];
     } else {
-        NSLog(@"Error:【%@】并不是 Container!", self);
+        EUILog(@"Error:【%@】并不是 Container!", self);
     }
 }
 
@@ -69,7 +69,7 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
         [one removeNode:object];
         [self eui_reload];
     } else {
-        NSLog(@"Error:【%@】并不是 Container!", self);
+        EUILog(@"Error:【%@】并不是 Container!", self);
     }
 }
 
@@ -80,7 +80,7 @@ static const void *kDCEngineAssociatedKey = &kDCEngineAssociatedKey;
         }
         [self eui_reload];
     }
-}
+} 
 
 - (void)eui_reload {
     [self eui_lay:self.eui_node];

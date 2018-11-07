@@ -122,7 +122,7 @@
     if ((gravity & EUIGravityHorzEnd)) {
         CGFloat x = 0;
         if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
-            NSLog(@"Node 或者 templet 的宽度异常！");
+            EUILog(@"Node 或者 templet 的宽度异常！");
         } else {
             if (templet.isRoot) {
                 x = tplt_w - EUIValue(templet.padding.right) - node_w - EUIValue(node.margin.right);
@@ -138,7 +138,7 @@
     if (gravity & EUIGravityHorzCenter) {
         CGFloat x = 0;
         if (!EUIValueIsValid(tplt_w) || EUIValueIsValid(node_w)) {
-            NSLog(@"Node 或者 templet 的宽度异常！");
+            EUILog(@"Node 或者 templet 的宽度异常！");
         } else {
             x = ((NSInteger)(tplt_w - node_w) >> 1);
             if (!templet.isRoot) {
@@ -214,7 +214,7 @@
     if ((gravity & EUIGravityVertEnd)) {
         CGFloat y = 0;
         if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
-            NSLog(@"node 或者 templet 的高异常");
+            EUILog(@"node 或者 templet 的高异常");
         } else {
             if (templet.isRoot) {
                 y = tplt_h - EUIValue(templet.padding.bottom) - node_h - EUIValue(node.margin.bottom);
@@ -230,7 +230,7 @@
     if (gravity & EUIGravityVertCenter) {
         CGFloat y = 0;
         if (!EUIValueIsValid(tplt_h) || !EUIValueIsValid(node_h)) {
-            NSLog(@"node 或者 templet 的高异常");
+            EUILog(@"node 或者 templet 的高异常");
         } else {
             y = ((NSInteger)(tplt_h - node_h) >> 1);
         }

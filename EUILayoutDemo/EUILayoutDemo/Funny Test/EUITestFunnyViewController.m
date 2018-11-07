@@ -33,12 +33,12 @@
     UIView *container = [UIView new];
     [container setBackgroundColor:EUIRandomColor];
     [container setEui_sizeType:EUISizeTypeToVertFit];
-    [container eui_lay:TRow(one, two)];
-    [self.view eui_lay:TRow(
+    [container eui_layout:TRow(one, two)];
+    [self.view eui_layout:TRow(
                             container,
                             back,
                             )];
-    [self.view eui_layoutSubviews];
+    
 }
 
 @end

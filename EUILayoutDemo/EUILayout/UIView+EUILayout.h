@@ -25,7 +25,6 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
  注意事项：
     1、EUILayout 布局不要和其他布局体系混用；
     2、EUILayout 默认处理了视图的加载和移除操作；
-    3、EUILayout 
  */
 @interface UIView (EUILayout)
 
@@ -94,48 +93,41 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
  */
 @property (nonatomic, copy) NSString *eui_uniqueID;
 
-#pragma mark - Access
+#pragma mark - Layout
 
 /*!
- *  开始布置模板并计算，但并不会立即刷新视图，视图更新需要调用：eui_layoutSubviews
- */
-- (void)eui_lay:(EUITemplet *)templet;
-
-/*!
- *  立即布局模板上的视图
- */
-- (void)eui_layoutSubviews;
-
-/*!
- *  开始布局模板，并刷新视图，相当于
- *  [self eui_lay:templet];
- *  [self eui_layoutSubviews];
+ *  布局模板，并刷新视图
+ *  自己会作为父视图自动 addSubview: 模板中的子视图
+ *  @warning 每次 eui_layout： 时会自动移除未在模板中的子视图，如：
+    1、[self eui_layout:TRow(viewA)]; ///< viewA 被添加；
+    2、[self eui_layout:TRow(viewB)]; ///< viewB 被添加，viewA 做 removeFromSuperview；
  */
 - (void)eui_layout:(EUITemplet *)templet;
+
+/*!
+ *  刷新，该方法会刷新整个模板布局
+ */
+- (void)eui_reload;
 
 #pragma mark - 增删查改 Layout
 
 /*!
- *  添加一个布局 Node 并刷新视图布局
+ *  如果自己是容器，添加一个布局并刷新整个模板
+ *  @warning 如果自己不是容器该方法不会工作
  */
 - (void)eui_addLayout:(EUIObject)object;
 
 /*!
- *  移除对应节点和视图，并刷新布局
+ *  如果自己是容器，移除容器模板中的一个布局，并刷新模板
+ *  @warning 如果自己不是容器该方法不会工作
  */
 - (void)eui_removeLayout:(EUIObject)object;
 
 /*!
- *  移除所有的布局节点和视图
+ *  如果自己是容器，移除容器中模板上的所有布局
+ *  @warning 如果自己不是容器该方法不会工作
  */
 - (void)eui_removeAllLayouts;
-
-/*!
- *  立即刷新当前模板，相当于
- *  [self eui_lay:templet];
- *  [self eui_layoutSubviews];
- */
-- (void)eui_reload;
 
 /*!
  *  查询对应 index 的 layout; index 的范围是 [0 -- (count - 1)];
@@ -143,11 +135,6 @@ typedef void (^EUIConfigurationBlock)(EUINode *node);
  *  @return 一个 layout 对象（或者 Templet 对象）
  */
 - (__kindof EUINode *)eui_nodeAtIndex:(NSInteger)index;
-
-/*!
- *  清空模板上所有的节点，并移除所有的视图
- */
-- (void)eui_cleanup;
 
 /*!
  *  重新设置自己的 layout 布局对象

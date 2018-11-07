@@ -26,6 +26,7 @@
 @interface EUITemplet : EUINode {
     @package
     NSMapTable *_uniqueIDTable;
+    NSMapTable *_containers;
 }
 
 /*!
@@ -163,6 +164,7 @@
 
 #pragma mark -
 
-__attribute__((objc_subclassing_restricted)) @interface EUITempletView : UIView
+EUI_SUBCLASSING_RESTRICTED
+@interface EUITempletView : UIView
 @property (nonatomic, copy) void (^layoutSubviewsBlock)(void);
 @end
